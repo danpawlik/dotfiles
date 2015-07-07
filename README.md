@@ -7,4 +7,4 @@ This settings are using:
 * https://github.com/klen/python-mode
 
 
-    git clone <repo> && cd my-python-vim && mv .vimrc ~/ && mv * ~/.vim/
+    git clone https://github.com/dduuch/my-python-vim.git && cd my-python-vim && mv .vimrc ~/ && mv * ~/.vim/
