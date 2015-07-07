@@ -16,3 +16,12 @@ execute pathogen#infect()
 filetype plugin indent on
 
 set nofoldenable
+
+" remove automaticly whitespaces on the end
+" autocmd BufWritePre *.py :%s/\s\+$//e
+
+
+" show whitespaces and highlight it
+" highlight ExtraWhitespace ctermbg=red guibg=red
+"match ExtraWhitespace /\s\+$/
+
