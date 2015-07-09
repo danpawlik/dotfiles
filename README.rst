@@ -1,208 +1,226 @@
-|logo| Python-mode, Python in VIM
-#################################
+#################################################
+jedi-vim - awesome Python autocompletion with VIM
+#################################################
 
-.. image:: https://travis-ci.org/klen/python-mode.png?branch=develop
-    :target: https://travis-ci.org/klen/python-mode
+.. image:: https://travis-ci.org/davidhalter/jedi-vim.png?branch=master
+   :target: https://travis-ci.org/davidhalter/jedi-vim
+   :alt: Travis-CI build status
 
-.. image:: https://dl.dropboxusercontent.com/u/487440/reformal/donate.png
-    :target: https://www.gittip.com/klen/
-    :alt: Donate
+jedi-vim is a VIM binding to the autocompletion library
+`Jedi <http://github.com/davidhalter/jedi>`_.
 
-Python-mode is a vim plugin that helps you to create python code very quickly
-by utilizing libraries including pylint_, rope_, pydoc_, pyflakes_, pep8_, and
-mccabe_  for features like static analysis, refactoring, folding, completion,
-documentation, and more.
+Here are some pictures:
 
-The plugin contains all you need to develop python applications in Vim.
+.. image:: https://github.com/davidhalter/jedi/raw/master/docs/_screenshots/screenshot_complete.png
 
-There is no need to install pylint_, rope_ or any other Python libraries on
-your system.
+Completion for almost anything (Ctrl+Space).
 
-- Support Python version 2.6+ and 3.2+
-- Syntax highlighting
-- Virtualenv support
-- Run python code (``<leader>r``)
-- Add/remove breakpoints (``<leader>b``)
-- Improved Python indentation
-- Python folding
-- Python motions and operators (``]]``, ``3[[``, ``]]M``, ``vaC``, ``viM``,
-  ``daC``, ``ciM``, ...)
-- Code checking  (pylint_, pyflakes_, pylama_, ...) that can be run
-  simultaneously (``:PymodeLint``)
-- Autofix PEP8 errors (``:PymodeLintAuto``)
-- Search in python documentation (``K``)
-- Code refactoring <rope refactoring library> (rope_)
-- Strong code completion (rope_)
-- Go to definition (``<C-c>g`` for `:RopeGotoDefinition`)
-- And more, more ...
+.. image:: https://github.com/davidhalter/jedi/raw/master/docs/_screenshots/screenshot_function.png
 
-See (very old) screencast here: http://www.youtube.com/watch?v=67OZNp9Z0CQ
-(sorry for quality, this is my first screencast) Another old presentation here:
-http://www.youtube.com/watch?v=YhqsjUUHj6g
+Display of function/class bodies, docstrings.
 
-**To read python-mode documentation in Vim, see** ``:help pymode.txt``
+.. image:: https://github.com/davidhalter/jedi/raw/master/docs/_screenshots/screenshot_pydoc.png
+
+Documentation (Pydoc) support (with highlighting, Shift+k).
+
+There is also support for goto and renaming.
 
 
-.. contents::
-
-
-Requirements
-============
-
-- VIM >= 7.3 (mostly features needed `+python` or `+python3` support)
-  (also ``--with-features=big`` if you want ``g:pymode_lint_signs``)
-
-
-How to install
-==============
-
-Using pathogen (recommended)
-----------------------------
-::
-
-    % cd ~/.vim
-    % mkdir -p bundle && cd bundle
-    % git clone git://github.com/klen/python-mode.git
-
-- Enable `pathogen <https://github.com/tpope/vim-pathogen>`_
-  in your ``~/.vimrc``: ::
-
-    " Pathogen load
-    filetype off
-
-    call pathogen#infect()
-    call pathogen#helptags()
-
-    filetype plugin indent on
-    syntax on
-
-
-Manually
---------
-::
-
-    % git clone git://github.com/klen/python-mode.git
-    % cd python-mode
-    % cp -R * ~/.vim
-
-Then rebuild **helptags** in vim::
-
-    :helptags ~/.vim/doc/
-
-
-.. note:: **filetype-plugin**  (``:help filetype-plugin-on``) and
-   **filetype-indent** (``:help filetype-indent-on``)
-   must be enabled to use python-mode.
-
-
-Debian packages
----------------
-
-Repository URL: http://klen.github.io/python-mode/deb/
-Install with commands:
-
-::
-
-     add-apt-repository http://klen.github.io/python-mode/deb main
-     apt-get update
-     apt-get install vim-python-mode
-
-If you are getting the message: "The following signatures couldn't be verified because the public key is not available": ::
-
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B5DF65307000E266
-
-`vim-python-mode` using `vim-addons`, so after installation just enable
-`python-mode` with command: ::
-
-    vim-addons install python-mode
-
-
-Troubleshooting
-===============
-
-If your python-mode doesn't work:
-
-1. Load Vim with only python-mode enabled (use `debug.vim` from pymode): ::
-
-    vim -u <path_to_pymode>/debug.vim
-
-And try to repeat your case. If no error occurs, seems like problem isn't in the
-plugin.
-
-2. Type `:PymodeTroubleshooting`
-
-And fix any warnings or copy the output and send it to me. (For example, by
-creating a `new github issue <https://github.com/klen/python-mode/issues/new>`_
-if one does not already exist for the problem).
-
-
-Customization
-=============
-
-You can override the default key bindings by redefining them in your `.vimrc`, for example: ::
-
-    " Override go-to.definition key shortcut to Ctrl-]
-    let g:pymode_rope_goto_definition_bind = "<C-]>"
-
-    " Override run current python file key shortcut to Ctrl-Shift-e
-    let g:pymode_run_bind = "<C-S-e>"
-
-    " Override view python doc key shortcut to Ctrl-Shift-d
-    let g:pymode_doc_bind = "<C-S-d>"
-
+Get the latest from `github <http://github.com/davidhalter/jedi-vim>`_.
 
 Documentation
 =============
 
-Documentation is available in your vim ``:help pymode``
+Documentation is available in your vim: ``:help jedi-vim``. You can also look
+it up `on github <http://github.com/davidhalter/jedi-vim/blob/master/doc/jedi-vim.txt>`_.
 
+You can read the Jedi library documentation `here <http://jedi.jedidjah.ch>`_.
 
-Bugtracker
-===========
-
-If you have any suggestions, bug reports or
-annoyances please report them to the issue tracker
-at https://github.com/klen/python-mode/issues
+If you want to report issues, just use the github issue tracker. In case of
+questions about the software, please use `stackoverflow
+<https://stackoverflow.com>`_ and tag your question with ``jedi-vim``.
 
 
 Contributing
 ============
 
-See the `AUTHORS` file.
-
-Development of python-mode happens at github:
-https://github.com/klen/python-mode
-
-Please make a pull request to `development` branch and add yourself to
-`AUTHORS`.
+We love Pull Requests! Read the instructions in ``CONTRIBUTING.md``.
 
 
-Copyright
-=========
+Features
+========
 
-Copyright © 2013 Kirill Klenov (klen_)
+The Jedi library understands most of Python's core features. From decorators to
+generators, there is broad support.
 
-License
+Apart from that, jedi-vim supports the following commands
+
+- Completion ``<C-Space>``
+- Goto assignments ``<leader>g`` (typical goto function)
+- Goto definitions ``<leader>d`` (follow identifier as far as possible,
+  includes imports and statements)
+- Show Documentation/Pydoc ``K`` (shows a popup with assignments)
+- Renaming ``<leader>r``
+- Usages ``<leader>n`` (shows all the usages of a name)
+- Open module, e.g. ``:Pyimport os`` (opens the ``os`` module)
+
+
+Installation
+============
+
+You might want to use `pathogen <https://github.com/tpope/vim-pathogen>`_ or
+`vundle <https://github.com/gmarik/vundle>`_ to install jedi in VIM. Also you
+need a VIM version that was compiled with ``+python``, which is typical for most
+distributions on Linux.  The Python version compiled into VIM must be 2.6 or later
+(you can check this from within VIM using ``:python import sys; print sys.version`` )
+
+The first thing you need after that is an up-to-date version of Jedi. You can
+either get it via ``pip install jedi`` or with ``git submodule update --init``
+in your jedi-vim repository.
+
+Example Installation Command using Pathogen:
+
+.. code-block:: sh
+
+    cd ~/.vim/bundle/ && git clone --recursive https://github.com/davidhalter/jedi-vim.git
+
+
+On Arch Linux, you can also install jedi-vim from official repositories as `vim-jedi
+<https://www.archlinux.org/packages/community/any/vim-jedi/>`__. It is also available
+on `Debian (≥8) <https://packages.debian.org/vim-python-jedi>`__ and `Ubuntu (≥14.04)
+<http://packages.ubuntu.com/vim-python-jedi>`__ as vim-python-jedi.
+
+Note that the `python-mode <https://github.com/klen/python-mode>`_ VIM plugin seems
+to conflict with jedi-vim, therefore you should disable it before enabling
+jedi-vim.
+
+To enjoy the full features of jedi-vim, you should have VIM >= 7.3, compiled with
+``+conceal`` (which is not the case on some platforms, including OS X). If your VIM
+does not meet these requirements, the parameter recommendation list may not appear
+when you type an open bracket after a function name. Please read
+`the documentation <http://github.com/davidhalter/jedi-vim/blob/master/doc/jedi-vim.txt>`_
+for details.
+
+
+Settings
+========
+
+Jedi is by default automatically initialized. If you don't want that I suggest
+you disable the auto-initialization in your ``.vimrc``:
+
+.. code-block:: vim
+
+    let g:jedi#auto_initialization = 0
+
+There are also some VIM options (like ``completeopt`` and key defaults) which
+are automatically initialized, but you can skip this:
+
+.. code-block:: vim
+
+    let g:jedi#auto_vim_configuration = 0
+
+
+You can make jedi-vim use tabs when going to a definition etc:
+
+.. code-block:: vim
+
+    let g:jedi#use_tabs_not_buffers = 1
+
+If you are a person who likes to use VIM-splits, you might want to put this in your ``.vimrc``:
+
+.. code-block:: vim
+
+    let g:jedi#use_splits_not_buffers = "left"
+
+This options could be "left", "right", "top", "bottom" or "winwidth". It will decide the direction where the split open.
+
+Jedi automatically starts the completion, if you type a dot, e.g. ``str.``, if
+you don't want this:
+
+.. code-block:: vim
+
+    let g:jedi#popup_on_dot = 0
+
+Jedi selects the first line of the completion menu: for a better typing-flow
+and usually saves one keypress.
+
+.. code-block:: vim
+
+    let g:jedi#popup_select_first = 0
+
+Jedi displays function call signatures in insert mode in real-time, highlighting
+the current argument. The call signatures can be displayed as a pop-up in the
+buffer (set to 1, the default), which has the advantage of being easier to refer
+to, or in Vim's command line aligned with the function call (set to 2), which
+can improve the integrity of Vim's undo history.
+
+.. code-block:: vim
+
+    let g:jedi#show_call_signatures = "1"
+
+Here are a few more defaults for actions, read the docs (``:help jedi-vim``) to
+get more information. If you set them to ``""``, they are not assigned.
+
+.. code-block:: vim
+
+    NOTE: subject to change!
+
+    let g:jedi#goto_command = "<leader>d"
+    let g:jedi#goto_assignments_command = "<leader>g"
+    let g:jedi#goto_definitions_command = ""
+    let g:jedi#documentation_command = "K"
+    let g:jedi#usages_command = "<leader>n"
+    let g:jedi#completions_command = "<C-Space>"
+    let g:jedi#rename_command = "<leader>r"
+
+
+Finally, if you don't want completion, but all the other features, use:
+
+.. code-block:: vim
+
+    let g:jedi#completions_enabled = 0
+
+FAQ
+===
+
+I don't want the docstring window to popup during completion
+------------------------------------------------------------
+
+This depends on the ``completeopt`` option. Jedi initializes it in its
+``ftplugin``. Add the following line to your ``.vimrc`` to disable it:
+
+.. code-block:: vim
+
+    autocmd FileType python setlocal completeopt-=preview
+
+
+I want <Tab> to do autocompletion
+---------------------------------
+
+Don't even think about changing the Jedi command to ``<Tab>``,
+use `supertab <https://github.com/ervandew/supertab>`_!
+
+
+The completion is waaay too slow!
+---------------------------------
+
+Completion of complex libraries (like Numpy) should only be slow the first time
+you complete it. After that, the results should be cached and very fast.
+
+If it's still slow, in case you've installed the python-mode VIM plugin, disable
+it. It seems to conflict with jedi-vim. See issue `#163
+<https://github.com/davidhalter/jedi-vim/issues/163>`__.
+
+
+Testing
 =======
 
-Licensed under a `GNU lesser general public license`_.
+jedi-vim is being tested with a combination of `vspec
+<https://github.com/kana/vim-vspec>`_ and `py.test <http://pytest.org/>`_.
 
-If you like this plugin, you can send me postcard :)
-My address is here: "Russia, 143401, Krasnogorsk, Shkolnaya 1-19" to "Kirill Klenov".
-**Thanks for support!**
+The tests are in the ``test`` subdirectory, you can run them calling::
 
-.. _GNU lesser general public license: http://www.gnu.org/copyleft/lesser.html
-.. _klen: http://klen.github.com/
-.. _pydoc: http://docs.python.org/library/pydoc.html
-.. _pathogen: https://github.com/tpope/vim-pathogen
-.. _rope: https://pypi.python.org/pypi/rope
-.. _pylama: https://github.com/klen/pylama
-.. _pylint: https://bitbucket.org/logilab/pylint
-.. _pyflakes: https://pypi.python.org/pypi/pyflakes
-.. _autopep8: https://github.com/hhatto/autopep8
-.. _pep257: http://github.com/GreenSteam/pep257
-.. _mccabe: https://github.com/flintwork/mccabe
-.. _pythonvim: http://www.hlabs.spb.ru/vim/python.vim
-.. _pep8: http://github.com/jcrocholl/pep8
-.. _pep8indent: http://github.com/hynek/vim-python-pep8-indent
-.. |logo| image:: https://raw.github.com/klen/python-mode/develop/logo.png
+    py.test
+
+The tests are automatically run with `travis
+<https://travis-ci.org/davidhalter/jedi-vim>`_.
