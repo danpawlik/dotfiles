@@ -9,13 +9,18 @@ set t_Co=256
 set background=dark
 colorscheme solarized
 
+set tw=79
+set formatoptions+=t
+
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set hlsearch
 
 " remove automaticly whitespaces on the end
-autocmd BufWritePre *.py :%s/\s\+$//e
+" autocmd BufWritePre *.py :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -66,12 +71,12 @@ let g:syntastic_quiet_messages = { "type": "style" }
 
 """"" jedi-vim
 
-" let g:jedi#auto_vim_configuration = 1
-" let g:jedi#auto_initialization = 1
+let g:jedi#auto_vim_configuration = 1
+let g:jedi#auto_initialization = 1
 
 
-"""" Turn off help 
-" autocmd FileType python setlocal completeopt-=preview
+"""" Turn off help
+autocmd FileType python setlocal completeopt-=preview
 
 """" end jedi-vim
 
