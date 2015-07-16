@@ -7,7 +7,11 @@ This settings are using:
 * https://github.com/klen/python-mode
 * https://github.com/scrooloose/nerdtree
 * https://github.com/rodjek/vim-puppet
+* https://github.com/bling/vim-airline
 
+Good work and thank you!
+
+How to install:
 '''
 
     apt-get update && apt-get install cmake libllvm-3.3-ocaml-dev | yum install cmake
