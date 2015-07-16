@@ -1,3 +1,9 @@
+"""" to install plugins, you can add into .vimrc and enter:
+"""" vim +BundleInstall +qall
+"""" in command line or
+"""" in .vimrc enter :source % and later  :PluginInstall
+"""" to remove :PluginClean
+
 syntax on
 set tabstop=8
 set expandtab
@@ -9,90 +15,79 @@ set t_Co=256
 set background=dark
 colorscheme solarized
 
-""" set text width 79
-" set textwidth=79
-" set formatoptions+=t
-
-
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set hlsearch
+set nofoldenable
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+filetype plugin indent on
+
+
 
 """" Showing a different background colour in Vim past 80 characters
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
 let &colorcolumn=join(range(81,999),",")
 
 " remove automaticly whitespaces on the end of all files
-" autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufWritePre *py :%s/\s\+$//e
+autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre *py :%s/\s\+$//e
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 """" vundle
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'rodjek/vim-puppet'
-
-Plugin 'tomasr/molokai'
-
-
+Plugin 'klen/python-mode'
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
 call vundle#end()
-filetype plugin indent on
 
 """"" end vundle
 
-"""" to install plugins, you can add into .vimrc and enter:
-"""" vim +BundleInstall +qall
-"""" in command line or
-"""" in .vimrc enter :source % and later  :PluginInstall
+
+""" the nerd tree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 
-"""""syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"""" pymode
+let g:pymode_options = 1
+let g:pymode_folding = 1
 
-" comment line under, if you want to check syntax with pep8 or something else
-" let g:syntastic_python_checkers = ['python']
 
-let g:syntastic_quiet_messages = { "type": "style" }
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pep8_args="--ignore=E501,E302,E261,E262,E701,E241,E126,E127,E128,W801"
-let g:syntastic_python_pylint_args="--disable=C0103,C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,W0614,R0914,R0912,R0915,R0913,R0904,R0801"
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
 
-"""" end syntastic
-
-""""" jedi-vim
-
-let g:jedi#auto_vim_configuration = 1
-let g:jedi#auto_initialization = 1
-autocmd CompleteDone * pclose
-
-"""" Turn off help
+" remove module doc
 autocmd FileType python setlocal completeopt-=preview
 
-"""" end jedi-vim
 
 
-"""""  Unwanted highlighting with Syntastic / Jedi-Vim
-" highlight SyntasticWarning NONE
-" highlight SyntasticError NONE
+"checker
+let g:pymode_lint = 0
+let g:pymode_lint_on_write = 1
+let g:pymode_lint_message = 1
+"let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe', 'pylint']
+let g:pymode_lint_checkers = ['pylint']
+let g:pymode_lint_ignore = "E501,E302,E261,E262,E701,E241,E126,E127,E128,W801,C0103,C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,W0614,R0914,R0912,R0915,R0913,R0904,R0801"
+
+" completion
+let g:pymode_rope_completion = 1
+let g:pymode_rope_lookup_project = 0
 
 
+" syntax
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 
