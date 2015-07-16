@@ -65,7 +65,7 @@ let g:pymode_folding = 1
 
 
 let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+let g:pymode_doc_bind = 'K'
 
 " remove module doc
 autocmd FileType python setlocal completeopt-=preview
@@ -73,17 +73,18 @@ autocmd FileType python setlocal completeopt-=preview
 
 
 "checker
-let g:pymode_lint = 0
+let g:pymode_lint = 1
 let g:pymode_lint_on_write = 1
 let g:pymode_lint_message = 1
 "let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe', 'pylint']
 let g:pymode_lint_checkers = ['pylint']
-let g:pymode_lint_ignore = "E501,E302,E261,E262,E701,E241,E126,E127,E128,W801,C0103,C0111,I0011,I0012,W0704,W0142,W0212,W0232,W0613,W0702,R0201,W0614,R0914,R0912,R0915,R0913,R0904,R0801"
+"ignore W-warnings , and C - critical that begins on C0111
+let g:pymode_lint_ignore = "W, C0111"
 
 " completion
 let g:pymode_rope_completion = 1
 let g:pymode_rope_lookup_project = 0
-
+let g:pymode_rope_autoimport = 0
 
 " syntax
 let g:pymode_syntax = 1

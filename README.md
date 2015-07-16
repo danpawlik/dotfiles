@@ -13,8 +13,8 @@ Good work and thank you!
 
 How to install:
 '''
-
-    apt-get update && apt-get install cmake libllvm-3.3-ocaml-dev | yum install cmake
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    apt-get update && apt-get install git | yum install git
 
 
 
