@@ -24,6 +24,9 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 filetype plugin indent on
 
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
 
 
 """" Showing a different background colour in Vim past 80 characters
@@ -79,9 +82,11 @@ let g:pymode_lint_message = 1
 "let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe', 'pylint']
 let g:pymode_lint_checkers = ['pylint']
 "ignore W-warnings , and C - critical that begins on C0111
-let g:pymode_lint_ignore = "W, C0111"
+let g:pymode_lint_ignore = "W, C, R"
+" let g:pymode_lint_sort = ['E', 'W', 'C']
 
 " completion
+let g:pymode_rope=0
 let g:pymode_rope_completion = 1
 let g:pymode_rope_lookup_project = 0
 let g:pymode_rope_autoimport = 0
