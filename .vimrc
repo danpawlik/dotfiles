@@ -29,6 +29,9 @@ nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
 
+"" disable checking syntax on paste
+set pastetoggle=<F2>
+
 
 """" Showing a different background colour in Vim past 80 characters
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
@@ -68,10 +71,15 @@ let g:airline_powerline_fonts = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 
 "comment line under, if you want to check syntax with pep8 or something else
 let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
+"let g:syntastic_perl_checkers = ['perl']
+"let g:syntastic_go_checkers = ['go']
+"let g:syntastic_cpp_checkers = ['gcc']
+
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
@@ -82,5 +90,10 @@ autocmd FileType python setlocal completeopt -= preview
 " identline
 let g:indentLine_color_term = 239
 "  You can also use one of ¦, ┆, ︙ or │
-let g:indentLine_char = '┆'
+" let g:indentLine_char = '┆'
+let g:airline_theme = 'solarized'
 
+
+
+"you complete me
+let g:ycm_autoclose_preview_window_after_insertion = 1

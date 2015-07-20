@@ -15,11 +15,13 @@ Good work and thank you!
 How to install:
 '''
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    apt-get update && apt-get install git | yum install git
+    apt-get update && apt-get install -y git ctags cmake python-dev gcc g++  | yum install -y git gcc-c++ cmake
 
 
 
-    git clone https://github.com/dduuch/my-python-vim.git && cd my-python-vim && mv .vimrc ~/ && mv colors bundle ~/.vim/ && vim +PluginInstall +qall
+    git clone https://github.com/dduuch/my-python-vim.git && cd my-python-vim && mv .vimrc ~/ && mv colors  ~/.vim/
+
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall
 
 '''
 
