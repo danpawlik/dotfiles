@@ -85,7 +85,7 @@ let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
 let g:syntastic_python_pylint_args="--disable=W, R "
 
-autocmd FileType python setlocal completeopt -= preview
+autocmd FileType python setlocal completeopt-=preview
 
 " identline
 let g:indentLine_color_term = 239
