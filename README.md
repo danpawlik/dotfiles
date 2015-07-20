@@ -8,6 +8,7 @@ This settings are using:
 * https://github.com/bling/vim-airline
 * https://github.com/scrooloose/syntastic
 * https://github.com/Valloric/YouCompleteMe
+* https://github.com/sjl/badwolf
 
 Good work and thank you!
 

@@ -50,7 +50,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
-
+Plugin 'Yggdroot/indentLine'
 call vundle#end()
 
 """"" end vundle
@@ -62,47 +62,25 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
-
-
-" remove module doc
-autocmd FileType python setlocal completeopt-=preview
-
-
-" youcompleteme
-
-let g:ycm_register_as_syntastic_checker = 1 "default 1
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:Show_diagnostics_ui = 1 "default 1
-
-
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
-
-let g:ycm_complete_in_strings = 1 "default 1
-let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
-
-
-let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
-let g:ycm_confirm_extra_conf = 1
-
+let g:airline_powerline_fonts = 1
 "syntasic
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 "comment line under, if you want to check syntax with pep8 or something else
-let g:syntastic_python_checkers = ['python']
-
+let g:syntastic_python_checkers = ['pylint']
+" let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
-"let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_python_pep8_args="--ignore=E501,W801"
-let g:syntastic_python_pylint_args="--disable=C, W, R "
+let g:syntastic_python_pep9_args="--ignore=E501,W801"
+let g:syntastic_python_pylint_args="--disable=W, R "
 
-autocmd FileType python setlocal completeopt-=preview
+autocmd FileType python setlocal completeopt -= preview
 
-
-"""" end syntastic
+" identline
+let g:indentLine_color_term = 239
+"  You can also use one of ¦, ┆, ︙ or │
+let g:indentLine_char = '┆'
 
