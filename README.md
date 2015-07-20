@@ -4,10 +4,10 @@ My vim settings  for programming in python
 This settings are using:
 * https://github.com/VundleVim/Vundle.vim
 * https://github.com/altercation/vim-colors-solarized
-* https://github.com/klen/python-mode
 * https://github.com/scrooloose/nerdtree
-* https://github.com/rodjek/vim-puppet
 * https://github.com/bling/vim-airline
+* https://github.com/scrooloose/syntastic
+* https://github.com/Valloric/YouCompleteMe
 
 Good work and thank you!
 

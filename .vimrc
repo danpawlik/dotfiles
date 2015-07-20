@@ -16,6 +16,7 @@ set background=dark
 colorscheme solarized
 
 set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set hlsearch
 set nofoldenable
@@ -45,10 +46,11 @@ call vundle#begin()
 
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'rodjek/vim-puppet'
-Plugin 'klen/python-mode'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+
 call vundle#end()
 
 """"" end vundle
@@ -62,40 +64,45 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:airline#extensions#tabline#enabled = 1
 
 
-"""" pymode
-let g:pymode_options = 1
-let g:pymode_folding = 1
-
-
-let g:pymode_doc = 1
-let g:pymode_doc_bind = 'K'
-
 " remove module doc
 autocmd FileType python setlocal completeopt-=preview
 
 
+" youcompleteme
 
-"checker
-let g:pymode_lint = 1
-let g:pymode_lint_on_write = 1
-let g:pymode_lint_message = 1
-"let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe', 'pylint']
-let g:pymode_lint_checkers = ['pylint']
-"ignore W-warnings , and C - critical that begins on C0111
-let g:pymode_lint_ignore = "W, C, R"
-" let g:pymode_lint_sort = ['E', 'W', 'C']
+let g:ycm_register_as_syntastic_checker = 1 "default 1
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:Show_diagnostics_ui = 1 "default 1
 
-" completion
-let g:pymode_rope=0
-let g:pymode_rope_completion = 1
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_autoimport = 0
 
-" syntax
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_enable_diagnostic_highlighting = 0
+let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
 
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
+let g:ycm_complete_in_strings = 1 "default 1
+let g:ycm_collect_identifiers_from_tags_files = 0 "default 0
 
+
+let g:ycm_server_use_vim_stdout = 0 "default 0 (logging to console)
+let g:ycm_confirm_extra_conf = 1
+
+"syntasic
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"comment line under, if you want to check syntax with pep8 or something else
+let g:syntastic_python_checkers = ['python']
+
+let g:syntastic_quiet_messages = { "type": "style" }
+"let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pep8_args="--ignore=E501,W801"
+let g:syntastic_python_pylint_args="--disable=C, W, R "
+
+autocmd FileType python setlocal completeopt-=preview
+
+
+"""" end syntastic
 
