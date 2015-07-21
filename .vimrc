@@ -83,7 +83,7 @@ let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
-let g:syntastic_python_pylint_args="--disable=W, R "
+let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
 
 autocmd FileType python setlocal completeopt-=preview
 
