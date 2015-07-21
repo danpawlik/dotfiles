@@ -34,8 +34,7 @@ set pastetoggle=<F2>
 
 
 """" Showing a different background colour in Vim past 80 characters
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
-let &colorcolumn=join(range(81,999),",")
+set colorcolumn=80
 
 " remove automaticly whitespaces on the end of all files
 autocmd BufWritePre * :%s/\s\+$//e
