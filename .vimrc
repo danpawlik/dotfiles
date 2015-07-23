@@ -34,8 +34,7 @@ set pastetoggle=<F2>
 
 
 """" Showing a different background colour in Vim past 80 characters
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
-let &colorcolumn=join(range(81,999),",")
+set colorcolumn=80
 
 " remove automaticly whitespaces on the end of all files
 autocmd BufWritePre * :%s/\s\+$//e
@@ -84,7 +83,7 @@ let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
-let g:syntastic_python_pylint_args="--disable=W, R "
+let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
 
 autocmd FileType python setlocal completeopt-=preview
 
