@@ -3,14 +3,17 @@ My vim settings  for programming in python
 
 This settings are using:
 * https://github.com/VundleVim/Vundle.vim
-* https://github.com/altercation/vim-colors-solarized
 * https://github.com/scrooloose/nerdtree
 * https://github.com/bling/vim-airline
-* https://github.com/scrooloose/syntastic
 * https://github.com/Valloric/YouCompleteMe
+* https://github.com/scrooloose/syntastic
+* https://github.com/nathanaelkane/vim-indent-guides
+* https://github.com/altercation/vim-colors-solarized
 * https://github.com/sjl/badwolf
 
+
 Good work and thank you!
+
 
 How to install:
 '''

@@ -53,7 +53,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
-Plugin 'Yggdroot/indentLine'
+Plugin 'nathanaelkane/vim-indent-guides'
 call vundle#end()
 
 """"" end vundle
@@ -66,8 +66,9 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-"syntasic
+let g:airline_theme = 'solarized'
 
+"syntasic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -87,13 +88,20 @@ let g:syntastic_python_pylint_args="--disable=W, R "
 
 autocmd FileType python setlocal completeopt-=preview
 
-" identline
-let g:indentLine_color_term = 239
-"  You can also use one of ¦, ┆, ︙ or │
-" let g:indentLine_char = '┆'
-let g:airline_theme = 'solarized'
 
-
-
-"you complete me
+"YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_min_num_of_chars_for_completion = 0
+let g:ycm_auto_trigger = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+
+""" Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:ident_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_color_change_percent = 80
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
+
