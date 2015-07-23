@@ -16,8 +16,11 @@ Good work and thank you!
 
 
 How to install:
-'''
+
+
+
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    
     apt-get update && apt-get install -y git ctags cmake python-dev gcc g++  | yum install -y git gcc-c++ cmake
 
 
@@ -26,7 +29,7 @@ How to install:
 
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall
 
-'''
+
 
 
 Its still pre alpha config.
