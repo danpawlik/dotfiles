@@ -58,9 +58,12 @@ call vundle#end()
 """"" end vundle
 
 
-""" the nerd tree
+""" the nerd tree - ctrl + n  enabled
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -71,7 +74,7 @@ let g:airline_theme = 'solarized'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_wq = 0
 
 "comment line under, if you want to check syntax with pep8 or something else
 let g:syntastic_python_checkers = ['pylint']
