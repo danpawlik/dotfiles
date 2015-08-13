@@ -3,7 +3,6 @@
 """" in command line or
 """" in .vimrc enter :source % and later  :PluginInstall
 """" to remove :PluginClean
-
 syntax on
 set tabstop=8
 set expandtab
@@ -112,4 +111,10 @@ let g:indent_guides_color_change_percent = 80
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 
-
+" test
+" copy the previous indentation on autoindenting
+set copyindent
+" ignore case in search
+set ignorecase
+" automatic wrap text > 80 im python f im python filesiles
+au BufRead,BufNewFile *py setlocal textwidth=80
