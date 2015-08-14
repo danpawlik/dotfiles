@@ -52,6 +52,7 @@ Plugin 'bling/vim-airline'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 """"" end vundle
@@ -118,3 +119,18 @@ set copyindent
 set ignorecase
 " automatic wrap text > 80 im python f im python filesiles
 au BufRead,BufNewFile *py setlocal textwidth=80
+
+
+function! ColorschemeToggle()
+  let a:color=0
+  if (a:color == 0)
+    set background=dark
+    colorscheme badwolf
+    let a:color += 1
+  elseif (a:color ==1)
+    set background=dark
+    colorscheme solarized
+  endif
+endfunction
+
+nnoremap <F5> :call ColorschemeToggle()<cr>
