@@ -2,7 +2,7 @@
 """" vim +BundleInstall +qall
 """" in command line or
 """" in .vimrc enter :source % and later  :PluginInstall
-"""" to remove :PluginClean
+"""" to remove :source % and later :PluginClean
 syntax on
 set tabstop=8
 set expandtab
@@ -22,7 +22,6 @@ set nofoldenable
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
-filetype plugin indent on
 
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
@@ -49,6 +48,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
+Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
@@ -56,7 +56,7 @@ Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 """"" end vundle
-
+filetype plugin indent on
 
 """ the nerd tree - ctrl + n  enabled
 autocmd StdinReadPre * let s:std_in=1
@@ -80,7 +80,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
 "let g:syntastic_perl_checkers = ['perl']
-"let g:syntastic_go_checkers = ['go']
+let g:syntastic_go_checkers = ['go']
 "let g:syntastic_cpp_checkers = ['gcc']
 
 " let g:syntastic_python_checkers = ['python']
