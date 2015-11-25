@@ -26,10 +26,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-
 "" disable checking syntax on paste
 set pastetoggle=<F2>
-
 
 """" Showing a different background colour in Vim past 80 characters
 set colorcolumn=80
@@ -43,8 +41,6 @@ match ExtraWhitespace /\s\+$/
 
 """" vundle
 call vundle#begin()
-
-
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
@@ -54,7 +50,6 @@ Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tpope/vim-fugitive'
 call vundle#end()
-
 """"" end vundle
 filetype plugin indent on
 
@@ -120,17 +115,3 @@ set ignorecase
 " automatic wrap text > 80 im python f im python filesiles
 au BufRead,BufNewFile *py setlocal textwidth=80
 
-
-function! ColorschemeToggle()
-  let a:color=0
-  if (a:color == 0)
-    set background=dark
-    colorscheme badwolf
-    let a:color += 1
-  elseif (a:color ==1)
-    set background=dark
-    colorscheme solarized
-  endif
-endfunction
-
-nnoremap <F5> :call ColorschemeToggle()<cr>
