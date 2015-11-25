@@ -45,9 +45,9 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'Shougo/neocomplcache.vim'
 Plugin 'tpope/vim-fugitive'
 call vundle#end()
 """"" end vundle
@@ -83,19 +83,8 @@ let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
 let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
 
-
-
 "remove preview about module to completion
 autocmd FileType python setlocal completeopt-=preview
-
-
-"""YouCompleteMe
-"option shows help about module to completion
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_min_num_of_chars_for_completion = 0
-let g:ycm_auto_trigger = 1
 
 
 """ Indent Guides
@@ -114,4 +103,26 @@ set copyindent
 set ignorecase
 " automatic wrap text > 80 im python f im python filesiles
 au BufRead,BufNewFile *py setlocal textwidth=80
+
+" Neocomplcache
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+let g:neocomplcache_enable_camel_case = 1
+let g:neocomplcache_max_list = 50
+let g:neocomplcache_force_overwrite_completefunc = 1
+
+if !exists('g:neocomplcache_omni_functions')
+    let g:neocomplcache_omni_functions = {}
+endif
+if !exists('g:neocomplcache_force_omni_patterns')
+    let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_overwrite_completefunc = 1
+let g:neocomplcache_force_omni_patterns['python'] = '[^. t].w*'
+set ofu=syntaxcomplete#Complete
+au FileType python set omnifunc=pythoncomplete#Complete
+au FileType python let b:did_ftplugin = 1
+
+" Vim-jedi settings
+let g:jedi#popup_on_dot = 0
 
