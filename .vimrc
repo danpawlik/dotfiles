@@ -46,7 +46,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'tpope/vim-fugitive'
 call vundle#end()
@@ -111,18 +110,4 @@ let g:neocomplcache_enable_camel_case = 1
 let g:neocomplcache_max_list = 50
 let g:neocomplcache_force_overwrite_completefunc = 1
 
-if !exists('g:neocomplcache_omni_functions')
-    let g:neocomplcache_omni_functions = {}
-endif
-if !exists('g:neocomplcache_force_omni_patterns')
-    let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_overwrite_completefunc = 1
-let g:neocomplcache_force_omni_patterns['python'] = '[^. t].w*'
-set ofu=syntaxcomplete#Complete
-au FileType python set omnifunc=pythoncomplete#Complete
-au FileType python let b:did_ftplugin = 1
-
-" Vim-jedi settings
-let g:jedi#popup_on_dot = 0
 
