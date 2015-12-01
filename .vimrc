@@ -1,8 +1,10 @@
-"""" to install plugins, you can add into .vimrc and enter:
+"""" At first type this in command line:
+"""" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"""" then in command line type this:
 """" vim +BundleInstall +qall
-"""" in command line or
-"""" in .vimrc enter :source % and later  :PluginInstall
-"""" to remove :source % and later :PluginClean
+"""" or in vimrc file type:
+"""" to install plugins:  :source % | :PluginInstall
+"""" to remove plugins:   :source % | :PluginClean
 syntax on
 set tabstop=8
 set expandtab
