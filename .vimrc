@@ -49,7 +49,10 @@ Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Shougo/neocomplcache.vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-colorscheme-switcher'
 call vundle#end()
 """"" end vundle
 filetype plugin indent on
@@ -64,7 +67,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'solarized'
 
 """ syntasic
 let g:syntastic_always_populate_loc_list = 1
@@ -109,7 +111,20 @@ au BufRead,BufNewFile *py setlocal textwidth=80
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case = 1
-let g:neocomplcache_max_list = 50
+let g:neocomplcache_max_list = 80
 let g:neocomplcache_force_overwrite_completefunc = 1
 
+if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns = {}
+        endif
+let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" switch colors by pressing F8
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+let g:colorscheme_switcher_exclude = ['ron', 'shine', 'slate', 'torte', 'zellner', 'blue', 'darkblue', 'delek', 'default', 'desert', 'elflord', 'evening', 'koehler', 'morning', 'murphy', 'peachpuff', 'pablo']
 
