@@ -126,5 +126,5 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " switch colors by pressing F8
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-let g:colorscheme_switcher_exclude = ['ron', 'shine', 'slate', 'torte', 'zellner', 'blue', 'darkblue', 'delek', 'default', 'desert', 'elflord', 'evening', 'koehler', 'morning', 'murphy', 'peachpuff', 'pablo']
+let g:colorscheme_switcher_exclude = ['torte', 'zellner', 'blue', 'darkblue', 'delek', 'default', 'desert', 'elflord', 'evening', 'koehler', 'morning', 'murphy', 'peachpuff', 'pablo']
 
