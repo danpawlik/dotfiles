@@ -1,8 +1,9 @@
 # my-python-vim
-My vim settings  for programming in python
+My vim configuration for programming in python
 
-This settings are using:
+Config file is using plugins:
 * https://github.com/VundleVim/Vundle.vim
+* https://github.com/sirver/ultisnips
 * https://github.com/scrooloose/nerdtree
 * https://github.com/bling/vim-airline
 * https://github.com/Shougo/neocomplcache.vim
@@ -19,13 +20,12 @@ Good work and thank you!
 
 How to install:
 
-
-
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    cd /tmp ; git clone https://github.com/dduuch/my-python-vim.git -b neocomplete-jedi-vim && cd my-python-vim ;  mv .vimrc ~/ ; mkdir -p ~/.vim/ ; mv colors ~/.vim/
 
-    git clone https://github.com/dduuch/my-python-vim.git && cd my-python-vim && mv .vimrc ~/ && mv colors  ~/.vim/
 
-    # Adding new vim colors
+Add vim colors:
+
     mkdir -p ~/.vim
     mkdir -p ~/.vim/colors
     wget https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim -O ~/.vim/colors/solarized.vim
@@ -38,6 +38,7 @@ How to install:
     wget https://raw.githubusercontent.com/Reewr/vim-monokai-phoenix/master/colors/monokai-phoenix.vim -O ~/.vim/colors/monokai-phoenix.vim
     wget https://raw.githubusercontent.com/ayu-theme/ayu-vim/master/colors/ayu.vim -O ~/.vim/colors/ayu.vim
 
-Its still pre alpha config. YouCompleteMe config is better done. You can find it in another branch.
-For my own use.
 
+Install plugins:
+
+    vim +BundleInstall +qall

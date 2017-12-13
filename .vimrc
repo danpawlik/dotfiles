@@ -44,6 +44,7 @@ match ExtraWhitespace /\s\+$/
 """" vundle
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+Plugin 'sirver/ultisnips'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
