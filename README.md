@@ -1,4 +1,4 @@
-# my-python-vim
+# dotfiles
 My vim configuration for programming in python
 
 Config file is using plugins:
@@ -6,7 +6,7 @@ Config file is using plugins:
 * https://github.com/sirver/ultisnips
 * https://github.com/scrooloose/nerdtree
 * https://github.com/bling/vim-airline
-* https://github.com/Shougo/neocomplcache.vim
+* https://github.com/Shougo/deoplete.nvim
 * https://github.com/davidhalter/jedi-vim
 * https://github.com/scrooloose/syntastic
 * https://github.com/nathanaelkane/vim-indent-guides
@@ -18,15 +18,21 @@ Config file is using plugins:
 Good work and thank you!
 
 
-How to install:
+Configure vim:
+From deocomplete (https://github.com/Shougo/deoplete.nvim#install):
+
+    pip3 install neovim
+
+Then:
 
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    cd /tmp ; git clone https://github.com/dduuch/my-python-vim.git -b neocomplete-jedi-vim && cd my-python-vim ;  mv .vimrc ~/ ; mkdir -p ~/.vim/ ; mv colors ~/.vim/
+    cd /tmp ; git clone https://github.com/dduuch/dotfiles.git -b deoplete
+    mv dotfiles/vimrc/.vimrc~/;
+    mkdir -p ~/.vim/
 
 
 Add vim colors:
 
-    mkdir -p ~/.vim
     mkdir -p ~/.vim/colors
     wget https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim -O ~/.vim/colors/solarized.vim
     wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O ~/.vim/colors/badwolf.vim
