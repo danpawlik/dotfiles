@@ -5,21 +5,75 @@
 """" or in vimrc file type:
 """" to install plugins:  :source % | :PluginInstall
 """" to remove plugins:   :source % | :PluginClean
+set encoding=utf-8
 syntax on
-set tabstop=8
-set expandtab
+set tabstop=4
 set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set autoindent
 set t_Co=256
 set background=dark
 set shiftwidth=4
+set hlsearch
+set nofoldenable
+set nocompatible
+set encoding=utf-8
+set wildmenu
+set cursorline
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set hlsearch
 set nofoldenable
 set nocompatible
-set encoding=utf-8
+
+set cursorcolumn
+set showcmd
+set nowrap
+set ttyfast
+
+filetype off
+
 set rtp+=~/.vim/bundle/Vundle.vim
+
+"""" vundle
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+Plugin 'fatih/vim-go'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/syntastic'
+
+if has('nvim')
+  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plugin 'Shougo/deoplete.nvim'
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plugin 'tpope/vim-fugitive'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'sirver/ultisnips'
+Plugin 'honza/vim-snippets'
+
+"colorscheme
+Plugin 'kiddos/malokai'
+Plugin 'morhetz/gruvbox'
+Plugin 'ajh17/spacegray.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'henrynewcomer/vim-theme-papaya'
+Plugin 'wolf-dog/nighted.vim'
+Plugin 'dikiaap/minimalist'
+Plugin 'cocopon/iceberg.vim'
+Plugin 'sjl/badwolf'
+call vundle#end()
+""""" end vundle
 
 " disable checking syntax on paste
 set pastetoggle=<F2>
@@ -64,31 +118,6 @@ filetype plugin indent on
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
-
-"""" vundle
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'fatih/vim-go'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-fugitive'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-colorscheme-switcher'
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-
-if has('nvim')
-  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plugin 'Shougo/deoplete.nvim'
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
-endif
-
-call vundle#end()
-""""" end vundle
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
