@@ -75,6 +75,9 @@ Plugin 'sjl/badwolf'
 call vundle#end()
 """"" end vundle
 
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+
 " disable checking syntax on paste
 set pastetoggle=<F2>
 
@@ -88,7 +91,7 @@ set ignorecase
 au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
-colorscheme solarized
+colorscheme badwolf
 
 filetype off
 

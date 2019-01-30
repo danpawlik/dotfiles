@@ -6,9 +6,9 @@ Configure Vim with deoplete:
 
 Install required packages:
 
-    sudo apt install -y python-pip pyton3-pip
-    pip install neovim
-    pip3 install neovim
+    sudo apt install -y python-pip python3-pip
+    pip install --user neovim
+    pip3 install --user neovim
 
 
 How to install for vim:
@@ -19,17 +19,15 @@ How to install for vim:
     mkdir -p ~/.vim/
 
 
-How to install for neovim:
+How to install for neovim and replace vim:
 
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim.appimage
-    cd /tmp ; chmod u+x nvim.appimage
-    ./nvim.appimage --appimage-extract
-    mv /tmp/squashfs-root ~/.nvim
-    ln -s $HOME/.nvim/usr/bin/nvim /usr/bin/nvim
+    wget https://github.com/neovim/neovim/releases/download/v0.3.4/nvim.appimage -O /tmp/nvim.appimage
+    chmod u+x /tmp/nvim.appimage
+    mv /usr/bin/vim /usr/bin/vim-original
+    mv /tmp/nvim.appimage /usr/bin/vim
+
     mkdir -p $HOME/.config/nvim
-
-    git clone https://github.com/dduuch/dotfiles.git -b ycm /tmp/dotfiles
-    mv /tmp/dotfiles/vimrc/.vimrc $HOME/.config/nvim/init.vim
+    ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 
 
 Install plugins:
