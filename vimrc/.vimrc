@@ -35,6 +35,7 @@ set cursorcolumn
 set showcmd
 set nowrap
 set ttyfast
+set backspace=indent,eol,start
 
 filetype off
 
