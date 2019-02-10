@@ -4,6 +4,7 @@
 """" vim +BundleInstall +qall
 """" or in vimrc file type:
 """" to install plugins:  :source % | :PluginInstall
+"""" to update plugins:   :source % | :PluginUpdate
 """" to remove plugins:   :source % | :PluginClean
 set encoding=utf-8
 syntax on
@@ -57,13 +58,14 @@ else
 endif
 
 Plugin 'tpope/vim-fugitive'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-colorscheme-switcher'
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 
 "colorscheme
-Plugin 'kiddos/malokai'
+Plugin 'fatih/molokai'
+Plugin 'patstockwell/vim-monokai-tasty'
+Plugin 'fortes/vim-escuro'
+Plugin 'haishanh/night-owl.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'ajh17/spacegray.vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -91,7 +93,7 @@ set ignorecase
 au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
-colorscheme badwolf
+colorscheme molokai
 
 filetype off
 
@@ -158,7 +160,3 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
-
-" colorscheme
-" switch colors by pressing F8
-let g:colorscheme_switcher_exclude = ['torte', 'zellner', 'blue', 'darkblue', 'delek', 'default', 'desert', 'elflord', 'evening', 'koehler', 'morning', 'murphy', 'peachpuff', 'pablo']
