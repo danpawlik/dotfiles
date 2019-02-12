@@ -1,165 +1,162 @@
-// Future versions of Hyper may add additional config options,
-// which will not automatically be merged into this file.
-// See https://hyper.is#cfg for all currently supported options.
 
 module.exports = {
   config: {
-    // Choose either "stable" for receiving highly polished,
-    // or "canary" for less polished but more frequent updates
+
     updateChannel: 'stable',
 
-    // default font size in pixels for all tabs
     fontSize: 14,
 
-    // font family with optional fallbacks
+    // fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
     fontFamily: '"Source Code Pro", "DejaVu Sans Mono", Iosevka, Hack, Monaco, Consolas, "Lucida Console", monospace',
 
-    // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
+    fontWeight: 'normal',
+
+    fontWeightBold: 'bold',
+
+    lineHeight: 1,
+
+    letterSpacing: 0,
+
     cursorColor: 'rgba(248,28,229,0.8)',
 
-    // `BEAM` for |, `UNDERLINE` for _, `BLOCK` for █
+    cursorAccentColor: '#000',
+
     cursorShape: 'BLOCK',
 
-    // set to true for blinking cursor
     cursorBlink: false,
 
-    // color of the text
     foregroundColor: '#fff',
 
-    // terminal background color
     backgroundColor: '#000',
 
-    // border color (window, tabs)
+    selectionColor: 'rgba(248,28,229,0.3)',
+
     borderColor: '#333',
 
-    // custom css to embed in the main window
     css: `
+      .header_header {
+        background: transparent!important;
+      }
       .tab_tab {
-        background-color: #1f2329 !important;
+        border: 0;
       }
-      .tab_tab.tab_active {
-        background-color: #282c34 !important;
+      .tab_active::before {
+        border-bottom: 2px solid rgba(255,255,255,.5);
       }
-    `,
+      .tab_hasActivity {
+        color: #42a1e4;
+      }
+      .tab_hasActivity:hover {
+        color: #96d4e4;
+      }`,
 
-    // custom css to embed in the terminal window
     termCSS: '',
 
-    // set to `true` (without backticks) if you're using a Linux setup that doesn't show native menus
-    // default: `false` on Linux, `true` on Windows (ignored on macOS)
     showHamburgerMenu: '',
 
-    // set to `false` if you want to hide the minimize, maximize and close buttons
-    // additionally, set to `'left'` if you want them on the left, like in Ubuntu
-    // default: `true` on windows and Linux (ignored on macOS)
     showWindowControls: '',
 
-    // custom padding (css format, i.e.: `top right bottom left`)
     padding: '12px 14px',
 
-    // the full list. if you're going to provide the full color palette,
-    // including the 6 x 6 color cubes and the grayscale map, just provide
-    // an array here instead of a color map object
     colors: {
       black: '#000000',
-      red: '#ff0000',
-      green: '#33ff00',
-      yellow: '#ffff00',
-      blue: '#0066ff',
-      magenta: '#cc00ff',
-      cyan: '#00ffff',
-      white: '#d0d0d0',
-      lightBlack: '#808080',
-      lightRed: '#ff0000',
-      lightGreen: '#33ff00',
-      lightYellow: '#ffff00',
-      lightBlue: '#0066ff',
-      lightMagenta: '#cc00ff',
-      lightCyan: '#00ffff',
-      lightWhite: '#ffffff'
+      red: '#C51E14',
+      green: '#1DC121',
+      yellow: '#C7C329',
+      blue: '#0A2FC4',
+      magenta: '#C839C5',
+      cyan: '#20C5C6',
+      white: '#C7C7C7',
+      lightBlack: '#686868',
+      lightRed: '#FD6F6B',
+      lightGreen: '#67F86F',
+      lightYellow: '#FFFA72',
+      lightBlue: '#6A76FB',
+      lightMagenta: '#FD7CFC',
+      lightCyan: '#68FDFE',
+      lightWhite: '#FFFFFF',
     },
 
-    // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
-    // if left empty, your system's login shell will be used by default
-    //
-    // Windows
-    // - Make sure to use a full path if the binary name doesn't work
-    // - Remove `--login` in shellArgs
-    //
-    // Bash on Windows
-    // - Example: `C:\\Windows\\System32\\bash.exe`
-    //
-    // Powershell on Windows
-    // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
     shell: '/bin/zsh',
 
-    // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
-    // by default ['--login'] will be used
     shellArgs: ['--login'],
 
-    // for environment variables
     env: {},
 
-    // set to false for no bell
     bell: 'SOUND',
 
-    // if true, selected text will automatically be copied to the clipboard
     copyOnSelect: false,
 
-    // if true, on right click selected text will be copied or pasted if no
-    // selection is present (true by default on Windows)
-    // quickEdit: true
+    defaultSSHApp: true,
 
-    // URL to custom bell
-    // bellSoundURL: 'http://example.com/bell.mp3',
-
-    // for advanced config flags please refer to https://hyper.is/#cfg
     summon: {
       hotkey: 'Cmd+`'
     },
     hypercwd: {
-      initialWorkingDirectory: '~/Development/Sites'
+      initialWorkingDirectory: '$HOME'
     },
     hyperStatusLine: {
       dirtyColor: 'salmon',
       aheadColor: 'ivory',
-      footerTransparent: true
+      footerTransparent: false
     },
     hyperTabs: {
       trafficButtons: true,
       border: false,
       tabIconsColored: true,
       closeAlign: 'right',
-    }
+    },
+    hyperTransparent: {
+      backgroundColor: '#000',
+      opacity: 0.8,
+      vibrancy: 'ultra-dark' // ['', 'dark', 'medium-light', 'ultra-dark']
+    },
+
+    // change chars from mac layout to linux:
+    // cmd: s/cmd/control/g
+    paneNavigation: {
+      debug: false,
+      hotkeys: {
+        navigation: {
+          up: 'cmd+shift+up',
+          down: 'cmd+shift+down',
+          left: 'cmd+shift+left',
+          right: 'cmd+shift+right'
+        },
+        jump_prefix: 'cmd+shift', // completed with 1-9 digits
+        permutation_modifier: 'shift', // Added to jump and navigation hotkeys for pane permutation
+        maximize: 'cmd+shift+enter'
+      },
+      showIndicators: true, // Show pane number
+      indicatorPrefix: '^⌥', // Will be completed with pane number
+      indicatorStyle: { // Added to indicator <div>
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        fontSize: '10px'
+      },
+      focusOnMouseHover: false,
+      inactivePaneOpacity: 0.6 // Set to 1 to disable inactive panes dimming
+    },
+
   },
 
-  // a list of plugins to fetch and install from npm
-  // format: [@org/]project[#version]
-  // examples:
-  //   `hyperpower`
-  //   `@company/project`
-  //   `project#1.0.1`
   plugins: [
-    "verminal",
     "hyper-tabs-enhanced",
-    "hyperterm-atom-dark",
     "hypercwd",
     "hyper-broadcast",
-    "hyper-search".
     "hyperterm-paste",
     "hyper-statusline",
     "hyperterm-summon",
-
+    "hyper-search",
+    "hyper-pane",
+    "verminal",
   ],
+//    "hyperterm-material",
+//    "hyper-transparent-bg",
 
-  // in development, you can create a directory under
-  // `~/.hyper_plugins/local/` and include it here
-  // to load it and avoid it being `npm install`ed
   localPlugins: [],
 
   keymaps: {
-    'pane:splitHorizontal': 'ctrl+shift+o',
-    // Example
-    // 'window:devtools': 'cmd+alt+o',
-  }
+  },
 };
