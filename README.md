@@ -21,7 +21,7 @@ ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 ```
 mkdir -p ~/.vim/
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-git clone https://github.com/dduuch/dotfiles.git /tmp/dotfiles
+git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 ```
 
 ## 3. Take one configuration:
@@ -36,7 +36,7 @@ pip3 install --user neovim
 ```
 Copy deoplete config file:
 ```
-mv dotfiles/vimrc/deoplete ~/.vimrc;
+mv /tmp/dotfiles/vimrc/deoplete ~/.vimrc;
 ```
 > If all is installed, check health by execuint command in vim/nvim:
 ```
