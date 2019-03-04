@@ -6,6 +6,13 @@ if [ -f "$HOME/.zsh_aliases" ]; then
     source "$HOME/.zsh_aliases"
 fi
 
+# Fix word skiping
+if [ "$(uname)" == "Darwin" ]; then
+    bindkey -e
+    bindkey '[C' forward-word
+    bindkey '[D' backward-word
+fi
+
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="agnoster"
 #ZSH_THEME="risto"
@@ -47,6 +54,8 @@ else
 fi
 
 export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Do not propose fix if command is bad
 unsetopt correct_all
 
 # Spaceship
