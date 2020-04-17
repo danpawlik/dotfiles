@@ -1,43 +1,34 @@
 # my-python-vim
 My dotfiles configurtion.
 
-## 1. Configure and install neovim:
+# Vim configuration:
 
-How to install for neovim and replace vim:
-```
-wget https://github.com/neovim/neovim/releases/download/v0.3.4/nvim.appimage -O /tmp/nvim.appimage
-chmod u+x /tmp/nvim.appimage
-sudo mv /usr/bin/vim /usr/bin/vim-original
-sudo mv /tmp/nvim.appimage /usr/bin/vim
-```
-
-Finally create symlink to neovim:
-```
-mkdir -p $HOME/.config/nvim
-ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
-```
-
-## 2. Vim preparation:
+## 1. Preparation:
 ```
 mkdir -p ~/.vim/
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 ```
 
-## 3. Take one configuration:
+## 2. Take one configuration:
 
 ### - deoplete:
 
 Install required packages:
 ```
-sudo apt install -y python-pip python3-pip || dnf install -y python-pip python3-pip
+sudo apt install -y python-pip python3-pip || sudo yum install -y python-pip python3-pip
 pip install --user neovim
 pip3 install --user neovim
 ```
 Copy deoplete config file:
 ```
-mv /tmp/dotfiles/vimrc/deoplete ~/.vimrc;
+cp /tmp/dotfiles/vimrc/deoplete ~/.vimrc;
 ```
+Install plugins:
+```
+vim +PluginInstall +qall
+```
+
 > If all is installed, check health by execuint command in vim/nvim:
 ```
 :checkhealth
@@ -47,23 +38,27 @@ Thanks @Shougo/deoplete.nvim
 ### - YouCompleteMe (YCM)
 
 ```
-mv /tmp/dotfiles/vimrc/ycm ~/.vimrc
+cp /tmp/dotfiles/vimrc/ycm ~/.vimrc
 ```
 
 On the end, compile YCM for e.g. python:
 ```
-sudo apt install -y build-essential cmake || sudo dnf install -y automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel
+sudo apt install -y build-essential cmake || sudo yum install -y automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel
+vim +PluginInstall +qall
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
 ```
 Thanks @Valloric/YouCompleteMe
 
+
 ### - Jedi vim:
 ```
-sudo apt install -y vim-python-jedi || sudo dnf install -y vim-jedi
-mv /tmp/dotfiles/vimrc/jedi ~/.vimrc
+sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi
+cp /tmp/dotfiles/vimrc/jedi ~/.vimrc
+vim +PluginInstall +qall
 ```
 Thanks @davidhalter/jedi-vim
+
 
 ### - Spacevim
 
@@ -82,18 +77,19 @@ Thats all!
 Thanks @SpaceVim/SpaceVim team!
 
 
-## 4. Post preparations - install plugins:
+## 3. Neovim - configure and install:
+
+How to install for neovim and replace vim:
 ```
-vim +BundleInstall +qall
+wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim.appimage
+sudo mv /usr/bin/vim /usr/bin/vim-original
+sudo mv /tmp/nvim.appimage /usr/bin/vim
+chmod u+x /usr/bin/vim
 ```
-or
+
+Finally create symlink to neovim:
 ```
+mkdir -p $HOME/.config/nvim
+ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 nvim +BundleInstall +qall
-```
-
-
-## 5. Copy config file to neovim directory:
-```
-mkdir -p ~/.config/nvim/
-ln -s  ~/.vimrc ~/.config/nvim/init.vim
 ```

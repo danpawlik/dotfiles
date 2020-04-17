@@ -170,5 +170,10 @@ let g:UltiSnipsEditSplit="vertical"
 let b:ale_fixers = ['prettier', 'eslint']
 let g:ale_completion_enabled = 1
 
-"
 let g:SimpylFold_docstring_preview = 1
+
+" skip whole words with arrows
+execute "set <xUp>=\e[1;*A"
+execute "set <xDown>=\e[1;*B"
+execute "set <xRight>=\e[1;*C"
+execute "set <xLeft>=\e[1;*D"

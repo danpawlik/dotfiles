@@ -4,8 +4,8 @@
 """" vim +BundleInstall +qall
 """" or in vimrc file type:
 """" to install plugins:  :source % | :PluginInstall
+"""" to update plugins:   :source % | :PluginUpdate
 """" to remove plugins:   :source % | :PluginClean
-set encoding=utf-8
 syntax on
 set tabstop=4
 set softtabstop=4
@@ -46,16 +46,22 @@ Plugin 'sirver/ultisnips'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'fatih/vim-go'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-colorscheme-switcher'
+Plugin 'honza/vim-snippets'
+Plugin 'integralist/vim-mypy'
+
 Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'kien/ctrlp.vim'
 
 "colorscheme
-Plugin 'kiddos/malokai'
+Plugin 'fatih/molokai'
+Plugin 'patstockwell/vim-monokai-tasty'
+Plugin 'fortes/vim-escuro'
+Plugin 'haishanh/night-owl.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'ajh17/spacegray.vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -64,31 +70,44 @@ Plugin 'wolf-dog/nighted.vim'
 Plugin 'dikiaap/minimalist'
 Plugin 'cocopon/iceberg.vim'
 Plugin 'sjl/badwolf'
+Plugin 'junegunn/fzf'
 call vundle#end()
 """"" end vundle
 
-let g:solarized_termcolors = 256
-set t_Co=256
-set background=dark
-colorscheme badwolf
-
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
 
 "" disable checking syntax on paste
 set pastetoggle=<F2>
 
-"""" Showing a different background colour in Vim past 80 characters
+" Showing a different background colour in Vim past 80 characters
 set colorcolumn=80
+" copy the previous indentation on autoindenting
+set copyindent
+" ignore case in search
+set ignorecase
+" automatic wrap text > 80 im python f im python filesiles
+au BufRead,BufNewFile *py setlocal textwidth=80
+
+let g:solarized_termcolors = 256
+colorscheme molokai
+
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
 
 " remove automaticly whitespaces on the end of all files
 autocmd BufWritePre * :%s/\s\+$//e
 " autocmd BufWritePre *py :%s/\s\+$//e
 
+"remove preview about module to completion
+autocmd FileType python setlocal completeopt-=preview
+
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 
 filetype plugin indent on
 
@@ -98,6 +117,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+map <C-n> :NERDTreeToggle<CR>
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -109,21 +129,22 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-"comment line under, if you want to check syntax with pep8 or something else
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
-"let g:syntastic_perl_checkers = ['perl']
-let g:syntastic_go_checkers = ['go']
-"let g:syntastic_cpp_checkers = ['gcc']
+let g:syntastic_cpp_checkers = ['gcc']
+let g:syntastic_yaml_checkers = ['yamllint']
 
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
 let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
 
-"remove preview about module to completion
-autocmd FileType python setlocal completeopt-=preview
-
+""" Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:ident_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_color_change_percent = 80
 
 """YouCompleteMe
 "option shows help about module to completion
@@ -132,25 +153,16 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_min_num_of_chars_for_completion = 0
 let g:ycm_auto_trigger = 1
-
-
-""" Indent Guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:ident_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_color_change_percent = 80
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
-
-" test
-" copy the previous indentation on autoindenting
-set copyindent
-" ignore case in search
-set ignorecase
-" automatic wrap text > 80 im python f im python filesiles
-au BufRead,BufNewFile *py setlocal textwidth=80
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+" skip whole words with arrows
+execute "set <xUp>=\e[1;*A"
+execute "set <xDown>=\e[1;*B"
+execute "set <xRight>=\e[1;*C"
+execute "set <xLeft>=\e[1;*D"
