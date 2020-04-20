@@ -84,7 +84,15 @@ How to install for neovim and replace vim:
 wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim.appimage
 sudo mv /usr/bin/vim /usr/bin/vim-original
 sudo mv /tmp/nvim.appimage /usr/bin/vim
+sudo ln -s /usr/bin/vim /usr/bin/nvim
 chmod u+x /usr/bin/vim
+```
+
+Install FUSE (https://github.com/AppImage/AppImageKit/wiki/FUSE):
+```
+yum --enablerepo=epel -y install fuse-sshfs # install from EPEL
+user="$(whoami)"
+usermod -a -G fuse "$user"
 ```
 
 Finally create symlink to neovim:
@@ -92,4 +100,6 @@ Finally create symlink to neovim:
 mkdir -p $HOME/.config/nvim
 ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 nvim +BundleInstall +qall
+
+pip3 install neovim && pip2 install neovim
 ```
