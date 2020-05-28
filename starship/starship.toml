@@ -1,0 +1,22 @@
+add_newline = false
+
+prompt_order = [
+    "username",
+    "directory",
+    "git_branch",
+    "git_commit",
+    "git_state",
+    "git_status",
+    "hg_branch",
+    "docker_context",
+    "jobs",
+    "character",
+]
+
+[character]
+symbol = "➜"
+
+[directory]
+truncation_length = 12
+truncate_to_repo = false
+

@@ -24,24 +24,6 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 unsetopt correct_all
-
-## Spaceship
-#SPACESHIP_PROMPT_ADD_NEWLINE=false
-#SPACESHIP_PROMPT_SEPARATE_LINE=false
-#SPACESHIP_TIME_SHOW=true
-#SPACESHIP_TIME_COLOR=cyan
-#SPACESHIP_USER_SHOW=always
-#SPACESHIP_USER_COLOR=green
-#SPACESHIP_HOST_SHOW=true
-#SPACESHIP_DIR_SHOW=true
-#SPACESHIP_GIT_SHOW=true
-#SPACESHIP_GIT_BRANCH_SHOW=true
-#SPACESHIP_GIT_STATUS_SHOW=true
-#SPACESHIP_GIT_BRANCH_COLOR=blue
-#SPACESHIP_DOCKER_SHOW=true
-#SPACESHIP_VENV_SHOW=true
-#SPACESHIP_GIT_BRANCH_PREFIX=""
-#SPACESHIP_USER_PREFIX=""
 #
 ## History line
 #PROMPT='%{%f%k%b%}%{%K{${bkg}}%B%F{red}%}%n%{%B%F{blue}%}@%{%B%F{green}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}$ '

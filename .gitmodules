@@ -1,0 +1,3 @@
+[submodule "prezto/dotfiles"]
+	path = prezto/dotfiles
+	url = https://github.com/wikimatze/dotfiles
