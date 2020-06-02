@@ -1,36 +1,68 @@
+# Font configuration (changes require restart)
 font:
   size: 8
+  # The normal (roman) font face to use.
   normal:
     family: Fira Code
     style: Regular
 
-# Colors (Atom)
 # https://github.com/mbadolato/iTerm2-Color-Schemes/
+# Colors (Builtin Tango Dark)
 colors:
   bright:
-    black: '#000000'
-    blue: '#96cbfe'
-    cyan: '#85befd'
-    green: '#94fa36'
-    magenta: '#b9b6fc'
-    red: '#fd5ff1'
-    white: '#e0e0e0'
-    yellow: '#f5ffa8'
+    black: '#555753'
+    blue: '#729fcf'
+    cyan: '#34e2e2'
+    green: '#8ae234'
+    magenta: '#ad7fa8'
+    red: '#ef2929'
+    white: '#eeeeec'
+    yellow: '#fce94f'
   cursor:
-    cursor: '#d0d0d0'
-    text: '#151515'
+    cursor: '#ffffff'
+    text: '#000000'
   normal:
     black: '#000000'
-    blue: '#85befd'
-    cyan: '#85befd'
-    green: '#87c38a'
-    magenta: '#b9b6fc'
-    red: '#fd5ff1'
-    white: '#e0e0e0'
-    yellow: '#ffd7b1'
+    blue: '#3465a4'
+    cyan: '#06989a'
+    green: '#4e9a06'
+    magenta: '#75507b'
+    red: '#cc0000'
+    white: '#d3d7cf'
+    yellow: '#c4a000'
   primary:
-    background: '#161719'
-    foreground: '#c5c8c6'
+    background: '#000000'
+    foreground: '#ffffff'
   selection:
-    background: '#444444'
-    text: '#c5c8c6'
+    background: '#b5d5ff'
+    text: '#000000'
+
+## Colors (Builtin Dark)
+#colors:
+#  bright:
+#    black: '#555555'
+#    blue: '#5555ff'
+#    cyan: '#55ffff'
+#    green: '#55ff55'
+#    magenta: '#ff55ff'
+#    red: '#ff5555'
+#    white: '#ffffff'
+#    yellow: '#ffff55'
+#  cursor:
+#    cursor: '#bbbbbb'
+#    text: '#ffffff'
+#  normal:
+#    black: '#000000'
+#    blue: '#0000bb'
+#    cyan: '#00bbbb'
+#    green: '#00bb00'
+#    magenta: '#bb00bb'
+#    red: '#bb0000'
+#    white: '#bbbbbb'
+#    yellow: '#bbbb00'
+#  primary:
+#    background: '#000000'
+#    foreground: '#bbbbbb'
+#  selection:
+#    background: '#b5d5ff'
+#    text: '#000000'
