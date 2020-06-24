@@ -54,6 +54,7 @@ Thanks @Valloric/YouCompleteMe
 ### - Jedi vim:
 ```
 sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi
+sudo yum install -y python2-setuptools.noarch python3-setuptools.noarch
 cp /tmp/dotfiles/vimrc/jedi ~/.vimrc
 vim +PluginInstall +qall
 ```
@@ -82,17 +83,21 @@ Thanks @SpaceVim/SpaceVim team!
 How to install for neovim and replace vim:
 ```
 wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim.appimage
-sudo mv /usr/bin/vim /usr/bin/vim-original
-sudo mv /tmp/nvim.appimage /usr/bin/vim
-sudo ln -s /usr/bin/vim /usr/bin/nvim
-chmod u+x /usr/bin/vim
+sudo mv /tmp/nvim.appimage /usr/bin/nvim
+chmod u+x /usr/bin/nvim
+if [ -f "$HOME/.zshrc" ]; then
+  echo "alias vim=nvim" >> $HOME/.zshrc
+elif [ -f "$HOME/.bashrc ]; then
+  echo "alias vim=nvim" >> $HOME/.bashrc
+fi
 ```
 
 Install FUSE (https://github.com/AppImage/AppImageKit/wiki/FUSE):
 ```
-yum --enablerepo=epel -y install fuse-sshfs # install from EPEL
-user="$(whoami)"
-usermod -a -G fuse "$user"
+sudo yum install epel-release -y
+sudo yum install fuse-sshfs
+sudo user="$(whoami)"
+sudo usermod -a -G fuse "$user"
 ```
 
 Finally create symlink to neovim:
@@ -100,6 +105,4 @@ Finally create symlink to neovim:
 mkdir -p $HOME/.config/nvim
 ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 nvim +BundleInstall +qall
-
-pip3 install neovim && pip2 install neovim
 ```

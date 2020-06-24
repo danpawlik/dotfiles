@@ -1,11 +1,11 @@
 """" At first type this in command line:
-"""" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"""" curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 """" then in command line type this:
 """" vim +BundleInstall +qall
 """" or in vimrc file type:
-"""" to install plugins:  :source % | :PluginInstall
-"""" to update plugins:   :source % | :PluginUpdate
-"""" to remove plugins:   :source % | :PluginClean
+"""" to install plugins: :PlugInstall
+"""" to update plugins:  :PlugUpdate
+"""" to remove plugins:  :PlugClean
 set encoding=utf-8
 syntax on
 set tabstop=4
@@ -20,66 +20,64 @@ set shiftwidth=4
 set hlsearch
 set nofoldenable
 set nocompatible
-set encoding=utf-8
 set wildmenu
 set cursorline
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-set hlsearch
-set nofoldenable
-set nocompatible
-
 set cursorcolumn
 set showcmd
+set smartindent
+set smartcase
 set nowrap
 set ttyfast
 set backspace=indent,eol,start
 
-filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
+"""" plugged
+call plug#begin('~/.vim/plugged')
+" Code helpers
+Plug 'Shougo/deoplete.nvim'
 
-"""" vundle
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'bling/vim-airline'
-Plugin 'fatih/vim-go'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'scrooloose/syntastic'
+" Helpers
+Plug 'scrooloose/nerdtree'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'fatih/vim-go'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/syntastic'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 
-if has('nvim')
-  Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plugin 'Shougo/deoplete.nvim'
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
-endif
-
-Plugin 'tpope/vim-fugitive'
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'stephpy/vim-yaml'
+Plug 'tpope/vim-fugitive'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'integralist/vim-mypy'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
+Plug 'kien/ctrlp.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'tmhedberg/simpylfold'
+Plug 'w0rp/ale'
 
 "colorscheme
-Plugin 'fatih/molokai'
-Plugin 'patstockwell/vim-monokai-tasty'
-Plugin 'fortes/vim-escuro'
-Plugin 'haishanh/night-owl.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'ajh17/spacegray.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'henrynewcomer/vim-theme-papaya'
-Plugin 'wolf-dog/nighted.vim'
-Plugin 'dikiaap/minimalist'
-Plugin 'cocopon/iceberg.vim'
-Plugin 'sjl/badwolf'
-call vundle#end()
-""""" end vundle
+Plug 'fatih/molokai'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'fortes/vim-escuro'
+Plug 'haishanh/night-owl.vim'
+Plug 'morhetz/gruvbox'
+Plug 'ajh17/spacegray.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'henrynewcomer/vim-theme-papaya'
+Plug 'wolf-dog/nighted.vim'
+Plug 'dikiaap/minimalist'
+Plug 'cocopon/iceberg.vim'
+Plug 'sjl/badwolf'
+call plug#end()
+""""" end plugged
+" disable line numbers
+" autocmd FileType python setlocal nonumber
 
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python3'
+" let g:python_host_prog = '/usr/bin/python2'
+" let g:python3_host_prog = '/usr/bin/python3'
 
 " disable checking syntax on paste
 set pastetoggle=<F2>
@@ -97,6 +95,7 @@ let g:solarized_termcolors = 256
 colorscheme molokai
 
 filetype off
+filetype plugin indent on
 
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
@@ -120,28 +119,40 @@ map <C-n> :NERDTreeToggle<CR>
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
-filetype plugin indent on
-
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
+
+let g:SimpylFold_docstring_preview = 1
+
+" Autocomplete
+" Deoplete
+let g:deoplete#enable_at_startup = 1
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 """ syntasic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_puppet_checkers = ['puppet', 'puppetlint']
+let g:syntastic_puppet_checkers = ['puppetlint']
 let g:syntastic_perl_checkers = ['perl']
-let g:syntastic_go_checkers = ['go']
+let g:syntastic_ansible_checkers = ['ansiblelint']
 let g:syntastic_cpp_checkers = ['gcc']
+let g:syntastic_yaml_checkers = ['yamlling']
+let g:syntastic_vim_checkers = ['vimlint']
+let g:syntastic_sh_checkers = ['shellcheck']
+let g:syntastic_ruby_checkers = ['rubylint']
+let g:syntastic_json_checkers = ['jsonlint']
+let g:syntastic_docker_checkers = ['dockerfile_lint']
 
-" let g:syntastic_python_checkers = ['python']
 let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_python_pep9_args="--ignore=E501,W801"
 let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
@@ -153,14 +164,15 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_color_change_percent = 80
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
+
+" ale
+let b:ale_fixers = ['prettier', 'eslint']
+let g:ale_completion_enabled = 1
 
 " skip whole words with arrows
 execute "set <xUp>=\e[1;*A"
