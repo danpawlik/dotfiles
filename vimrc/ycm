@@ -31,10 +31,12 @@ set nowrap
 set ttyfast
 set backspace=indent,eol,start
 
+let g:go_version_warning = 0
+
 """" plugged
 call plug#begin('~/.vim/plugged')
 " Code helpers
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 " Helpers
 Plug 'scrooloose/nerdtree'
