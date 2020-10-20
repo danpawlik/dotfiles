@@ -40,7 +40,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/syntastic'
 Plug 'roxma/nvim-yarp'
@@ -143,7 +143,6 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_puppet_checkers = ['puppetlint']
-let g:syntastic_perl_checkers = ['perl']
 let g:syntastic_ansible_checkers = ['ansiblelint']
 let g:syntastic_cpp_checkers = ['gcc']
 let g:syntastic_yaml_checkers = ['yamlling']

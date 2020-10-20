@@ -76,12 +76,12 @@ mkdir -p $FONT_DIR
 mkdir -p $HOME/.fonts
 curl -SL https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip > $FONT_DIR/Fira_code.zip
 curl -SL https://github.com/source-foundry/Hack/releases/download/v3.003/Hack-v3.003-ttf.zip > $FONT_DIR/Hack.zip
-curl -SL https://fonts.google.com/download?family=Work%20Sans > Work_Sans.zip
-curl -SL https://fonts.google.com/download?family=Source%20Sans%20Pro > Source_Sans_Pro.zip
-curl -SL https://fonts.google.com/download?family=Lato > Lato.zip
-curl -SL https://fonts.google.com/download?family=Open%20Sans > Open_Sans.zip
-curl -SL https://fonts.google.com/download?family=Roboto > Roboto.zip
-curl -LO https://fonts.google.com/download?family=Source%20Code%20Pro > Source_Code_Pro.zip
+curl -SL https://fonts.google.com/download?family=Work%20Sans > $FONT_DIR/Work_Sans.zip
+curl -SL https://fonts.google.com/download?family=Source%20Sans%20Pro > $FONT_DIR/Source_Sans_Pro.zip
+curl -SL https://fonts.google.com/download?family=Lato > $FONT_DIR/Lato.zip
+curl -SL https://fonts.google.com/download?family=Open%20Sans > $FONT_DIR/Open_Sans.zip
+curl -SL https://fonts.google.com/download?family=Roboto > $FONT_DIR/Roboto.zip
+curl -LO https://fonts.google.com/download?family=Source%20Code%20Pro > $FONT_DIR/Source_Code_Pro.zip
 
 cd $FONT_DIR
 for i in $(ls | grep zip); do 7za x -y $i; done

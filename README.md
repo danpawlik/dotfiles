@@ -13,15 +13,13 @@ git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 
 Install additional packages:
 ```
-sudo apt install -y python-pip python3-pip || sudo yum install -y python-pip python3-pip
-pip install --user mypy
-pip3 install --user mypy
+sudo apt install -y python-pip python3-pip || sudo yum install -y python3-pip
+sudo pip3 install mypy
 ```
 
 If you want to use neovim:
 ```
-pip install --user neovim
-pip3 install --user neovim
+sudo pip3 install neovim
 ```
 
 ## 2. Take one configuration:
@@ -98,7 +96,7 @@ How to install for neovim and replace vim:
 Install FUSE (https://github.com/AppImage/AppImageKit/wiki/FUSE):
 ```
 sudo yum install epel-release -y
-sudo yum install fuse-sshfs
+sudo yum install fuse-sshfs -y
 sudo user="$(whoami)"
 sudo usermod -a -G fuse "$user"
 ```
