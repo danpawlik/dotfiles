@@ -61,8 +61,8 @@ Plug 'tmhedberg/simpylfold'
 Plug 'w0rp/ale'
 
 "colorscheme
-Plug 'fatih/molokai'
-Plug 'patstockwell/vim-monokai-tasty'
+Plug 'tomasr/molokai'
+Plug 'fcevado/molokai_dark'
 Plug 'fortes/vim-escuro'
 Plug 'haishanh/night-owl.vim'
 Plug 'morhetz/gruvbox'
@@ -96,7 +96,7 @@ set ignorecase
 au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
-colorscheme badwolf
+colorscheme molokai_dark
 
 filetype off
 filetype plugin indent on
@@ -152,7 +152,7 @@ let g:syntastic_auto_loc_list = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = ['mypy', 'flake8']
 let g:syntastic_puppet_checkers = ['puppetlint']
 let g:syntastic_ansible_checkers = ['ansiblelint']
 let g:syntastic_cpp_checkers = ['gcc']

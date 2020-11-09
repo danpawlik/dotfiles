@@ -1,17 +1,21 @@
 add_newline = false
 
-prompt_order = [
-    "username",
-    "directory",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "hg_branch",
-    "docker_context",
-    "jobs",
-    "character",
-]
+format = """$python\
+   $username\
+   $directory\
+   $git_branch\
+   $git_commit\
+   $git_state\
+   $git_status\
+   $hg_branch\
+   $docker_context\
+   $jobs\
+   $character\
+   $openstack\
+"""
+
+[python]
+format='via[${symbol}(\($virtualenv\))]($style) '
 
 [character]
 symbol = "➜"
@@ -20,3 +24,10 @@ symbol = "➜"
 truncation_length = 12
 truncate_to_repo = false
 
+[username]
+show_always = true
+style_user = "bold green"
+
+[git_branch]
+truncation_symbol = ""
+style = "bg:#bf5700"

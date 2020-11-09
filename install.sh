@@ -9,7 +9,7 @@ sudo dnf copr enable grumpey/TESTING -y
 sudo dnf install -y htop glances vim-enhanced axel mumble \
                     gnupg zsh zstd bzip2 tmux \
                     pinta alacritty keepass fwupd vlc \
-                    p7zip unzip ccze
+                    p7zip unzip ccze wavemon
 
 sudo dnf groupinstall -y development-tools
 sudo dnf install -y python3-devel python2-devel python3-pip python2-pip \
