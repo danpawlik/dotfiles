@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VIM_CONFIG="${VIM_CONFIG:-'ycm'}"
-SETUP_NEOVIM="${SETUP_NEOVIM:-'true'}"
+VIM_CONFIG="${VIM_CONFIG:-ycm}"
+SETUP_NEOVIM="${SETUP_NEOVIM:-true}"
 
 
 mkdir -p ~/.vim/
@@ -35,9 +35,10 @@ if [ "${VIM_CONFIG}" != 'spacevim' ]; then
     cp "/tmp/dotfiles/vimrc/${VIM_CONFIG}" ~/.vimrc
 fi
 
-vim +PlugInstall +qall
+vim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty
 
-if [ "${SETUP_NEOVIM}" == 'true' ]; then
+
+if [ "${SETUP_NEOVIM}" = 'true' ]; then
     curl -SL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage > /tmp/nvim.appimage
     sudo mv /tmp/nvim.appimage /usr/bin/nvim
     chmod u+x /usr/bin/nvim
@@ -54,5 +55,5 @@ if [ "${SETUP_NEOVIM}" == 'true' ]; then
 
     curl -fLo "${HOME}/.config/nvim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    nvim +PlugInstall +qall
+    nvim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty
 fi

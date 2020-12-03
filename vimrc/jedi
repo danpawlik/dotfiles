@@ -97,7 +97,7 @@ set ignorecase
 au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
-colorscheme badwolf
+silent! colorscheme badwolf
 
 filetype off
 filetype plugin indent on
