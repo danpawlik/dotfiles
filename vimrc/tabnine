@@ -33,7 +33,7 @@ set backspace=indent,eol,start
 """" plugged
 call plug#begin('~/.vim/plugged')
 " Code helpers
-Plug 'codota/tabnine-vim', { 'do': './install.py --clang-completer' }
+Plug 'zxqfl/tabnine-vim', { 'do': './install.py --clang-completer' }
 Plug 'klen/python-mode', { 'on_ft': 'python' }
 
 " Helpers
@@ -50,13 +50,17 @@ Plug 'stephpy/vim-yaml'
 Plug 'tpope/vim-fugitive'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'integralist/vim-mypy'
+" Plug 'integralist/vim-mypy'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/ctrlp.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'tmhedberg/simpylfold'
 Plug 'w0rp/ale'
+
+"" Dhall
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+" Plug 'vmchale/dhall-vim'
 
 "colorscheme
 Plug 'fatih/molokai'

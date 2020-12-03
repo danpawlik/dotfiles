@@ -13,13 +13,15 @@ git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 
 Install additional packages:
 ```
-sudo apt install -y python-pip python3-pip || sudo yum install -y python3-pip
-sudo pip3 install mypy
+sudo apt install -y python-pip python3-pip || sudo yum install -y python-pip python3-pip
+pip install --user mypy
+pip3 install --user mypy
 ```
 
 If you want to use neovim:
 ```
-sudo pip3 install neovim
+pip install --user neovim
+pip3 install --user neovim
 ```
 
 ## 2. Take one configuration:
@@ -62,8 +64,7 @@ Thanks @Valloric/YouCompleteMe
 
 ### - Jedi vim:
 ```
-sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi
-sudo yum install -y python2-setuptools.noarch python3-setuptools.noarch
+sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi python2-setuptools python3-setuptools
 cp /tmp/dotfiles/vimrc/jedi ~/.vimrc
 vim +PlugInstall +qall
 ```
@@ -86,6 +87,21 @@ Thats all!
 
 Thanks @SpaceVim/SpaceVim team!
 
+### - CoC vim:
+```
+curl -sL install-node.now.sh/lts | bash
+cp /tmp/dotfiles/vimrc/coc ~/.vimrc
+vim +PlugInstall +qall
+```
+Thanks @neoclide/coc.nvim
+
+### - Tabnine vim:
+```
+cp /tmp/dotfiles/vimrc/tabnine ~/.vimrc
+vim +PlugInstall +qall
+```
+Thanks @codota/TabNine
+
 
 ## 3. Neovim - configure and install:
 The best option if you don't have `vim > 8.0` is to
@@ -93,15 +109,7 @@ replace vim with neovim.
 
 How to install for neovim and replace vim:
 
-Install FUSE (https://github.com/AppImage/AppImageKit/wiki/FUSE):
-```
-sudo yum install epel-release -y
-sudo yum install fuse-sshfs -y
-sudo user="$(whoami)"
-sudo usermod -a -G fuse "$user"
-```
-
-Download latest nvim appimage:
+1. Download latest nvim appimage:
 ```
 curl -SL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage > /tmp/nvim.appimage
 sudo mv /tmp/nvim.appimage /usr/bin/nvim
@@ -113,13 +121,13 @@ elif [ -f "$HOME/.bashrc" ]; then
 fi
 ```
 
-Finally create symlink neovim to vim:
+2. Create symlink neovim to vim:
 ```
 mkdir -p $HOME/.config/nvim
 ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 ```
 
-Install plugged for neovim:
+3. Install plugged for neovim:
 ```
 curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

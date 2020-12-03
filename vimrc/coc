@@ -36,7 +36,7 @@ let g:go_version_warning = 0
 """" plugged
 call plug#begin('~/.vim/plugged')
 " Code helpers
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Helpers
 Plug 'scrooloose/nerdtree'
@@ -100,7 +100,7 @@ set ignorecase
 au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
-colorscheme molokai
+colorscheme badwolf
 
 filetype off
 filetype plugin indent on
@@ -133,16 +133,6 @@ let g:SimpylFold_docstring_preview = 1
 
 
 " Autocomplete
-"""YouCompleteMe
-"option shows help about module to completion
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_min_num_of_chars_for_completion = 0
-let g:ycm_auto_trigger = 1
-let g:ycm_key_list_stop_completion = ['<TAB>']
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 """ airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1

@@ -50,13 +50,17 @@ Plug 'stephpy/vim-yaml'
 Plug 'tpope/vim-fugitive'
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'integralist/vim-mypy'
+" Plug 'integralist/vim-mypy'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/ctrlp.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'tmhedberg/simpylfold'
 Plug 'w0rp/ale'
+
+"" Dhall
+" Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+" Plug 'vmchale/dhall-vim'
 
 "colorscheme
 Plug 'fatih/molokai'
