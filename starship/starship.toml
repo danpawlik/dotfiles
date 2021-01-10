@@ -15,7 +15,7 @@ format = """$python\
 """
 
 [python]
-format='via[${symbol}(\($virtualenv\))]($style) '
+format='[${symbol}(\($virtualenv\))]($style) '
 
 [character]
 symbol = "➜"
@@ -31,3 +31,6 @@ style_user = "bold green"
 [git_branch]
 truncation_symbol = ""
 style = "bg:#bf5700"
+
+[venv]
+spaceship_venv_show = true

@@ -3,6 +3,11 @@ My dotfiles configurtion.
 
 # Vim configuration:
 
+tl; dr
+```
+curl -SL https://raw.githubusercontent.com/danpawlik/dotfiles/master/setup-vim.sh | bash
+```
+
 ## 1. Preparation:
 ```
 mkdir -p ~/.vim/
@@ -132,4 +137,11 @@ ln -s $HOME/.vimrc $HOME/.config/nvim/init.vim
 curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 nvim +PlugInstall +qall
+```
+
+# ZSH and others
+
+tl; dr
+```
+curl -LO https://raw.githubusercontent.com/danpawlik/dotfiles/master/install.sh | bash
 ```

@@ -1,0 +1,18 @@
+ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="agnoster"
+#ZSH_THEME="fishy"
+#ZSH_THEME="risto"
+#ZSH_THEME="michelebologna"
+
+# CASE_SENSITIVE="true"
+HYPHEN_INSENSITIVE="false"
+HIST_STAMPS="yyyy-mm-dd"
+plugins=(git git-extras python pip tmux ansible cp fedora yum)
+
+export ZSH=$HOME/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# History line
+#PROMPT='%{%f%k%b%}%{%K{${bkg}}%B%F{red}%}%n%{%B%F{blue}%}@%{%B%F{green}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}$ '
+#RPROMPT='!%{%B%F{cyan}%}%!%{%f%k%b%}'
+#RPROMPT='[%F{cyan}%?%f]'
