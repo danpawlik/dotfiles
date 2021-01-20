@@ -13,6 +13,13 @@ git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 sudo apt install -y python-pip python3-pip || sudo yum install -y python3-pip
 pip3 install --user neovim mypy
 
+OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
+
+if [ $OS_VERSION -eq 7 ] && [ "${VIM_CONFIG}" == 'ycm' ]; then
+    yum install -y devtoolset-8 centos-release-scl
+    scl enable devtoolset-8 bash
+fi
+
 
 if [ "${VIM_CONFIG}" == 'ycm' ]; then
     sudo apt install -y build-essential cmake || sudo yum install -y automake gcc gcc-c++ kernel-devel cmake python-devel python3-devel
