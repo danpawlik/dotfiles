@@ -8,15 +8,16 @@ if [ -f "$HOME/.zsh_aliases" ]; then
     source "$HOME/.zsh_aliases"
 fi
 
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
 #ZSH_THEME="fishy"
 #ZSH_THEME="risto"
 #ZSH_THEME="michelebologna"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # CASE_SENSITIVE="true"
 HYPHEN_INSENSITIVE="false"
 HIST_STAMPS="yyyy-mm-dd"
-plugins=(git git-extras python pip tmux ansible cp dnf fedora yum )
+plugins=(git git-extras python pip tmux ansible cp dnf yum )
 
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh

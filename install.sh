@@ -4,6 +4,7 @@ USE_ZSH=${USE_ZSH:-0}
 USE_OH_MY_ZSH=${USE_OH_MY_ZSH:-0}
 USE_PREZTO_ZSH=${USE_PREZTO_ZSH:-1}
 USE_POWERLEVEL10K=${USE_POWERLEVEL10K:-0}
+USE_GNOME=${USE_GNOME:-1}
 
 INSTALL_ANDROIND_ADB=${INSTALL_ANDROIND_ADB:-1}
 
@@ -12,12 +13,16 @@ sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-non
 
 sudo dnf install -y htop glances vim-enhanced axel mumble \
                     gnupg zsh zstd bzip2 tmux \
-                    pinta alacritty keepass fwupd vlc \
+                    pinta alacritty keepassxc fwupd vlc \
                     p7zip unzip ccze wavemon powertop \
                     rsync
 
+if [ "${USE_GNOME}" -eq 0 ]; then
+    sudo yum install -y gnome-tweaks gnome-backgrounds-extras variety
+fi
+
 sudo dnf groupinstall -y development-tools
-sudo dnf install -y python3-devel python2-devel python3-pip python2-pip \
+sudo dnf install -y python3-devel python2-devel python3-pip \
                     git qemu libvirt virt-manager podman podman-docker
 
 sudo yum remove -y nano
@@ -31,8 +36,8 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install -y brave-browser
 
 # some python libs
-pip --user install pdbpp remote_pdb mypy
-pip3 --user install pdbpp remote_pdb mypy
+# pip --user install pdbpp remote_pdb mypy
+pip3 --user install pdbpp remote_pdb mypy pip -U --force-reinstall
 
 # dotfiles
 mkdir -p ~/.vim/
@@ -63,16 +68,23 @@ if [ "${USE_ZSH}" -eq 0 ]; then
         done
         cp -a /tmp/dotfiles/prezto/.z* "${HOME}/.zprezto/runcoms/"
         git clone --recurse-submodules https://github.com/belak/prezto-contrib "${ZPREZTODIR}/contrib"
+
+        # starship
+        mkdir -p "${HOME}/.config"
+        curl -SL https://starship.rs/install.sh > /tmp/starship.sh
+        bash /tmp/starship.sh -y
+        cp -a /tmp/dotfiles/starship/starship.toml "${HOME}/.config/"
     fi
 
+    # oh my zsh
     if [ "${USE_OH_MY_ZSH}" -eq 0 ]; then
+        unset ZSH
         curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+        if [ "${USE_POWERLEVEL10K}" -eq 0 ]; then
+            cp /tmp/dotfiles/powerlevel10k/.p10k.zsh "${HOME}/"
+            git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+        fi
         cp -a /tmp/dotfiles/oh_my_zsh/.z* "${HOME}/"
-    fi
-
-    if [ "${USE_POWERLEVEL10K}" -eq 0 ]; then
-        cp /tmp/dotfiles/powerlevel10k/.p10k.zsh "${HOME}/"
     fi
 
     cp -a /tmp/dotfiles/zsh_common/.z* "$HOME/"
@@ -84,12 +96,8 @@ fi
 mkdir -p "${HOME}/.config"
 cp -a /tmp/dotfiles/alacritty "${HOME}/.config/"
 
-# starship
-mkdir -p "${HOME}/.config"
-curl -SL https://starship.rs/install.sh > /tmp/starship.sh
-bash /tmp/starship.sh -y
-cp -a /tmp/dotfiles/starship/starship.toml "${HOME}/.config/"
-
+# git
+git config --global core.editor vim
 
 # install fonts
 FONT_DIR=/tmp/fonts
@@ -101,7 +109,7 @@ curl -SL https://fonts.google.com/download?family=Source%20Sans%20Pro > $FONT_DI
 curl -SL https://fonts.google.com/download?family=Lato > $FONT_DIR/Lato.zip
 curl -SL https://fonts.google.com/download?family=Open%20Sans > $FONT_DIR/Open_Sans.zip
 curl -SL https://fonts.google.com/download?family=Roboto > $FONT_DIR/Roboto.zip
-curl -LO https://fonts.google.com/download?family=Source%20Code%20Pro > $FONT_DIR/Source_Code_Pro.zip
+curl -SL https://fonts.google.com/download?family=Source%20Code%20Pro > $FONT_DIR/Source_Code_Pro.zip
 
 cd "${FONT_DIR}"
 for i in $(ls | grep '.zip'); do 7za x -y $i; done
@@ -110,3 +118,6 @@ cd -
 
 # restore KDE env
 #TBD
+
+# System tune
+sudo sed -i 's/wifi.powersave = 3/wifi.powersave = 2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
