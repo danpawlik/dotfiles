@@ -47,14 +47,25 @@ vim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty
 
 if [ "${SETUP_NEOVIM}" = 'true' ]; then
     curl -SL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage > /tmp/nvim.appimage
-    sudo mv /tmp/nvim.appimage /usr/bin/nvim
-    chmod u+x /usr/bin/nvim
-    if [ -f "${HOME}/.zshrc" ]; then
-        echo "alias vim=nvim" >> "${HOME}/.zshrc"
-#        source $HOME/.zshrc
-    elif [ -f "${HOME}/.bashrc" ]; then
-        echo "alias vim=nvim" >> "${HOME}/.bashrc"
-#        source $HOME/.zshrc
+
+    if [ -f "/etc/centos-release" ] && cat /etc/os-release  | grep VERSION_ID | grep -q '7'; then
+        sudo mv /tmp/nvim.appimage /usr/local/nvim
+        cd /usr/local/ && chmod u+x nvim && ./nvim --appimage-extract
+        NVIM_PATH=/usr/local/squashfs-root/usr/bin/nvim
+    else
+        sudo mv /tmp/nvim.appimage /usr/bin/nvim
+        chmod u+x /usr/bin/nvim
+        NVIM_PATH=/usr/bin/nvim
+    fi
+
+    if echo $SHELL | grep -q 'zsh'; then
+        echo "alias vim=$NVIM_PATH" >> "${HOME}/.zshrc"
+        source $HOME/.zshrc
+    elif echo $SHELL | grep -q 'bash'; then
+        echo "alias vim=$NVIM_PATH" >> "${HOME}/.bashrc"
+        source $HOME/.bashrc
+    else
+        echo "Add: alias vim=$NVIM_PATH into your shell rc file"
     fi
 
     mkdir -p "${HOME}/.config/nvim"
