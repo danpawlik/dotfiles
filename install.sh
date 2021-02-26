@@ -4,7 +4,7 @@ USE_ZSH=${USE_ZSH:-0}
 USE_OH_MY_ZSH=${USE_OH_MY_ZSH:-0}
 USE_PREZTO_ZSH=${USE_PREZTO_ZSH:-1}
 USE_POWERLEVEL10K=${USE_POWERLEVEL10K:-0}
-USE_GNOME=${USE_GNOME:-1}
+USE_GNOME=${USE_GNOME:-0}
 
 INSTALL_ANDROIND_ADB=${INSTALL_ANDROIND_ADB:-1}
 
@@ -15,9 +15,9 @@ sudo dnf install -y htop glances vim-enhanced axel mumble \
                     gnupg zsh zstd bzip2 tmux \
                     pinta alacritty keepassxc fwupd vlc \
                     p7zip unzip ccze wavemon powertop \
-                    rsync
+                    rsync util-linux-user
 
-if [ "${USE_GNOME}" -eq 0 ]; then
+if [ "$USE_GNOME" -eq "0" ]; then
     sudo yum install -y gnome-tweaks gnome-backgrounds-extras variety
 fi
 
@@ -47,7 +47,7 @@ git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
 bash /tmp/dotfiles/setup-vim.sh
 
 # android
-if [ "${INSTALL_ANDROIND_ADB}" -eq 0 ]; then
+if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
     sudo yum install -y android-tools.x86_64
     git clone https://github.com/M0Rf30/android-udev-rules /tmp/android-udev-rules
     sudo bash -x /tmp/android-udev-rules/install.sh "$(whoami)"
@@ -58,9 +58,9 @@ git clone https://github.com/gpakosz/.tmux.git "${HOME}/.tmux"
 ln -s "${HOME}/.tmux/.tmux.conf" "${HOME}/.tmux.conf"
 cp -a /tmp/dotfiles/tmux/.tmux* "${HOME}/"
 
-if [ "${USE_ZSH}" -eq 0 ]; then
+if [ "$USE_ZSH" -eq "0" ]; then
     # prezto
-    if [ "${USE_PREZTO_ZSH}" -eq 0 ]; then
+    if [ "$USE_PREZTO_ZSH" -eq "0" ]; then
         git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
         setopt EXTENDED_GLOB
         for rcfile in $(ls "${HOME}/.zprezto/runcoms/" | grep -vi 'readme'); do
@@ -77,10 +77,10 @@ if [ "${USE_ZSH}" -eq 0 ]; then
     fi
 
     # oh my zsh
-    if [ "${USE_OH_MY_ZSH}" -eq 0 ]; then
+    if [ "$USE_OH_MY_ZSH" -eq "0" ]; then
         unset ZSH
-        curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-        if [ "${USE_POWERLEVEL10K}" -eq 0 ]; then
+        curl -SL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | bash
+        if [ "$USE_POWERLEVEL10K" -eq "0" ]; then
             cp /tmp/dotfiles/powerlevel10k/.p10k.zsh "${HOME}/"
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
         fi
@@ -120,4 +120,4 @@ cd -
 #TBD
 
 # System tune
-sudo sed -i 's/wifi.powersave = 3/wifi.powersave = 2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+# sudo sed -i 's/wifi.powersave = 3/wifi.powersave = 2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
