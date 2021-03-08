@@ -96,7 +96,11 @@ Thanks @SpaceVim/SpaceVim team!
 ```
 curl -sL install-node.now.sh/lts | bash
 cp /tmp/dotfiles/vimrc/coc ~/.vimrc
+export LC_ALL=en_US.UTF-8
 vim +PlugInstall +qall
+for plugin in coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-snippets coc-python coc-git coc-go coc-docker; do
+vim +'CocInstall "$plugin"' +qall
+done
 ```
 Thanks @neoclide/coc.nvim
 

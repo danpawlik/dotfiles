@@ -1,10 +1,11 @@
 #!/bin/bash
 
+SOURCE_DIR=${SOURCE_DIR:-'/tmp/dotfiles'}
 USE_ZSH=${USE_ZSH:-0}
 USE_OH_MY_ZSH=${USE_OH_MY_ZSH:-0}
 USE_PREZTO_ZSH=${USE_PREZTO_ZSH:-1}
 USE_POWERLEVEL10K=${USE_POWERLEVEL10K:-0}
-USE_GNOME=${USE_GNOME:-0}
+USE_GNOME=${USE_GNOME:-1}
 
 INSTALL_ANDROIND_ADB=${INSTALL_ANDROIND_ADB:-1}
 
@@ -41,10 +42,12 @@ pip3 --user install pdbpp remote_pdb mypy pip -U --force-reinstall
 
 # dotfiles
 mkdir -p ~/.vim/
-git clone https://github.com/danpawlik/dotfiles.git /tmp/dotfiles
+if ! [ -d "${SOURCE_DIR}" ]; then
+    git clone https://github.com/danpawlik/dotfiles.git "${SOURCE_DIR}"
+fi
 
 # vim
-bash /tmp/dotfiles/setup-vim.sh
+bash "${SOURCE_DIR}/setup-vim.sh"
 
 # android
 if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
@@ -56,7 +59,7 @@ fi
 # tmux
 git clone https://github.com/gpakosz/.tmux.git "${HOME}/.tmux"
 ln -s "${HOME}/.tmux/.tmux.conf" "${HOME}/.tmux.conf"
-cp -a /tmp/dotfiles/tmux/.tmux* "${HOME}/"
+cp -a $SOURCE_DIR/tmux/.tmux* "${HOME}/"
 
 if [ "$USE_ZSH" -eq "0" ]; then
     # prezto
@@ -66,14 +69,14 @@ if [ "$USE_ZSH" -eq "0" ]; then
         for rcfile in $(ls "${HOME}/.zprezto/runcoms/" | grep -vi 'readme'); do
           ln -s "${HOME}/.zprezto/runcoms/${rcfile}" "${ZDOTDIR:-$HOME}/.${rcfile}"
         done
-        cp -a /tmp/dotfiles/prezto/.z* "${HOME}/.zprezto/runcoms/"
+        cp -a $SOURCE_DIR/prezto/.z* "${HOME}/.zprezto/runcoms/"
         git clone --recurse-submodules https://github.com/belak/prezto-contrib "${ZPREZTODIR}/contrib"
 
         # starship
         mkdir -p "${HOME}/.config"
         curl -SL https://starship.rs/install.sh > /tmp/starship.sh
         bash /tmp/starship.sh -y
-        cp -a /tmp/dotfiles/starship/starship.toml "${HOME}/.config/"
+        cp -a $SOURCE_DIR/starship/starship.toml "${HOME}/.config/"
     fi
 
     # oh my zsh
@@ -81,20 +84,21 @@ if [ "$USE_ZSH" -eq "0" ]; then
         unset ZSH
         curl -SL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | bash
         if [ "$USE_POWERLEVEL10K" -eq "0" ]; then
-            cp /tmp/dotfiles/powerlevel10k/.p10k.zsh "${HOME}/"
+            cp $SOURCE_DIR/powerlevel10k/.p10k.zsh "${HOME}/"
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
         fi
-        cp -a /tmp/dotfiles/oh_my_zsh/.z* "${HOME}/"
+        cp -a $SOURCE_DIR/oh_my_zsh/.z* "${HOME}/"
     fi
 
-    cp -a /tmp/dotfiles/zsh_common/.z* "$HOME/"
-    chsh -s /bin/zsh
+    cp -a $SOURCE_DIR/zsh_common/.z* "$HOME/"
+    # FIXME: it requires password
+    # chsh -s /bin/zsh
     source "${HOME}/.zshrc"
 fi
 
 # alacritty
 mkdir -p "${HOME}/.config"
-cp -a /tmp/dotfiles/alacritty "${HOME}/.config/"
+cp -a $SOURCE_DIR/alacritty "${HOME}/.config/"
 
 # git
 git config --global core.editor vim
@@ -121,3 +125,9 @@ cd -
 
 # System tune
 # sudo sed -i 's/wifi.powersave = 3/wifi.powersave = 2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+
+if [ "$USE_ZSH" -eq "0" ]; then
+    echo "All configuration applied, changing shell is missing..."
+    echo "Changing the shell to zsh"
+    chsh -s /bin/zsh
+fi
