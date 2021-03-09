@@ -124,7 +124,30 @@ cd -
 #TBD
 
 # System tune
-# sudo sed -i 's/wifi.powersave = 3/wifi.powersave = 2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+sudo mkdir -p /etc/NetworkManager/conf.d/
+if ! [ -f '/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf' ]; then
+    cat << EOF | sudo tee /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+[connection]
+wifi.powersave = 2
+EOF
+fi
+
+cat << EOF | sudo tee /etc/systemd/system/powertop.service
+[Unit]
+Description=PowerTOP auto tune
+
+[Service]
+Type=oneshot
+Environment="TERM=dumb"
+RemainAfterExit=true
+ExecStart=/usr/sbin/powertop --auto-tune
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now powertop.service
 
 if [ "$USE_ZSH" -eq "0" ]; then
     echo "All configuration applied, changing shell is missing..."
