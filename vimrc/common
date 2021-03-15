@@ -1,11 +1,10 @@
-"""" At first type this in command line:
-"""" curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"""" then in command line type this:
-"""" vim +BundleInstall +qall
-"""" or in vimrc file type:
-"""" to install plugins: :PlugInstall
-"""" to update plugins:  :PlugUpdate
-"""" to remove plugins:  :PlugClean
+"" To install/update/remove plugins from vimrc-common:
+"" :source %
+"" then:
+"" to install plugins: :PlugInstall
+"" to update plugins:  :PlugUpdate
+"" to remove plugins:  :PlugClean
+
 set encoding=utf-8
 syntax on
 set tabstop=4
@@ -29,34 +28,48 @@ set smartcase
 set nowrap
 set ttyfast
 set backspace=indent,eol,start
+set updatetime=300
+set shortmess+=c
 
 let g:go_version_warning = 0
 
 """" plugged
 call plug#begin('~/.vim/plugged')
 " Helpers
-Plug 'scrooloose/nerdtree'
+Plug 'nathanaelkane/vim-indent-guides'
+" Automatic closing of brackets
+Plug 'raimondi/delimitMate'
+" Vim tmux intergration
+Plug 'christoomey/vim-tmux-navigator'
+" statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'fatih/vim-go'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'scrooloose/syntastic'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-"Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'stephpy/vim-yaml'
+" Git integration
 Plug 'tpope/vim-fugitive'
+" shows git diff markers
+Plug 'airblade/vim-gitgutter'
+" syntax checks
+Plug 'scrooloose/syntastic'
+" Code Snippet
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'integralist/vim-mypy'
+" Change quotes to doublequotes
 Plug 'tpope/vim-surround'
+" fuzyy finder
+Plug 'junegunn/fzf'
+" file system explorer, similar to ranger/ranger
+Plug 'scrooloose/nerdtree'
+" Check syntax
+Plug 'dense-analysis/ale'
+" nerdy commenting powers
 Plug 'scrooloose/nerdcommenter'
-Plug 'kien/ctrlp.vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'tmhedberg/simpylfold'
-Plug 'w0rp/ale'
+" languagepack collecion
+Plug 'sheerun/vim-polyglot'
 
+" ansible
+Plug 'pearofducks/ansible-vim'
+" markdown
+Plug 'plasticboy/vim-markdown'
 "" Dhall
 Plug 'autozimu/LanguageClient-neovim', {
      \ 'branch': 'next',
@@ -64,6 +77,10 @@ Plug 'autozimu/LanguageClient-neovim', {
      \ }
 Plug 'vmchale/dhall-vim'
 Plug 'Chiel92/vim-autoformat'
+" js
+Plug 'othree/javascript-libraries-syntax.vim'
+" python
+Plug 'python-mode/python-mode'
 
 "colorscheme
 Plug 'fatih/molokai'
@@ -115,10 +132,10 @@ autocmd FileType python setlocal completeopt-=preview
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-map <C-n> :NERDTreeToggle<CR>
+""close vim if the only window left open is a NERDTree
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"
+"map <C-n> :NERDTreeToggle<CR>
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -126,6 +143,13 @@ match ExtraWhitespace /\s\+$/
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 let g:SimpylFold_docstring_preview = 1
+
+""" Indent Guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:ident_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_color_change_percent = 80
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
@@ -140,31 +164,18 @@ let g:syntastic_auto_loc_list = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = ['mypy']
 let g:syntastic_puppet_checkers = ['puppetlint']
 let g:syntastic_ansible_checkers = ['ansiblelint']
-let g:syntastic_cpp_checkers = ['gcc']
 let g:syntastic_yaml_checkers = ['yamlling']
 let g:syntastic_vim_checkers = ['vimlint']
 let g:syntastic_sh_checkers = ['shellcheck']
-let g:syntastic_ruby_checkers = ['rubylint']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_docker_checkers = ['dockerfile_lint']
-
-let g:syntastic_quiet_messages = { "type": "style" }
-let g:syntastic_python_pep9_args="--ignore=E501,W801"
 let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
-
-""" Indent Guides
-let g:indent_guides_enable_on_vim_startup = 1
-let g:ident_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_color_change_percent = 80
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
-
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
@@ -183,21 +194,18 @@ execute "set <xLeft>=\e[1;*D"
 "let g:LanguageClient_serverCommands = {
 "    \ 'dhall': ['dhall-lsp-server'],
 "    \ }
-"
-"""" comment the next line to disable automatic format on save
-"" let g:dhall_format=1
-"""" set signcolumn=yes
-""set hidden
-""nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-""nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" let g:dhall_format=1
+"" set signcolumn=yes
+"set hidden
+"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 "
 "" autoformatter
 "noremap <F3> :Autoformat<CR>
-"" au BufWrite *py :Autoformat
 "let g:autoformat_autoindent = 0
 "let g:autoformat_retab = 0
 "let g:autoformat_remove_trailing_spaces = 0
-"" autocmd FileType vim,tex,sh let b:autoformat_autoindent=0
+" autocmd FileType vim,tex,sh let b:autoformat_autoindent=0
 
-" Semshi
-"g:semshi#filetypes = ['python']
+" Vim-polyglot
+" let g:polyglot_disabled = ['python']

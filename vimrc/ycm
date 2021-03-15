@@ -1,3 +1,7 @@
+"" To install plugins: :PlugInstall
+"" To update plugins:  :PlugUpdate
+"" To remove plugins:  :PlugClean
+
 " source common configuration
 source $HOME/.vimrc-common
 
