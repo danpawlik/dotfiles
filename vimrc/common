@@ -66,16 +66,39 @@ Plug 'scrooloose/nerdcommenter'
 " languagepack collecion
 Plug 'sheerun/vim-polyglot'
 
-" ansible
+"" Polyglot plugins
+" Python
+Plug 'vim-python/python-syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
+" Haskell
+Plug 'neovimhaskell/haskell-vim'
+" Docker
+Plug 'ekalinin/Dockerfile.vim'
+" GraphQL
+Plug 'jparise/vim-graphql'
+" Helm
+Plug 'towolf/vim-helm'
+" HTML5
+Plug 'sheerun/html5.vim'
+" JSON
+Plug 'elzr/vim-json'
+" Reasonml
+Plug 'reasonml-editor/vim-reason-plus'
+" Ansible
 Plug 'pearofducks/ansible-vim'
-" markdown
+" Log
+Plug 'MTDL9/vim-log-highlighting'
+" Markdown .md
 Plug 'plasticboy/vim-markdown'
-"" Dhall
+" RestructuredTextRuntime .rst
+Plug 'marshallward/vim-restructuredtext'
+
+" Dhall
+Plug 'vmchale/dhall-vim'
 Plug 'autozimu/LanguageClient-neovim', {
      \ 'branch': 'next',
      \ 'do': 'bash install.sh',
      \ }
-Plug 'vmchale/dhall-vim'
 Plug 'Chiel92/vim-autoformat'
 " js
 Plug 'othree/javascript-libraries-syntax.vim'
