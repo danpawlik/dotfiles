@@ -82,6 +82,22 @@ Plug 'towolf/vim-helm'
 Plug 'sheerun/html5.vim'
 " JSON
 Plug 'elzr/vim-json'
+" Javascript
+Plug 'pangloss/vim-javascript'
+" Javascript -jsx extentions
+Plug 'mxw/vim-jsx'
+
+"" Pretty code
+"Plug 'prettier/vim-prettier', {
+"      \ 'do': 'yarn install' }
+
+"" live edit html/css/js
+"Plug 'turbio/bracey.vim'
+
+"" eslint
+"Plug 'eslint/eslint', {
+"      \ 'do': 'yarn install' }
+
 " Reasonml
 Plug 'reasonml-editor/vim-reason-plus'
 " Ansible
@@ -186,6 +202,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+""Disable syntastic when open python files and you want python-mode
+"let g:syntastic_ignore_files = ['\.py$']
 
 let g:syntastic_python_checkers = ['mypy']
 let g:syntastic_puppet_checkers = ['puppetlint']
@@ -213,6 +231,10 @@ execute "set <xDown>=\e[1;*B"
 execute "set <xRight>=\e[1;*C"
 execute "set <xLeft>=\e[1;*D"
 
+"" Python-mode
+"" Stop checking with pymode, but use synstastic.
+"let g:pymode_lint = 0
+
 "" Dhall
 "let g:LanguageClient_serverCommands = {
 "    \ 'dhall': ['dhall-lsp-server'],
@@ -232,7 +254,11 @@ execute "set <xLeft>=\e[1;*D"
 "let g:autoformat_retab = 0
 "let g:autoformat_remove_trailing_spaces = 0
 "let g:formatdef_dhall_format = '"dhall --unicode format"'
-"autocmd FileType vim,sh let b:autoformat_autoindent=0
+"autocmd FileType css,scss,js let b:autoformat_autoindent=0
+
+"" prettier
+"au FileType css,scss,js let b:prettier_exec_cmd = "prettier-stylelint"
+"let g:prettier#autoformat = 1
 
 " Vim-polyglot
 " let g:polyglot_disabled = ['tex']
