@@ -217,18 +217,22 @@ execute "set <xLeft>=\e[1;*D"
 "let g:LanguageClient_serverCommands = {
 "    \ 'dhall': ['dhall-lsp-server'],
 "    \ }
-" let g:dhall_format=1
-"" set signcolumn=yes
+"let g:dhall_format=1
+"set signcolumn=yes
 "set hidden
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 "nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+"" Highlight unicode symbols/chars
+"highlight nonascii guibg=Red ctermbg=1 term=standout
+"au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 "
 "" autoformatter
 "noremap <F3> :Autoformat<CR>
 "let g:autoformat_autoindent = 0
 "let g:autoformat_retab = 0
 "let g:autoformat_remove_trailing_spaces = 0
-" autocmd FileType vim,tex,sh let b:autoformat_autoindent=0
+"let g:formatdef_dhall_format = '"dhall --unicode format"'
+"autocmd FileType vim,sh let b:autoformat_autoindent=0
 
 " Vim-polyglot
-" let g:polyglot_disabled = ['python']
+" let g:polyglot_disabled = ['tex']
