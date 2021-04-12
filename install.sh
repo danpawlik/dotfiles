@@ -40,6 +40,10 @@ sudo dnf install -y brave-browser
 # pip --user install pdbpp remote_pdb mypy
 pip3 --user install pdbpp remote_pdb mypy pip -U --force-reinstall
 
+# npm
+curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
+sudo npm install -g pnpm prettier
+
 # dotfiles
 mkdir -p ~/.vim/
 if ! [ -d "${SOURCE_DIR}" ]; then

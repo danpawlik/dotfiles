@@ -224,6 +224,7 @@ let g:UltiSnipsEditSplit="vertical"
 " ale
 let b:ale_fixers = ['prettier', 'eslint']
 let g:ale_completion_enabled = 1
+let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 
 " skip whole words with arrows
 execute "set <xUp>=\e[1;*A"
@@ -234,31 +235,38 @@ execute "set <xLeft>=\e[1;*D"
 "" Python-mode
 "" Stop checking with pymode, but use synstastic.
 "let g:pymode_lint = 0
-
-"" Dhall
-"let g:LanguageClient_serverCommands = {
-"    \ 'dhall': ['dhall-lsp-server'],
-"    \ }
-"let g:dhall_format=1
-"set signcolumn=yes
-"set hidden
-"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-"" Highlight unicode symbols/chars
-"highlight nonascii guibg=Red ctermbg=1 term=standout
-"au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 "
-"" autoformatter
-"noremap <F3> :Autoformat<CR>
-"let g:autoformat_autoindent = 0
-"let g:autoformat_retab = 0
-"let g:autoformat_remove_trailing_spaces = 0
-"let g:formatdef_dhall_format = '"dhall --unicode format"'
-"autocmd FileType css,scss,js let b:autoformat_autoindent=0
+"" Dhall
+let g:LanguageClient_serverCommands = {
+    \ 'dhall': ['dhall-lsp-server'],
+    \ }
+let g:dhall_format=1
+set signcolumn=yes
+set hidden
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" Highlight unicode symbols/chars
+highlight nonascii guibg=Red ctermbg=1 term=standout
+au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 
-"" prettier
-"au FileType css,scss,js let b:prettier_exec_cmd = "prettier-stylelint"
+" autoformatter
+noremap <F3> :Autoformat<CR>
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+let g:formatdef_dhall_format = '"dhall --unicode format"'
+autocmd FileType vim,sh,js let b:autoformat_autoindent=0
+
+"" Vim-polyglot
+let g:polyglot_disabled = ['js']
+
+" prettier
 "let g:prettier#autoformat = 1
+"let g:prettier#autoformat_require_pragma = 0
+"let g:prettier#exec_cmd_async = 1
+"let g:prettier#partial_format=1
+"let g:prettier#quickfix_enabled = 1
+"let g:prettier#config#print_width = '80'
+"au FileType css,scss let b:prettier_exec_cmd = "prettier-stylelint"
+map <F4> :Prettier<CR>
 
-" Vim-polyglot
-" let g:polyglot_disabled = ['tex']
