@@ -86,17 +86,16 @@ Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
 " Javascript -jsx extentions
 Plug 'mxw/vim-jsx'
+" Rescript
+Plug 'rescript-lang/vim-rescript'
 
-"" Pretty code
-"Plug 'prettier/vim-prettier', {
-"      \ 'do': 'yarn install' }
-
-"" live edit html/css/js
-"Plug 'turbio/bracey.vim'
-
-"" eslint
-"Plug 'eslint/eslint', {
-"      \ 'do': 'yarn install' }
+" Pretty code
+Plug 'prettier/vim-prettier', {
+      \ 'do': 'npm install' }
+" live edit html/css/js
+Plug 'turbio/bracey.vim'
+" eslint
+Plug 'eslint/eslint'
 
 " Reasonml
 Plug 'reasonml-editor/vim-reason-plus'
@@ -149,8 +148,6 @@ set colorcolumn=80
 set copyindent
 " ignore case in search
 set ignorecase
-" automatic wrap text > 80 im python f im python filesiles
-au BufRead,BufNewFile *py setlocal textwidth=80
 
 let g:solarized_termcolors = 256
 silent! colorscheme molokai
@@ -163,9 +160,6 @@ nmap <CR> o<Esc>
 
 " remove automaticly whitespaces on the end of all files
 autocmd BufWritePre * :%s/\s\+$//e
-
-"remove preview about module to completion
-autocmd FileType python setlocal completeopt-=preview
 
 " the nerd tree - ctrl + n  enabled
 autocmd StdinReadPre * let s:std_in=1
@@ -235,6 +229,10 @@ execute "set <xLeft>=\e[1;*D"
 "" Python-mode
 "" Stop checking with pymode, but use synstastic.
 "let g:pymode_lint = 0
+" automatic wrap text > 80 im python f im python filesiles
+au BufRead,BufNewFile *py setlocal textwidth=80
+"remove preview about module to completion
+autocmd FileType python setlocal completeopt-=preview
 "
 "" Dhall
 let g:LanguageClient_serverCommands = {
@@ -270,3 +268,8 @@ let g:polyglot_disabled = ['js']
 "au FileType css,scss let b:prettier_exec_cmd = "prettier-stylelint"
 map <F4> :Prettier<CR>
 
+"" Rescript
+"autocmd FileType rescript nnoremap <silent> <buffer> <localleader>r :RescriptFormat<CR>
+"autocmd FileType rescript nnoremap <silent> <buffer> <localleader>t :RescriptTypeHint<CR>
+"autocmd FileType rescript nnoremap <silent> <buffer> <localleader>b :RescriptBuild<CR>
+"autocmd FileType rescript nnoremap <silent> <buffer> gd :RescriptJumpToDefinition<CR>

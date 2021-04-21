@@ -116,7 +116,7 @@ EOF
         echo "Setup COC plugins"
         vim -c 'CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
         # For web development
-        #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason|q'
+        #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
         echo "You can also install other modules by installing: :CocInstall coc-marketplace and choose your own with: :CocList marketplace"
     fi
 fi
