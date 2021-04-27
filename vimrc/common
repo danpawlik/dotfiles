@@ -30,82 +30,87 @@ set ttyfast
 set backspace=indent,eol,start
 set updatetime=300
 set shortmess+=c
+set colorcolumn=80
+set copyindent
+set ignorecase
 
 let g:go_version_warning = 0
 
+" skip whole words with arrows
+execute "set <xUp>=\e[1;*A"
+execute "set <xDown>=\e[1;*B"
+execute "set <xRight>=\e[1;*C"
+execute "set <xLeft>=\e[1;*D"
+
+" key mapping
+set pastetoggle=<F2>
+noremap <F3> :Autoformat<CR>
+map <F4> :Prettier<CR>
+
+filetype off
+filetype plugin indent on
+
 """" plugged
 call plug#begin('~/.vim/plugged')
+
 " Helpers
+" Automatic closing of brackets/tmux/statusline/fuzyy finder
 Plug 'nathanaelkane/vim-indent-guides'
-" Automatic closing of brackets
 Plug 'raimondi/delimitMate'
-" Vim tmux intergration
 Plug 'christoomey/vim-tmux-navigator'
-" statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Git integration
-Plug 'tpope/vim-fugitive'
-" shows git diff markers
-Plug 'airblade/vim-gitgutter'
-" syntax checks
-Plug 'scrooloose/syntastic'
-" Code Snippet
-Plug 'sirver/ultisnips'
-Plug 'honza/vim-snippets'
-" Change quotes to doublequotes
-Plug 'tpope/vim-surround'
-" fuzyy finder
 Plug 'junegunn/fzf'
-" file system explorer, similar to ranger/ranger
-Plug 'scrooloose/nerdtree'
-" Check syntax
-Plug 'dense-analysis/ale'
-" nerdy commenting powers
+Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
+
+" Git / shows git diff markers
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" syntax/snippets/
+Plug 'dense-analysis/ale'
+Plug 'sirver/ultisnips'
+
 " languagepack collecion
 Plug 'sheerun/vim-polyglot'
 
-"" Polyglot plugins
 " Python
+Plug 'python-mode/python-mode'
 Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
+
 " Haskell
 Plug 'neovimhaskell/haskell-vim'
-" Docker
+
+" Docker/Ansible/Helm
 Plug 'ekalinin/Dockerfile.vim'
-" GraphQL
-Plug 'jparise/vim-graphql'
-" Helm
+Plug 'pearofducks/ansible-vim'
 Plug 'towolf/vim-helm'
-" HTML5
-Plug 'sheerun/html5.vim'
+
 " JSON
 Plug 'elzr/vim-json'
-" Javascript
+
+" Javascript/jsx/rescript/graphQL
 Plug 'pangloss/vim-javascript'
-" Javascript -jsx extentions
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'mxw/vim-jsx'
-" Rescript
 Plug 'rescript-lang/vim-rescript'
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'jparise/vim-graphql'
+Plug 'sheerun/html5.vim'
 
 " Pretty code
 Plug 'prettier/vim-prettier', {
       \ 'do': 'npm install' }
-" live edit html/css/js
-Plug 'turbio/bracey.vim'
-" eslint
 Plug 'eslint/eslint'
+Plug 'Chiel92/vim-autoformat'
 
-" Reasonml
-Plug 'reasonml-editor/vim-reason-plus'
-" Ansible
-Plug 'pearofducks/ansible-vim'
 " Log
 Plug 'MTDL9/vim-log-highlighting'
-" Markdown .md
+
+" Markdown .md / RestructuredTextRuntime .rst
 Plug 'plasticboy/vim-markdown'
-" RestructuredTextRuntime .rst
 Plug 'marshallward/vim-restructuredtext'
 
 " Dhall
@@ -114,11 +119,6 @@ Plug 'autozimu/LanguageClient-neovim', {
      \ 'branch': 'next',
      \ 'do': 'bash install.sh',
      \ }
-Plug 'Chiel92/vim-autoformat'
-" js
-Plug 'othree/javascript-libraries-syntax.vim'
-" python
-Plug 'python-mode/python-mode'
 
 "colorscheme
 Plug 'fatih/molokai'
@@ -136,46 +136,21 @@ Plug 'sjl/badwolf'
 call plug#end()
 """"" end plugged
 
-" disable line numbers
-" autocmd FileType python setlocal nonumber
-
-" disable checking syntax on paste
-set pastetoggle=<F2>
-
-" Showing a different background colour in Vim past 80 characters
-set colorcolumn=80
-" copy the previous indentation on autoindenting
-set copyindent
-" ignore case in search
-set ignorecase
-
 let g:solarized_termcolors = 256
 silent! colorscheme molokai
 
-filetype off
-filetype plugin indent on
-
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
-
-" remove automaticly whitespaces on the end of all files
+" remove automaticly whitespaces on the end of all files / highlight whitechars
 autocmd BufWritePre * :%s/\s\+$//e
-
-" the nerd tree - ctrl + n  enabled
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-""close vim if the only window left open is a NERDTree
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"
-"map <C-n> :NERDTreeToggle<CR>
-
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
 let g:SimpylFold_docstring_preview = 1
+
+"" disable line numbers
+autocmd FileType python setlocal nonumber
+
 
 """ Indent Guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -188,27 +163,6 @@ let g:indent_guides_color_change_percent = 80
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-""" syntasic
-set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 5
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-""Disable syntastic when open python files and you want python-mode
-"let g:syntastic_ignore_files = ['\.py$']
-
-let g:syntastic_python_checkers = ['mypy']
-let g:syntastic_puppet_checkers = ['puppetlint']
-let g:syntastic_ansible_checkers = ['ansiblelint']
-let g:syntastic_yaml_checkers = ['yamlling']
-let g:syntastic_vim_checkers = ['vimlint']
-let g:syntastic_sh_checkers = ['shellcheck']
-let g:syntastic_json_checkers = ['jsonlint']
-let g:syntastic_docker_checkers = ['dockerfile_lint']
-let g:syntastic_python_pylint_args="--disable='fixme, line-too-long, logging-not-lazy, bad-whitespace, invalid-name, missing-docstring'"
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -216,24 +170,44 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " ale
-let b:ale_fixers = ['prettier', 'eslint']
+let b:ale_linters = {'javascript': ['eslint'],
+                  \'python': ['mypy'],
+                  \'puppet': ['puppetlint'],
+                  \'ansible': ['ansible_lint'],
+                  \'yaml': ['yamllint'],
+                  \'vim': ['vimls'],
+                  \'shell': ['shellcheck'],
+                  \'json': ['jsonlint'],
+                  \'dockerfile': ['dockerfile_lint'],
+                  \'css': ['csslint'],
+                  \'gitcommit': ['gitlint'],
+                  \'graphql': ['eslint'],
+                  \'haskell': ['ghc', 'hls'],
+                  \'html': ['proselint'],
+                  \'markdown': ['markdownlint'],
+                  \'ocaml': ['merlin'],
+                  \'pod': ['proselint'],
+                  \'reason': ['merlin', 'ols'],
+                  \'rst': ['rstcheck'],
+                  \'rust': ['cargo'],
+                  \'typescript': ['eslint', 'tslint']}
+
+let b:ale_fixers = {'python': ['black', 'yapf'],
+                  \'javascript': ['eslint'] }
+
+let g:ale_list_window_size = 3
 let g:ale_completion_enabled = 1
 let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 
-" skip whole words with arrows
-execute "set <xUp>=\e[1;*A"
-execute "set <xDown>=\e[1;*B"
-execute "set <xRight>=\e[1;*C"
-execute "set <xLeft>=\e[1;*D"
+"" Python
 
-"" Python-mode
 "" Stop checking with pymode, but use synstastic.
 "let g:pymode_lint = 0
 " automatic wrap text > 80 im python f im python filesiles
 au BufRead,BufNewFile *py setlocal textwidth=80
 "remove preview about module to completion
 autocmd FileType python setlocal completeopt-=preview
-"
+
 "" Dhall
 let g:LanguageClient_serverCommands = {
     \ 'dhall': ['dhall-lsp-server'],
@@ -248,7 +222,6 @@ highlight nonascii guibg=Red ctermbg=1 term=standout
 au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 
 " autoformatter
-noremap <F3> :Autoformat<CR>
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
@@ -266,7 +239,6 @@ let g:polyglot_disabled = ['js']
 "let g:prettier#quickfix_enabled = 1
 "let g:prettier#config#print_width = '80'
 "au FileType css,scss let b:prettier_exec_cmd = "prettier-stylelint"
-map <F4> :Prettier<CR>
 
 "" Rescript
 "autocmd FileType rescript nnoremap <silent> <buffer> <localleader>r :RescriptFormat<CR>

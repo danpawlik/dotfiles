@@ -9,14 +9,14 @@ YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
 # NOTE: if you want to use 'coc' vim setup, you need to install neovim.
 #
 if [ "${SETUP_NEOVIM}" = "true" ]; then
-    curl -SL https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage > "${SOURCE_DIR}/nvim.appimage"
+    curl -L "https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage" -o /tmp/nvim.appimage
 
     if [ -f "/etc/centos-release" ] && cat /etc/os-release  | grep VERSION_ID | grep -q '7'; then
-        sudo mv "${SOURCE_DIR}/nvim.appimage" /usr/local/nvim
+        sudo mv /tmp/nvim.appimage /usr/local/nvim
         cd /usr/local/ && chmod u+x nvim && ./nvim --appimage-extract
         NVIM_PATH=/usr/local/squashfs-root/usr/bin/nvim
     else
-        sudo mv "${SOURCE_DIR}/nvim.appimage" /usr/bin/nvim
+        sudo mv /tmp/nvim.appimage /usr/bin/nvim
         chmod u+x /usr/bin/nvim
         NVIM_PATH=/usr/bin/nvim
     fi
@@ -62,8 +62,10 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         if [ "${YCM_FLAGS}" == '--all' ]; then
             # NOTE: drop support for Debian/Ubuntu
 			sudo yum install -y golang
-            curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
-            sudo yum install -y nodejs
+			if ! command -v npm ; then
+                curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
+                sudo yum install -y nodejs
+            fi
         fi
     fi
 
@@ -72,12 +74,14 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
     fi
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
-        echo "Setup NodeJS"
-        export LC_ALL=en_US.UTF-8
-        # NOTE: it install lts nodejs version without prompt
-        # bash <(curl -sL install-node.now.sh/lts ) -f
-        curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
-        sudo yum install -y nodejs
+		if ! command -v npm ; then
+            echo "Setup NodeJS"
+            export LC_ALL=en_US.UTF-8
+            # NOTE: it install lts nodejs version without prompt
+            # bash <(curl -sL install-node.now.sh/lts ) -f
+            curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
+            sudo yum install -y nodejs
+        fi
     fi
 
     if [ "${VIM_CONFIG}" == 'jedi' ]; then
@@ -114,6 +118,7 @@ EOF
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         echo "Setup COC plugins"
+        pip3 install --user jedi pylint
         vim -c 'CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
         # For web development
         #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
