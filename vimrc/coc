@@ -2,10 +2,10 @@
 "" To update plugins:  :PlugUpdate
 "" To remove plugins:  :PlugClean
 
-"" To update vim coc modules, use command: vim -c 'CocUpdateSync' or ':CocUpdateSync'
-
 " source common configuration
 source $HOME/.vimrc-common
+
+"" To update vim coc modules, use command: vim -c 'CocUpdateSync' or ':CocUpdateSync'
 
 """" plugged
 call plug#begin('~/.vim/plugged')

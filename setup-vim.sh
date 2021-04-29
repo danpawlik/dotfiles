@@ -11,7 +11,7 @@ YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
 if [ "${SETUP_NEOVIM}" = "true" ]; then
     curl -L "https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage" -o /tmp/nvim.appimage
 
-    if [ -f "/etc/centos-release" ] && cat /etc/os-release  | grep VERSION_ID | grep -q '7'; then
+    if [ -f "/etc/centos-release" ] && grep 'VERSION_ID' /etc/os-release | grep -q '7'; then
         sudo mv /tmp/nvim.appimage /usr/local/nvim
         cd /usr/local/ && chmod u+x nvim && ./nvim --appimage-extract
         NVIM_PATH=/usr/local/squashfs-root/usr/bin/nvim
@@ -21,14 +21,14 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
         NVIM_PATH=/usr/bin/nvim
     fi
 
-    if echo $SHELL | grep -q 'zsh'; then
+    if echo "$SHELL" | grep -q 'zsh'; then
         echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
         echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
-        source $HOME/.zshrc
-    elif echo $SHELL | grep -q 'bash'; then
+        source "$HOME/.zshrc"
+    elif echo "$SHELL" | grep -q 'bash'; then
         echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
         echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
-        source $HOME/.bashrc
+        source "$HOME/.bashrc"
     else
         echo "Add: alias vim=$NVIM_PATH into your shell rc file"
     fi
@@ -52,8 +52,10 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         git clone https://github.com/danpawlik/dotfiles.git "${SOURCE_DIR}"
     fi
 
-    sudo apt install -y python-pip python3-pip || sudo yum install -y python3-pip
-    pip3 install --user neovim mypy pynvim
+    if ! command -v pip || ! command -v pip3 || ! command -v pip-3 ; then
+        # sudo apt install -y python-pip python3-pip || sudo yum install -y python3-pip
+        curl -SL https://bootstrap.pypa.io/get-pip.py | sudo python3
+    fi
 
     OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
 
@@ -69,7 +71,7 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         fi
     fi
 
-    if [ $OS_VERSION -eq 7 ] && [ "${VIM_CONFIG}" == 'ycm' ]; then
+    if [ "$OS_VERSION" -eq "7" ] && [ "${VIM_CONFIG}" == 'ycm' ]; then
         yum install -y devtoolset-8 centos-release-scl cmake
     fi
 
@@ -107,12 +109,12 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
 
     if [ "${VIM_CONFIG}" == 'ycm' ]; then
         echo "Compiling YCM"
-        if [ $OS_VERSION -eq 7 ]; then
+        if [ "$OS_VERSION" -eq "7" ]; then
             scl enable devtoolset-8 - << \EOF
 $HOME/.vim/plugged/YouCompleteMe/install.py ${YCM_FLAGS}
 EOF
         else
-            $HOME/.vim/plugged/YouCompleteMe/install.py
+            "$HOME/.vim/plugged/YouCompleteMe/install.py"
         fi
     fi
 
@@ -124,4 +126,9 @@ EOF
         #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
         echo "You can also install other modules by installing: :CocInstall coc-marketplace and choose your own with: :CocList marketplace"
     fi
+
+    # Other packages required by Ale
+    pip3 install --user neovim mypy pynvimrstcheck proselint merlin gitlint mypy ansible-lint black yapf vim-vint yamllint
+    sudo npm install -g prettier
+    sudo yum install -y shellcheck
 fi

@@ -50,6 +50,9 @@ map <F4> :Prettier<CR>
 filetype off
 filetype plugin indent on
 
+"" Vim-polyglot
+let g:polyglot_disabled = ['js']
+
 """" plugged
 call plug#begin('~/.vim/plugged')
 
@@ -79,13 +82,14 @@ Plug 'sheerun/vim-polyglot'
 Plug 'python-mode/python-mode'
 Plug 'vim-python/python-syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'puremourning/vimspector'
 
 " Haskell
 Plug 'neovimhaskell/haskell-vim'
 
 " Docker/Ansible/Helm
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'pearofducks/ansible-vim'
+"Plug 'pearofducks/ansible-vim'
 Plug 'towolf/vim-helm'
 
 " JSON
@@ -146,11 +150,6 @@ match ExtraWhitespace /\s\+$/
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
-let g:SimpylFold_docstring_preview = 1
-
-"" disable line numbers
-autocmd FileType python setlocal nonumber
-
 
 """ Indent Guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -170,36 +169,47 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " ale
-let b:ale_linters = {'javascript': ['eslint'],
-                  \'python': ['mypy'],
-                  \'puppet': ['puppetlint'],
-                  \'ansible': ['ansible_lint'],
-                  \'yaml': ['yamllint'],
-                  \'vim': ['vimls'],
-                  \'shell': ['shellcheck'],
-                  \'json': ['jsonlint'],
-                  \'dockerfile': ['dockerfile_lint'],
-                  \'css': ['csslint'],
-                  \'gitcommit': ['gitlint'],
-                  \'graphql': ['eslint'],
-                  \'haskell': ['ghc', 'hls'],
-                  \'html': ['proselint'],
-                  \'markdown': ['markdownlint'],
-                  \'ocaml': ['merlin'],
-                  \'pod': ['proselint'],
-                  \'reason': ['merlin', 'ols'],
-                  \'rst': ['rstcheck'],
-                  \'rust': ['cargo'],
-                  \'typescript': ['eslint', 'tslint']}
+let b:ale_linters = {
+                  \  'javascript': ['eslint'],
+                  \  'python': ['mypy'],
+                  \  'puppet': ['puppetlint'],
+                  \  'ansible': ['ansible-lint'],
+                  \  'yaml': ['yamllint'],
+                  \  'vim': ['vint'],
+                  \  'shell': ['shellcheck'],
+                  \  'json': ['jsonlint'],
+                  \  'dockerfile': ['dockerfile_lint'],
+                  \  'gitcommit': ['gitlint'],
+                  \  'graphql': ['eslint'],
+                  \  'go': ['gopls'],
+                  \  'haskell': ['ghc', 'hls'],
+                  \  'markdown': ['markdownlint'],
+                  \  'ocaml': ['merlin'],
+                  \  'pod': ['proselint'],
+                  \  'reason': ['merlin', 'ols'],
+                  \  'rst': ['rstcheck'],
+                  \  'rust': ['cargo'],
+                  \  'typescript': ['eslint', 'tslint']}
 
-let b:ale_fixers = {'python': ['black', 'yapf'],
-                  \'javascript': ['eslint'] }
+let b:ale_fixers = {
+                  \  '*': ['remove_trailing_lines', 'trim_whitespace'],
+                  \  'python': ['black', 'yapf'],
+                  \  'javascript': ['eslint'],
+                  \  'html': ['prettier'],
+                  \  'go': ['gofmt'],
+                  \  'json': ['prettier'],
+                  \  'jsx': ['prettier'],
+                  \  'markdown': ['prettier'],
+                  \  'yaml': ['prettier']}
 
 let g:ale_list_window_size = 3
 let g:ale_completion_enabled = 1
-let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
+" let g:ale_pattern_options = {'\.min.js$': {'ale_enabled': 0}}
 
 "" Python
+
+"" disable line numbers
+" autocmd FileType python setlocal nonumber
 
 "" Stop checking with pymode, but use synstastic.
 "let g:pymode_lint = 0
@@ -227,9 +237,6 @@ let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 let g:formatdef_dhall_format = '"dhall --unicode format"'
 autocmd FileType vim,sh,js let b:autoformat_autoindent=0
-
-"" Vim-polyglot
-let g:polyglot_disabled = ['js']
 
 " prettier
 "let g:prettier#autoformat = 1
