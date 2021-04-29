@@ -6,20 +6,18 @@ SETUP_NEOVIM="${SETUP_NEOVIM:-true}"
 SOURCE_DIR=${SOURCE_DIR:-'/tmp/dotfiles'}
 YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
 
+OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
+if [ -z "${OS_VERSION}" ]; then
+    OS_VERSION="None"
+fi
+
 # NOTE: if you want to use 'coc' vim setup, you need to install neovim.
-#
 if [ "${SETUP_NEOVIM}" = "true" ]; then
     curl -L "https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage" -o /tmp/nvim.appimage
-
-    if [ -f "/etc/centos-release" ] && grep 'VERSION_ID' /etc/os-release | grep -q '7'; then
-        sudo mv /tmp/nvim.appimage /usr/local/nvim
-        cd /usr/local/ && chmod u+x nvim && ./nvim --appimage-extract
-        NVIM_PATH=/usr/local/squashfs-root/usr/bin/nvim
-    else
-        sudo mv /tmp/nvim.appimage /usr/bin/nvim
-        chmod u+x /usr/bin/nvim
-        NVIM_PATH=/usr/bin/nvim
-    fi
+    cd /tmp ; chmod u+x nvim.appimage && ./nvim.appimage --appimage-extract && cd -
+    mkdir -p "$HOME/.local"
+    mv /tmp/squashfs-root "$HOME/.local/nvim"
+    NVIM_PATH="$HOME/.local/nvim/usr/bin/nvim"
 
     if echo "$SHELL" | grep -q 'zsh'; then
         echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
@@ -40,13 +38,28 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
 
     curl -fLo "${HOME}/.config/nvim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    nvim +'PlugInstall --sync' +PlugInstall +qall &> /dev/null < /dev/tty
 fi
 
 if [ "$CONFIGURE_VIM" = "true" ]; then
+    if [ "${VIM_CONFIG}" == 'spacevim' ]; then
+        curl -sLf https://spacevim.org/install.sh | bash
+        cp -avf "${SOURCE_DIR}/.SpaceVim.d" ~/.SpaceVim.d
+        exit 0
+    fi
+
     mkdir -p ~/.vim/
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    # This script is designed to be done as user, not root, but it will
+    # work on both.
+    if ! command -v sudo ; then
+        yum install -y sudo
+    fi
+
+    if ! command -v git ; then
+        sudo yum install -y git
+    fi
 
     if ! [ -d "${SOURCE_DIR}" ]; then
         git clone https://github.com/danpawlik/dotfiles.git "${SOURCE_DIR}"
@@ -57,26 +70,30 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         curl -SL https://bootstrap.pypa.io/get-pip.py | sudo python3
     fi
 
-    OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
-
     if [ "${VIM_CONFIG}" == 'ycm' ]; then
-        sudo apt install -y build-essential cmake || sudo yum install -y automake gcc gcc-c++ kernel-devel cmake make python3-devel
+        sudo yum install -y automake gcc gcc-c++ kernel-devel cmake make python3-devel
+
+        if [[ $OS_VERSION -eq 7 ]]; then
+            sudo yum check-update
+            sudo yum install -y devtoolset-8 centos-release-scl cmake scl-utils
+        fi
+
         if [ "${YCM_FLAGS}" == '--all' ]; then
             # NOTE: drop support for Debian/Ubuntu
-			sudo yum install -y golang
-			if ! command -v npm ; then
+            sudo yum install -y golang
+            if ! command -v npm ; then
                 curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
                 sudo yum install -y nodejs
             fi
         fi
     fi
 
-    if [ "$OS_VERSION" -eq "7" ] && [ "${VIM_CONFIG}" == 'ycm' ]; then
-        yum install -y devtoolset-8 centos-release-scl cmake
+    if [ "${VIM_CONFIG}" == 'jedi' ]; then
+        sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi python3-setuptools
     fi
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
-		if ! command -v npm ; then
+        if ! command -v npm ; then
             echo "Setup NodeJS"
             export LC_ALL=en_US.UTF-8
             # NOTE: it install lts nodejs version without prompt
@@ -86,30 +103,32 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         fi
     fi
 
-    if [ "${VIM_CONFIG}" == 'jedi' ]; then
-        sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi python3-setuptools
-    fi
 
-    if [ "${VIM_CONFIG}" == 'spacevim' ]; then
-        curl -sLf https://spacevim.org/install.sh | bash
-        cp -avf "${SOURCE_DIR}/.SpaceVim.d" ~/.SpaceVim.d
-    fi
+    ##### CONFIGURATION #####
 
-    if [ "${VIM_CONFIG}" != 'spacevim' ]; then
-        echo "Copy main vimrc file"
-        cp -vf "${SOURCE_DIR}/vimrc/${VIM_CONFIG}" ~/.vimrc
-    fi
 
-    echo "Intalling plugings from common file"
-    cp -vf "${SOURCE_DIR}/vimrc/common" "${HOME}/.vimrc-common"
-    vim -E -s -u ~/.vimrc-common +PlugInstall +qall &> /dev/null
+    echo "Copy main vimrc file"
+    for f in general.vim plugins_conf.vim plugins.vim; do
+        cp -vf "${SOURCE_DIR}/vimrc/${f}" "$HOME/.vim/"
+    done
+    cp -vf "${SOURCE_DIR}/vimrc/init.vim" "$HOME/.vimrc"
+    cp -av "${SOURCE_DIR}/vimrc/plugin_conf" "$HOME/.vim/"
 
-    echo "Installing plugins from vimrc file"
-    vim -E -s -u ~/.vimrc +PlugInstall +qall &> /dev/null
+    # Uncomment just desired plugin in vimrc; it will ignore YouCompleteMe
+    sed -i "/^\".*\/${VIM_CONFIG}/s/^\"//" "$HOME/.vimrc"
+
+    # Uncomment just desired plugin in plugins file
+    sed -i "/^\".*\/${VIM_CONFIG}/s/^\"//" "$HOME/.vim/plugins.vim"
+
+    echo "Installing vim plugins..."
+    $NVIM_PATH +PlugInstall +qall &> /dev/null || vim +PlugInstall +qall &> /dev/null
 
     if [ "${VIM_CONFIG}" == 'ycm' ]; then
+        # Uncomment YouCompleteMe
+        sed -i "/^\".*\/YouCompleteMe/s/^\"//" "$HOME/.vimrc"
+
         echo "Compiling YCM"
-        if [ "$OS_VERSION" -eq "7" ]; then
+        if [[ $OS_VERSION -eq 7 ]]; then
             scl enable devtoolset-8 - << \EOF
 $HOME/.vim/plugged/YouCompleteMe/install.py ${YCM_FLAGS}
 EOF
@@ -121,14 +140,16 @@ EOF
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         echo "Setup COC plugins"
         pip3 install --user jedi pylint
-        vim -c 'CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
+        PLUGINS='CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
         # For web development
         #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
+        $NVIM_PATH -c $PLUGINS || vim -c $PLUGINS
         echo "You can also install other modules by installing: :CocInstall coc-marketplace and choose your own with: :CocList marketplace"
     fi
 
     # Other packages required by Ale
-    pip3 install --user neovim mypy pynvimrstcheck proselint merlin gitlint mypy ansible-lint black yapf vim-vint yamllint
-    sudo npm install -g prettier
-    sudo yum install -y shellcheck
+    pip3 install --user neovim mypy pynvim rstcheck proselint \
+                        gitlint mypy ansible-lint black yapf vim-vint yamllint
+    sudo npm install -g prettier eslint
+    sudo yum install -y shellcheck ocaml-merlin || true
 fi
