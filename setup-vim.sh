@@ -139,7 +139,6 @@ EOF
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         echo "Setup COC plugins"
-        pip3 install --user jedi pylint
         PLUGINS='CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
         # For web development
         #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
@@ -149,7 +148,8 @@ EOF
 
     # Other packages required by Ale
     pip3 install --user neovim mypy pynvim rstcheck proselint \
-                        gitlint mypy ansible-lint black yapf vim-vint yamllint
+                        gitlint ansible-lint black yapf vim-vint yamllint \
+                        jedi pylint mypy
     sudo npm install -g prettier eslint
     sudo yum install -y shellcheck ocaml-merlin || true
 fi
