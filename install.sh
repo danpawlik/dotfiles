@@ -91,6 +91,8 @@ if [ "$USE_ZSH" -eq "0" ]; then
             cp $SOURCE_DIR/powerlevel10k/.p10k.zsh "${HOME}/"
             git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
         fi
+        # install zsh autosuggestions.
+        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
         cp -a $SOURCE_DIR/oh_my_zsh/.z* "${HOME}/"
     fi
 
@@ -99,6 +101,9 @@ if [ "$USE_ZSH" -eq "0" ]; then
     # chsh -s /bin/zsh
     source "${HOME}/.zshrc"
 fi
+
+# add FZF
+$HOME/.vim/plugged/fzf/install --all
 
 # alacritty
 mkdir -p "${HOME}/.config"

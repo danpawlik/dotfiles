@@ -40,6 +40,7 @@ execute "set <xLeft>=\e[1;*D"
 set pastetoggle=<F2>
 noremap <F3> :ALEFix<CR>
 noremap <F4> :Prettier<CR>
+noremap <C-f> :FZF<CR>
 
 filetype off
 filetype plugin indent on

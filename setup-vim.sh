@@ -141,7 +141,10 @@ EOF
         echo "Setup COC plugins"
         PLUGINS='CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
         # For web development
-        #vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
+        # vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
+        # Setup reason-language-server
+        # curl -L https://github.com/jaredly/reason-language-server/releases/download/1.7.13/rls-linux.zip -o /tmp/rls-linux.zip && cd /tmp && unzip rls-linux.zip && mv rls-linux/reason-language-server $HOME/.config/nvim/
+        # echo 'let g:LanguageClient_serverCommands = {"reason": ["$HOME/.config/nvim/reason-language-server"]}' | tee -a $HOME/.vim/plugins_conf.vim
         $NVIM_PATH -c $PLUGINS || vim -c $PLUGINS
         echo "You can also install other modules by installing: :CocInstall coc-marketplace and choose your own with: :CocList marketplace"
     fi
