@@ -22,10 +22,12 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
     if echo "$SHELL" | grep -q 'zsh'; then
         echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
         echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
+        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.zshrc"
         source "$HOME/.zshrc"
     elif echo "$SHELL" | grep -q 'bash'; then
         echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
         echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
+        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.bashrc"
         source "$HOME/.bashrc"
     else
         echo "Add: alias vim=$NVIM_PATH into your shell rc file"
@@ -139,14 +141,22 @@ EOF
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         echo "Setup COC plugins"
-        PLUGINS='CocInstall -sync coc-snippets coc-fzf coc-sh coc-json coc-utils coc-pyright coc-html coc-yaml coc-prettier coc-python coc-git coc-go coc-docker|q'
+        PLUGINS='CocInstall -sync coc-snippets coc-fzf coc-sh coc-json \
+                 coc-tsserver coc-utils coc-pyright coc-html coc-yaml \
+                 coc-pairs coc-prettier coc-python coc-git coc-go coc-docker \
+                 coc-lua coc-vimlsp|q'
         # For web development
-        # vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets coc-highlight coc-prettier coc-html-css-support coc-react-refactor coc-reason coc-rescript|q'
+        # vim -c 'CocInstall -sync coc-react-refactor coc-reason coc-snippets \
+        #                          coc-highlight coc-prettier coc-html-css-support \
+        #                          coc-react-refactor coc-eslint coc-reason \
+        #                          coc-rescript|q'
         # Setup reason-language-server
-        # curl -L https://github.com/jaredly/reason-language-server/releases/download/1.7.13/rls-linux.zip -o /tmp/rls-linux.zip && cd /tmp && unzip rls-linux.zip && mv rls-linux/reason-language-server $HOME/.config/nvim/
+        # curl -L https://github.com/jaredly/reason-language-server/releases/download/1.7.13/rls-linux.zip -o /tmp/rls-linux.zip && \
+        # cd /tmp && unzip rls-linux.zip && mv rls-linux/reason-language-server $HOME/.config/nvim/
         # echo 'let g:LanguageClient_serverCommands = {"reason": ["$HOME/.config/nvim/reason-language-server"]}' | tee -a $HOME/.vim/plugins_conf.vim
         $NVIM_PATH -c $PLUGINS || vim -c $PLUGINS
         echo "You can also install other modules by installing: :CocInstall coc-marketplace and choose your own with: :CocList marketplace"
+        pip3 install --user types-PyYAML types-requests pylama
     fi
 
     # Other packages required by Ale
@@ -154,5 +164,5 @@ EOF
                         gitlint ansible-lint black yapf vim-vint yamllint \
                         jedi pylint mypy
     sudo npm install -g prettier eslint
-    sudo yum install -y shellcheck ocaml-merlin || true
+    sudo yum install -y ShellCheck ocaml-merlin ripgrep fd-find || true
 fi

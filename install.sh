@@ -6,6 +6,8 @@ USE_OH_MY_ZSH=${USE_OH_MY_ZSH:-0}
 USE_PREZTO_ZSH=${USE_PREZTO_ZSH:-1}
 USE_POWERLEVEL10K=${USE_POWERLEVEL10K:-0}
 USE_GNOME=${USE_GNOME:-1}
+INSTALL_VIM=${INSTALL_VIM:-0}
+INSTALL_EMACS=${INSTALL_EMACS:-0}
 
 INSTALL_ANDROIND_ADB=${INSTALL_ANDROIND_ADB:-1}
 
@@ -51,7 +53,15 @@ if ! [ -d "${SOURCE_DIR}" ]; then
 fi
 
 # vim
-bash "${SOURCE_DIR}/setup-vim.sh"
+if [ "$INSTALL_VIM" -eq "0" ]; then
+    bash "${SOURCE_DIR}/setup-vim.sh"
+fi
+
+if [ "$INSTALL_EMACS" -eq "0" ]; then
+    sudo yum install -y ShellCheck marked ripgrep fd-find || true
+    git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
+fi
 
 # android
 if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
