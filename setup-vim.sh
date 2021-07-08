@@ -16,6 +16,9 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
     curl -L "https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage" -o /tmp/nvim.appimage
     cd /tmp ; chmod u+x nvim.appimage && ./nvim.appimage --appimage-extract && cd -
     mkdir -p "$HOME/.local"
+    if [ -d "$HOME/.local/nvim" ]; then
+        mv "$HOME/.local/nvim" "/tmp/nvim-old"
+    fi
     mv /tmp/squashfs-root "$HOME/.local/nvim"
     NVIM_PATH="$HOME/.local/nvim/usr/bin/nvim"
 

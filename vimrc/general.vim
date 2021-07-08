@@ -27,6 +27,7 @@ set copyindent
 set ignorecase
 set signcolumn=yes
 set hidden
+set termguicolors
 
 let g:go_version_warning = 0
 
@@ -45,7 +46,6 @@ noremap <C-f> :FZF<CR>
 filetype off
 filetype plugin indent on
 
-let g:solarized_termcolors = 256
 silent! colorscheme molokai
 
 " remove automaticly whitespaces on the end of all files / highlight whitechars
