@@ -1,1 +1,25 @@
-" TBD
+call coc#config('python', {
+    \   'defaultInterpreter': v:true,
+    \   'jediEnabled': v:true,
+    \   'formatting': {
+    \       'provider': 'yapf',
+    \   },
+    \})
+
+"" Disable formating
+"    \   'linting': {
+"    \       'enabled': v:true,
+"    \       'flake8Enabled': v:true,
+"    \       'flake8Args': [
+"    \           '--extend-ignore=E203,W503',
+"    \           '--max-line-length=88',
+"    \           '--exclude=*_pb2.py,*_pb2_grpc.py',
+"    \       ],
+"    \       'banditEnabled': v:false,
+"    \       'mypyEnabled': v:false,
+"    \       'pep8Enabled': v:false,
+"    \       'prospectorEnabled': v:false,
+"    \       'pydocstyleEnabled': v:false,
+"    \       'pylamaEnabled': v:false,
+"    \       'pylintEnabled': v:false,
+"    \   },

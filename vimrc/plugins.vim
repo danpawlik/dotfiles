@@ -62,15 +62,13 @@ Plug 'prettier/vim-prettier'
 Plug 'eslint/eslint'
 
 "colorscheme
-Plug 'fatih/molokai'
-Plug 'ayu-theme/ayu-vim'
-Plug 'challenger-deep-theme/vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'rakr/vim-one'
-Plug 'joshdick/onedark.vim'
-Plug 'sonph/onehalf'
-Plug 'jacoborus/tender.vim'
-Plug 'sainnhe/sonokai'
-Plug 'rainglow/vim'
+Plug 'sjl/badwolf'
+Plug 'tomasr/molokai'
+Plug 'rafalbromirski/vim-aurora'
+Plug 'srcery-colors/srcery-vim'
+Plug 'jsit/toast.vim'
+Plug 'vimpostor/vim-prism'
+Plug 'k4yt3x/ayu-vim-darker'
+
 call plug#end()
 """"" end plugged

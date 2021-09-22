@@ -46,7 +46,7 @@ noremap <C-f> :FZF<CR>
 filetype off
 filetype plugin indent on
 
-silent! colorscheme molokai
+silent! colorscheme prism
 
 " remove automaticly whitespaces on the end of all files / highlight whitechars
 autocmd BufWritePre * :%s/\s\+$//e

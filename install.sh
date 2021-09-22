@@ -18,7 +18,8 @@ sudo dnf install -y htop glances vim-enhanced axel mumble \
                     gnupg zsh zstd bzip2 tmux \
                     pinta alacritty keepassxc fwupd vlc \
                     p7zip unzip ccze wavemon powertop \
-                    rsync util-linux-user
+                    rsync util-linux-user iperf3 \
+                    libavif-tools lshw pavucontrol
 
 if [ "$USE_GNOME" -eq "0" ]; then
     sudo yum install -y gnome-tweaks gnome-backgrounds-extras variety
@@ -40,7 +41,10 @@ sudo dnf install -y brave-browser
 
 # some python libs
 # pip --user install pdbpp remote_pdb mypy
-pip3 --user install pdbpp remote_pdb mypy pip -U --force-reinstall
+pip3 --user install ansiblelint black docutils elasticsearch \
+    flake8 gitreview openstackclient pdbpp remote_pdb ipdb jedi \
+    mypy neovim numpy pandoc pylint pyflakes pynvim tox \
+    virtualenv yamllint zuulfmt jinjalint -U
 
 # npm
 curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
@@ -121,6 +125,8 @@ cp -a $SOURCE_DIR/alacritty "${HOME}/.config/"
 
 # git
 git config --global core.editor vim
+git config --global core.pager cat
+git config --global pager.branch false
 
 # install fonts
 FONT_DIR=/tmp/fonts
