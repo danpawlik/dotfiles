@@ -11,6 +11,11 @@ INSTALL_EMACS=${INSTALL_EMACS:-0}
 
 INSTALL_ANDROIND_ADB=${INSTALL_ANDROIND_ADB:-1}
 
+cat << EOF | sudo tee -a /etc/dnf/dnf.conf
+fastestmirror=True
+max_parallel_downloads=8
+EOF
+
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
@@ -75,6 +80,7 @@ if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
 fi
 
 # tmux
+# alternative config https://github.com/samoshkin/tmux-config
 git clone https://github.com/gpakosz/.tmux.git "${HOME}/.tmux"
 ln -s "${HOME}/.tmux/.tmux.conf" "${HOME}/.tmux.conf"
 cp -a $SOURCE_DIR/tmux/.tmux* "${HOME}/"
