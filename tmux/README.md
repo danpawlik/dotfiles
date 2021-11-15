@@ -1,2 +1,2 @@
-This tmux configuration uses configuration
-available in @gpakosz/.tmux repository (https://github.com/gpakosz/.tmux).
+More configuration settings/plugins available:
+https://github.com/rothgar/awesome-tmux

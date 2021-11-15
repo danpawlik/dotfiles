@@ -80,8 +80,10 @@ if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
 fi
 
 # tmux
-# alternative config https://github.com/samoshkin/tmux-config
-git clone https://github.com/gpakosz/.tmux.git "${HOME}/.tmux"
+# alternative config git clone https://github.com/gpakosz/.tmux.git "${HOME}/.tmux"
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+$HOME/.tmux/plugins/tpm/bin/install_plugins
+
 ln -s "${HOME}/.tmux/.tmux.conf" "${HOME}/.tmux.conf"
 cp -a $SOURCE_DIR/tmux/.tmux* "${HOME}/"
 
