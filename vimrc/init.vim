@@ -9,7 +9,4 @@ source $HOME/.vim/plugins_conf.vim
 source $HOME/.vim/general.vim
 
 "source $HOME/.vim/plugin_conf/coc
-"source $HOME/.vim/plugin_conf/deoplete
-"source $HOME/.vim/plugin_conf/jedi
-"source $HOME/.vim/plugin_conf/tabnine
 "source $HOME/.vim/plugin_conf/ycm

@@ -1,2 +1,21 @@
-""" Settings has been moved to:
-""" $HOME/.config/nvim/coc-settings.json
+let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-stylelintplus", "coc-snippets", "coc-sh", "coc-react-refactor", "coc-python", "coc-pyright", "coc-prettier", "coc-pairs", "coc-markdownlint", "coc-json", "coc-jedi", "coc-html", "coc-html-css-support", "coc-go", "coc-git", "coc-eslint", "coc-docker", "coc-marketplace" ]
+
+" Disable coc reason
+" coc-reason
+
+let g:coc_user_config = {}
+let g:coc_user_config['languageserver'] = {}
+let g:coc_user_config['coc.preferences.formatOnSaveFiletypes'] = ['go', 'python', 'sh']
+let g:coc_user_config['suggest.floatEnable'] = v:false
+let g:coc_user_config['suggest.enablePreview'] = v:true
+let g:coc_user_config['diagnostic.checkCurrentLine'] = v:true
+
+let g:coc_user_config['python.defaultInterpreter'] = v:true
+let g:coc_user_config['python.jediEnabled'] = v:true
+let g:coc_user_config['python.formatting.provider'] = "yapf"
+let g:coc_user_config['python.linting.flake8Enabled'] = v:true
+let g:coc_user_config['python.linting.mypyEnabled'] = v:false
+let g:coc_user_config['coc.preferences.formatOnType'] = v:false
+let g:coc_user_config['diagnostic-languageserver.filetypes'] = {"sh": "shellcheck"}
+let g:coc_user_config['markdownlint.config.default'] = v:true
+let g:coc_user_config['markdownlint.config.line_length'] = v:false

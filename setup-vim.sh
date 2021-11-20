@@ -1,11 +1,12 @@
 #!/bin/bash
 
 CONFIGURE_VIM=${CONFIGURE_VIM:-true}
-VIM_CONFIG="${VIM_CONFIG:-ycm}"
+VIM_CONFIG="${VIM_CONFIG:-coc}"
 SETUP_NEOVIM="${SETUP_NEOVIM:-true}"
 SOURCE_DIR=${SOURCE_DIR:-'/tmp/dotfiles'}
 YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
 NVIM_VERSION=${NVIM_VERSION:-'v0.5.0'}
+USER_NODEJS="${USER_NODEJS:-true}"
 
 OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
 if [ -z "${OS_VERSION}" ]; then
@@ -23,18 +24,20 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
     mv /tmp/squashfs-root "$HOME/.local/nvim"
     NVIM_PATH="$HOME/.local/nvim/usr/bin/nvim"
 
-    if echo "$SHELL" | grep -q 'zsh'; then
-        echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
-        echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
-        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.zshrc"
-        source "$HOME/.zshrc"
-    elif echo "$SHELL" | grep -q 'bash'; then
-        echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
-        echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
-        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.bashrc"
-        source "$HOME/.bashrc"
-    else
-        echo "Add: alias vim=$NVIM_PATH into your shell rc file"
+    if ! grep -q 'alias vim' "${HOME}/.zshrc" "${HOME}/.bashrc" ; then
+        if echo "$SHELL" | grep -q 'zsh'; then
+            echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
+            echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
+            echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.zshrc"
+            source "$HOME/.zshrc"
+        elif echo "$SHELL" | grep -q 'bash'; then
+            echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
+            echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
+            echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.bashrc"
+            source "$HOME/.bashrc"
+        else
+            echo "Add: alias vim=$NVIM_PATH into your shell rc file"
+        fi
     fi
 
     alias nvim=$NVIM_PATH
@@ -47,11 +50,10 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
 fi
 
 if [ "$CONFIGURE_VIM" = "true" ]; then
-    if [ "${VIM_CONFIG}" == 'spacevim' ]; then
-        curl -sLf https://spacevim.org/install.sh | bash
-        cp -avf "${SOURCE_DIR}/.SpaceVim.d" ~/.SpaceVim.d
-        exit 0
+    if [ -d "${SOURCE_DIR}" ]; then
+        mv "${SOURCE_DIR}" "${SOURCE_DIR}-$(date '+%d-%m-%Y')"
     fi
+    git clone https://github.com/danpawlik/dotfiles.git "${SOURCE_DIR}"
 
     mkdir -p ~/.vim/
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -65,10 +67,6 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
 
     if ! command -v git ; then
         sudo yum install -y git
-    fi
-
-    if ! [ -d "${SOURCE_DIR}" ]; then
-        git clone https://github.com/danpawlik/dotfiles.git "${SOURCE_DIR}"
     fi
 
     if ! command -v pip || ! command -v pip3 || ! command -v pip-3 ; then
@@ -94,18 +92,27 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         fi
     fi
 
-    if [ "${VIM_CONFIG}" == 'jedi' ]; then
-        sudo apt install -y vim-python-jedi || sudo yum install -y vim-jedi python3-setuptools
-    fi
-
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         if ! command -v npm ; then
             echo "Setup NodeJS"
-            export LC_ALL=en_US.UTF-8
-            # NOTE: it install lts nodejs version without prompt
-            # bash <(curl -sL install-node.now.sh/lts ) -f
-            curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
-            sudo yum install -y nodejs
+            if [ "${USER_NODEJS}" = "true" ]; then
+                sudo yum install -y xz
+                mkdir -p "${HOME}/.local"
+                curl -LO https://nodejs.org/dist/v17.1.0/node-v17.1.0-linux-x64.tar.xz
+                tar xaf node-v17.1.0-linux-x64.tar.xz && \
+                    mv node-v17.1.0-linux-x64 "${HOME}/.local/nodejs" && \
+                    rm node-v17.1.0-linux-x64.tar.xz && \
+                    ln -sf "${HOME}/.local/nodejs/bin/npm" "${HOME}/.local/bin/npm" && \
+                    ln -sf "${HOME}/.local/nodejs/bin/node" "${HOME}/.local/bin/node"
+                cd -
+            else
+                export LC_ALL=en_US.UTF-8
+                # NOTE: it install lts nodejs version without prompt
+                # bash <(curl -sL install-node.now.sh/lts ) -f
+                curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -
+                sudo yum install -y nodejs
+            fi
+
         fi
     fi
 
@@ -145,20 +152,9 @@ EOF
 
     if [ "${VIM_CONFIG}" == 'coc' ]; then
         echo "Setup COC plugins"
-        PLUGINS="CocInstall -sync coc-yaml coc-vimlsp\
-            coc-stylelintplus coc-snippets coc-sh coc-react-refactor\
-            coc-python coc-pyright coc-prettier coc-pairs coc-markdownlint\
-            coc-json coc-jedi coc-html coc-html-css-support coc-go\
-            coc-git coc-eslint coc-docker coc-marketplace coc-reason"
-        # Setup reason-language-server
-        # curl -L https://github.com/jaredly/reason-language-server/releases/download/1.7.13/rls-linux.zip -o /tmp/rls-linux.zip && \
-        # cd /tmp && unzip rls-linux.zip && mv rls-linux/reason-language-server $HOME/.config/nvim/
-        # echo 'let g:LanguageClient_serverCommands = {"reason": ["$HOME/.config/nvim/reason-language-server"]}' | tee -a $HOME/.vim/plugins_conf.vim
-        $NVIM_PATH -c $PLUGINS +qall || vim -c $PLUGINS +qall
+        $NVIM_PATH -c "" +qall || vim -c "" +qall
         echo "You can also install other modules by running command in the vim: :CocList marketplace"
         pip3 install --user types-PyYAML types-requests pylama
-
-        ln -s $HOME/.vim/plugin_conf/coc-settings.json ~/.config/nvim/coc-settings.json
     fi
 
     # Other packages required by Ale
