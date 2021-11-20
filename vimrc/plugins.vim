@@ -25,6 +25,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
+Plug 'luochen1990/rainbow'
+Plug 'mileszs/ack.vim'
 
 " Git / shows git diff markers
 Plug 'tpope/vim-fugitive'
@@ -58,8 +60,14 @@ Plug 'autozimu/LanguageClient-neovim', {
      \ }
 
 " Pretty code
-Plug 'prettier/vim-prettier'
 Plug 'eslint/eslint'
+Plug 'prettier/vim-prettier'
+
+"" autoformatter: if you are using vim coc,
+"" change settings in $HOME/.vim/plugin_conf/coc
+" Plug 'google/vim-maktaba'
+" Plug 'google/vim-codefmt'
+" Plug 'google/vim-glaive'
 
 "colorscheme
 Plug 'sjl/badwolf'

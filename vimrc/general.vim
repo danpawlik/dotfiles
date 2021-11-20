@@ -46,7 +46,7 @@ noremap <C-f> :FZF<CR>
 filetype off
 filetype plugin indent on
 
-silent! colorscheme prism
+silent! colorscheme molokai
 
 " remove automaticly whitespaces on the end of all files / highlight whitechars
 autocmd BufWritePre * :%s/\s\+$//e
@@ -73,3 +73,12 @@ au BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
+
+" vim rainbow
+let g:rainbow_active = 1
+
+"" autoformat - enable when plugin is other than vim coc
+"augroup autoformat_settings
+"  autocmd FileType go AutoFormatBuffer gofmt
+"  autocmd FileType python AutoFormatBuffer yapf
+"augroup END

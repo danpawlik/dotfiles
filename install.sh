@@ -26,6 +26,8 @@ sudo dnf install -y htop glances vim-enhanced axel mumble \
                     rsync util-linux-user iperf3 \
                     libavif-tools lshw pavucontrol
 
+sudo dnf install -y dnf-plugins-core
+
 if [ "$USE_GNOME" -eq "0" ]; then
     sudo yum install -y gnome-tweaks gnome-backgrounds-extras variety
 fi
@@ -38,11 +40,10 @@ sudo yum remove -y nano
 
 sudo yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 
-# brave
-sudo dnf install dnf-plugins-core
-sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-sudo dnf install -y brave-browser
+## brave
+#sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+#sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+#sudo dnf install -y brave-browser
 
 # some python libs
 # pip --user install pdbpp remote_pdb mypy
@@ -50,6 +51,16 @@ pip3 --user install ansiblelint black docutils elasticsearch \
     flake8 gitreview openstackclient pdbpp remote_pdb ipdb jedi \
     mypy neovim numpy pandoc pylint pyflakes pynvim tox \
     virtualenv yamllint zuulfmt jinjalint -U
+
+### nerd fonts
+#git clone --depth 1 https://github.com/ryanoasis/nerd-fonts /tmp/nerd-fonts
+#cd /tmp/nerd-fonts && sudo ./install.sh -M -O -S
+#cd -
+
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts && \
+    curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf && \
+    cd -
 
 # npm
 curl --silent --location https://rpm.nodesource.com/setup_14.x | sudo bash -

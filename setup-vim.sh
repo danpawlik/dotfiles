@@ -157,6 +157,8 @@ EOF
         $NVIM_PATH -c $PLUGINS +qall || vim -c $PLUGINS +qall
         echo "You can also install other modules by running command in the vim: :CocList marketplace"
         pip3 install --user types-PyYAML types-requests pylama
+
+        ln -s $HOME/.vim/plugin_conf/coc-settings.json ~/.config/nvim/coc-settings.json
     fi
 
     # Other packages required by Ale
