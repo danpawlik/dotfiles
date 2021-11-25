@@ -2,10 +2,11 @@
 
 CONFIGURE_VIM=${CONFIGURE_VIM:-true}
 VIM_CONFIG="${VIM_CONFIG:-coc}"
-SETUP_NEOVIM="${SETUP_NEOVIM:-true}"
 SOURCE_DIR=${SOURCE_DIR:-'/tmp/dotfiles'}
 YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
-NVIM_VERSION=${NVIM_VERSION:-'v0.5.0'}
+# Choose version or export NVIM_VERSION=nightly
+NVIM_VERSION=${NVIM_VERSION:-'v0.5.1'}
+SETUP_NVIM="${SETUP_NVIM:-true}"
 USER_NODEJS="${USER_NODEJS:-true}"
 
 OS_VERSION=$(awk '{print $4}' /etc/centos-release | cut -f1 -d'.')
@@ -14,7 +15,7 @@ if [ -z "${OS_VERSION}" ]; then
 fi
 
 # NOTE: if you want to use 'coc' vim setup, you need to install neovim.
-if [ "${SETUP_NEOVIM}" = "true" ]; then
+if [ "${SETUP_NVIM}" = "true" ]; then
     curl -L "https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim.appimage" -o /tmp/nvim.appimage
     cd /tmp ; chmod u+x nvim.appimage && ./nvim.appimage --appimage-extract && cd -
     mkdir -p "$HOME/.local"
@@ -24,20 +25,18 @@ if [ "${SETUP_NEOVIM}" = "true" ]; then
     mv /tmp/squashfs-root "$HOME/.local/nvim"
     NVIM_PATH="$HOME/.local/nvim/usr/bin/nvim"
 
-    if ! grep -q 'alias vim' "${HOME}/.zshrc" "${HOME}/.bashrc" ; then
-        if echo "$SHELL" | grep -q 'zsh'; then
-            echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
-            echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
-            echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.zshrc"
-            source "$HOME/.zshrc"
-        elif echo "$SHELL" | grep -q 'bash'; then
-            echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
-            echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
-            echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.bashrc"
-            source "$HOME/.bashrc"
-        else
-            echo "Add: alias vim=$NVIM_PATH into your shell rc file"
-        fi
+    if ! grep -q 'alias vim' "${HOME}/.zshrc" && echo "$SHELL" | grep -q 'zsh'; then
+        echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.zshrc"
+        echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.zshrc"
+        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.zshrc"
+        source "$HOME/.zshrc"
+    elif ! grep -q 'alias vim' "${HOME}/.bashrc" && echo "$SHELL" | grep -q 'bash'; then
+        echo "alias vim=\"$NVIM_PATH\"" >> "${HOME}/.bashrc"
+        echo "alias vimdiff=\"$NVIM_PATH -d\"" >> "${HOME}/.bashrc"
+        echo "export PATH=${HOME}/.local/bin:/usr/local/bin/:\$PATH" >> "${HOME}/.bashrc"
+        source "$HOME/.bashrc"
+    else
+        echo "Add: alias vim=$NVIM_PATH into your shell rc file"
     fi
 
     alias nvim=$NVIM_PATH
@@ -96,15 +95,20 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
         if ! command -v npm ; then
             echo "Setup NodeJS"
             if [ "${USER_NODEJS}" = "true" ]; then
-                sudo yum install -y xz
-                mkdir -p "${HOME}/.local"
-                curl -LO https://nodejs.org/dist/v17.1.0/node-v17.1.0-linux-x64.tar.xz
-                tar xaf node-v17.1.0-linux-x64.tar.xz && \
-                    mv node-v17.1.0-linux-x64 "${HOME}/.local/nodejs" && \
-                    rm node-v17.1.0-linux-x64.tar.xz && \
-                    ln -sf "${HOME}/.local/nodejs/bin/npm" "${HOME}/.local/bin/npm" && \
-                    ln -sf "${HOME}/.local/nodejs/bin/node" "${HOME}/.local/bin/node"
-                cd -
+                if [ -f "${HOME}/.local/nodejs/bin/npm" ]; then
+                    export PATH=${HOME}/.local/bin:/usr/local/bin/:$PATH
+                else
+                    sudo yum install -y xz
+                    mkdir -p "${HOME}/.local"
+                    curl -LO https://nodejs.org/dist/v17.1.0/node-v17.1.0-linux-x64.tar.xz
+                    tar xaf node-v17.1.0-linux-x64.tar.xz ; \
+                        mv node-v17.1.0-linux-x64 "${HOME}/.local/nodejs" ; \
+                        rm node-v17.1.0-linux-x64.tar.xz ; \
+                        mkdir -p "${HOME}/.local/bin"; \
+                        ln -s "${HOME}/.local/nodejs/bin/npm" "${HOME}/.local/bin/npm" ; \
+                        ln -s "${HOME}/.local/nodejs/bin/node" "${HOME}/.local/bin/node"
+                    cd -
+                fi
             else
                 export LC_ALL=en_US.UTF-8
                 # NOTE: it install lts nodejs version without prompt

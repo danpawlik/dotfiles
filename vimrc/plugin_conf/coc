@@ -1,4 +1,4 @@
-let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-stylelintplus", "coc-snippets", "coc-sh", "coc-react-refactor", "coc-python", "coc-pyright", "coc-prettier", "coc-pairs", "coc-markdownlint", "coc-json", "coc-jedi", "coc-html", "coc-html-css-support", "coc-go", "coc-git", "coc-eslint", "coc-docker", "coc-marketplace" ]
+let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-stylelintplus", "coc-snippets", "coc-sh", "coc-react-refactor", "coc-pyright", "coc-prettier", "coc-pairs", "coc-markdownlint", "coc-json", "coc-jedi", "coc-html", "coc-html-css-support", "coc-go", "coc-git", "coc-eslint", "coc-docker", "coc-marketplace" ]
 
 " Disable coc reason
 " coc-reason
