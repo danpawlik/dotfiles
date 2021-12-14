@@ -101,13 +101,19 @@ if [ "$CONFIGURE_VIM" = "true" ]; then
                     sudo yum install -y xz
                     mkdir -p "${HOME}/.local"
                     curl -LO https://nodejs.org/dist/v17.1.0/node-v17.1.0-linux-x64.tar.xz
+                    curl -LO https://yarnpkg.com/latest.tar.gz
                     tar xaf node-v17.1.0-linux-x64.tar.xz ; \
                         mv node-v17.1.0-linux-x64 "${HOME}/.local/nodejs" ; \
                         rm node-v17.1.0-linux-x64.tar.xz ; \
                         mkdir -p "${HOME}/.local/bin"; \
                         ln -s "${HOME}/.local/nodejs/bin/npm" "${HOME}/.local/bin/npm" ; \
-                        ln -s "${HOME}/.local/nodejs/bin/node" "${HOME}/.local/bin/node"
+                        ln -s "${HOME}/.local/nodejs/bin/node" "${HOME}/.local/bin/node" ; \
+                        mkdir -p "${HOME}/.local/yarn" ; \
+                        tar xaf latest.tar.gz  -C "${HOME}/.local/yarn" --strip-components 1 ; \
+                        rm latest.tar.gz ; \
+                        ln -s "${HOME}/.local/yarn/bin/yarn" "${HOME}/.local/bin/yarn"
                     cd -
+                    export PATH=${HOME}/.local/bin:/usr/local/bin/:$PATH
                 fi
             else
                 export LC_ALL=en_US.UTF-8
