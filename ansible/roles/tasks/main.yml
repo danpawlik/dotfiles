@@ -1,0 +1,43 @@
+---
+- name: Clone dotfiles repo
+  include_tasks: repo.yml
+
+- name: Install common packages
+  include_tasks: common.yml
+  when: "'common' in components"
+
+- name: Configure vim
+  include_tasks: vim.yml
+  when: "'vim' in components"
+
+- name: Configure zsh
+  include_tasks: zsh.yml
+  when: "'zsh' in components"
+
+- name: Configure tmux
+  include_tasks: tmux.yml
+  when: "'tmux' in components"
+
+- name: Configure adb
+  include_tasks: adb.yml
+  when: "'adb' in components"
+
+- name: Configure emacs
+  include_tasks: emacs.yml
+  when: "'emacs' in components"
+
+- name: Configure fzf
+  include_tasks: fzf.yml
+  when: "'fzf' in components"
+
+- name: Configure alacritty
+  include_tasks: alacritty.yml
+  when: "'alacritty' in components"
+
+- name: Configure git
+  include_tasks: git.yml
+  when: "'git' in components"
+
+- name: Configure system
+  include_tasks: system.yml
+  when: "'system' in components"

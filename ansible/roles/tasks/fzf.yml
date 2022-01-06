@@ -1,0 +1,12 @@
+---
+- name: Clone fzf repo
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: /tmp/fzf
+    depth: 1
+
+- name: Setup fzf
+  shell: |
+    ./install --all
+  args:
+    chdir: /tmp/fzf

@@ -1,0 +1,252 @@
+---
+- name: Copy vim config
+  copy:
+    src: /tmp/dotfiles/vimrc/init.vim
+    dest: ~/.vimrc
+    remote_src: true
+
+- name: Install vim-plug
+  shell: |
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+- name: Copy config files
+  copy:
+    src: "/tmp/dotfiles/vimrc/{{ item }}"
+    dest: "~/.vim/{{ item }}"
+    remote_src: true
+    recurse: true
+  loop:
+    - "general.vim"
+    - "plugins_conf.vim"
+    - "plugins.vim"
+    - "plugin_conf"
+
+- name: Copy vimrc file
+  copy:
+    src: "/tmp/dotfiles/vimrc/init.vim"
+    dest: "~/.vimrc"
+    remote_src: true
+
+- name: Setup Neovim
+  block:
+    - name: Create neovim dir
+      file:
+        path: ~/.local/nvim
+        state: directory
+        recurse: true
+
+    - name: Download Neovim appimage
+      shell: |
+        curl -L "https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim.appimage" -o /tmp/nvim.appimage
+        cd /tmp/
+        chmod u+x /tmp/nvim.appimage
+        ./nvim.appimage --appimage-extract
+
+    - name: Copy extracted appimage to local dir
+      copy:
+        src: /tmp/squashfs-root
+        dest: ~/.local/nvim
+        recurse: true
+        remote_src: true
+
+    - name: Create symbolic link between vimrc and nvim init
+      file:
+        src: ~/.vimrc
+        dest: ~/.local/nvim/init.vim
+        state: link
+  when: vim_distro == 'neovim'
+
+# Copy vim config files and run plugged
+- name: Configure plugin for YouCompleteMe
+  block:
+    - name: Uncomment ycm in vimrc
+      lineinfile:
+        path: ~/.vimrc
+        regexp: ".*ycm"
+        line: "source $HOME/.vim/plugin_conf/ycm"
+
+    - name: Uncomment ycm in vim plugins file
+      lineinfile:
+        path: ~/.vim/plugins.vim
+        regexp: ".*YouCompleteMe"
+        line: "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }"
+  when: vim_config == 'ycm'
+
+- name: Configure plugin for COC
+  block:
+    - name: Uncomment coc in vimrc
+      lineinfile:
+        path: ~/.vimrc
+        regexp: ".*coc"
+        line: "source $HOME/.vim/plugin_conf/coc"
+
+    - name: Uncomment coc in vim plugins file
+      lineinfile:
+        path: ~/.vim/plugins.vim
+        regexp: ".*coc"
+        line: "Plug 'neoclide/coc.nvim', { 'branch': 'release' }"
+  when: vim_config == 'coc'
+
+- name: Check if NodeJS is already available
+  environment:
+    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
+  shell: |
+    npm --version
+  register: npm_version
+  ignore_errors: true
+
+- name: Setup NodeJS
+  block:
+    - name: Ensure local dir exists
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: true
+      loop:
+        - "~/.local/bin"
+        - "~/.local/yarn"
+
+
+    - name: Install xz package
+      become: true
+      package:
+        name: xz
+        state: present
+
+    - name: Install npm to user space
+      shell: |
+        curl -fLo ~/.local/node-{{ nodejs_version }}-linux-x64.tar.xz https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz
+        curl -fLo ~/.local/latest.tar.gz https://yarnpkg.com/latest.tar.gz
+        tar xaf node-{{ nodejs_version }}-linux-x64.tar.xz
+        tar xaf latest.tar.gz  -C "~/.local/yarn" --strip-components 1
+        rm latest.tar.gz
+        rm node-{{ nodejs_version }}-linux-x64.tar.xz
+      args:
+        chdir: ~/.local
+
+    - name: Create symlinks
+      file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        state: link
+      loop:
+        - src: "~/.local/nodejs/bin/npm"
+          dest: "~/.local/bin/npm"
+        - src: "~/.local/nodejs/bin/node"
+          dest: "~/.local/bin/node"
+        - src: "~/.local/yarn/bin/yarn"
+          dest: "~/.local/bin/yarn"
+  when: npm_version.rc != 0 and nodejs_userspace
+
+- name: Install nodejs package
+  block:
+    - name: Configure NodeJS repo - Centos 7
+      become: true
+      shell: |
+        curl --silent --location https://rpm.nodesource.com/setup_14.x | bash
+      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
+
+    - name: Install NodeJS
+      become: true
+      package:
+        name: nodejs
+        state: present
+  when: npm_version.rc != 0 and not nodejs_userspace
+
+### YCM ###
+- name: Configure YouCompleteMe
+  environment:
+    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
+  block:
+    - name: Install additional packages
+      become: true
+      package:
+        name:
+          - automake
+          - gcc
+          - gcc-c++
+          - kernel-devel
+          - cmake
+          - make
+          - python3-devel
+          - golang
+        state: present
+
+    - name: Install packages when Centos 7
+      become: true
+      package:
+        name:
+          - devtoolset-8
+          - centos-release-scl
+          - cmake
+          - scl-utils
+        state: present
+      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
+
+    - name: Install vim plugins - vim
+      shell: |
+        vim +PlugInstall +qall
+      when: vim_distro == 'vim'
+
+    - name: Install vim plugins - neovim
+      shell: |
+        ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
+      when: vim_distro == 'neovim'
+
+    - name: Install YCM on Centos 7
+      shell: |
+        scl enable devtoolset-8 - << \EOF
+          ~/.vim/plugged/YouCompleteMe/install.py --all
+        EOF
+      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
+
+    - name: Install YCM on Centos 8 and later
+      shell: |
+        ~/.vim/plugged/YouCompleteMe/install.py --all
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Fedora' and ansible_lsb.major_release|int >= 8
+  when: vim_config == 'ycm'
+
+### COC ###
+- name: Configure vim coc
+  environment:
+    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
+  block:
+    - name: Install vim plugins - vim
+      shell: |
+        vim +PlugInstall +qall
+      when: vim_distro == 'vim'
+
+    - name: Install vim plugins - neovim
+      shell: |
+        ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
+      when: vim_distro == 'neovim'
+  when: vim_config == 'coc'
+
+- name: Install additional packages for vim
+  pip:
+    name:
+      - types-PyYAML
+      - types-requests
+      - pylama
+      - neovim
+      - mypy
+      - pynvim
+      - rstcheck
+      - proselint
+      - gitlint
+      - ansible-lint
+      - black
+      - yapf
+      - vim-vint
+      - yamllint
+      - jedi
+      - pylint
+    extra_args: --user
+  when: pip_packages
+
+- name: Install additional npm packages
+  become: true
+  environment:
+    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
+  shell: |
+    npm install -g prettier eslint

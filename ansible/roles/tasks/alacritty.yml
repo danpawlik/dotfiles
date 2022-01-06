@@ -1,0 +1,12 @@
+---
+- name: Install alacritty
+  become: true
+  package:
+    name: alacritty
+    state: present
+
+- name: Copy alacritty config
+  copy:
+    src: /tmp/dotfiles/alacritty
+    dest: ~/.config/
+    remote_src: true

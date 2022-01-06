@@ -1,0 +1,15 @@
+---
+- name: Clone tmux package manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+
+- name: Copy tmux config
+  copy:
+    src: /tmp/dotfiles/tmux
+    dest: ~/.tmux
+    remote_src: true
+
+- name: Configure tmux
+  shell: |
+    bash ~/.tmux/plugins/tpm/bin/install_plugins

@@ -1,0 +1,11 @@
+---
+- name: Install git package
+  become: true
+  package:
+    name: git
+    state: present
+
+- name: Clone dotfiles repo
+  git:
+    repo: https://github.com/danpawlik/dotfiles
+    dest: /tmp/dotfiles

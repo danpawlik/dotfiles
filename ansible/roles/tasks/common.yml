@@ -1,0 +1,101 @@
+---
+- name: Configure host when Fedora
+  become: true
+  block:
+    - name: Tune DNF
+      lineinfile:
+        path: /etc/dnf/dnf.conf
+        regexp: "^{{ item.param }}"
+        line: "{{ item.param }}={{ item.value }}"
+      loop:
+        - param: fastestmirror
+          value: True
+        - param: max_parallel_downloads
+          value: 8
+
+    - name: Install rpmfusion
+      package:
+        name:
+          - "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+          - "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+        state: present
+      when: enable_rpmfusion
+
+    - name: Install basic packages
+      package:
+        name: common_packages
+        state: latest
+      when: common_packages
+
+    - name: Install KDE packages
+      package:
+        name: kde_packages
+        state: latest
+      when: kde_packages
+
+    - name: Install GNOME packages
+      package:
+        name: gnome_packages
+        state: latest
+      when: gnome_packages
+
+    - name: Install dev packages
+      package:
+        name: dev_packages
+        state: latest
+      when: dev_packages
+
+    - name: Remove packages
+      package:
+        name: remove_packages
+        state: absent
+      when: remove_packages
+
+    - name: Install npm packages
+      shell: |
+        npm install -g {{ npm_packages }}
+      when: npm_packages
+
+  when: ansible_distribution == 'Fedora'
+
+- name: Install pip packages in user space
+  pip:
+    name: pip_packages
+    extra_args: --user
+  when: pip_packages
+
+- name: Install nerd fonts
+  block:
+    - name: Create font directory
+      file:
+        path: ~/.local/share/fonts
+        state: directory
+
+    - name: Clone nerd fonts
+      git:
+        repo: https://github.com/ryanoasis/nerd-fonts
+        dest: /tmp/nerd-fonts
+        depth: 1
+
+    - name: Download nerd fonts - small
+      shell: |
+        ./install.sh {{ item }}
+      args:
+        chdir: /tmp/nerd-fonts
+      loop:
+        - SourceCodePro
+        - RobotoMono
+        - DroidSansMono
+        - Hack
+        - FiraCode
+        - FiraMono
+        - Iosevka
+      when: nerd_fonts == 'small'
+
+    - name: Download nerd fonts - full
+      shell: |
+        ./install.sh -M -O -S
+      args:
+        chdir: /tmp/nerd-fonts
+      when: nerd_fonts == 'full'
+  when: enable_nerd_fonts

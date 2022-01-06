@@ -1,0 +1,44 @@
+---
+- name: Disable Wireless powersave
+  become: true
+  block:
+    - name: Create NetworkManager conf.d dir
+      file:
+        path: /etc/NetworkManager/conf.d
+        state: directory
+
+    - name: Disable power save for Wireless device
+      copy:
+        content: |
+          [connection]
+          wifi.powersave = 2
+        dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+  when: wifi_disable_powersave
+
+- name: Configure powertop service
+  become: true
+  block:
+    - name: Create service file
+      copy:
+        content: |
+          [Unit]
+          Description=PowerTOP auto tune
+
+          [Service]
+          Type=oneshot
+          Environment="TERM=dumb"
+          RemainAfterExit=true
+          ExecStart=/usr/sbin/powertop --auto-tune
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/powertop.service
+
+    - name: Enable powertop service
+      service:
+        name: powertop
+        state: started
+        enabled: true
+        daemon-reload: true
+
+  when: enable_powertop

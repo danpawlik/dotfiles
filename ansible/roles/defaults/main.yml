@@ -1,0 +1,108 @@
+---
+components: []
+
+enable_rpmfusion: true
+enable_nerd_fonts: true
+# small or full
+nerd_fonts: small
+
+# available: prezto, starship, oh_my_zsh
+zsh_distro: oh_my_zsh
+
+vim_distro: neovim
+vim_config: coc
+
+# it install nodejs into ~/.local/nodejs
+nodejs_userspace: true
+nodejs_version: v17.1.0
+
+wifi_disable_powersave: true
+enable_powertop: false
+
+common_packages:
+    - alacritty
+    - axel
+    - bzip2
+    - ccze
+    - curl
+    - dnf-plugins-core
+    - fd-find
+    - fwupd
+    - glances
+    - gnupg
+    - htop
+    - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    - iperf3
+    - keepassxc
+    - libavif-tools
+    - lshw
+    - marked
+    - mumble
+    - p7zip
+    - pavucontrol
+    - pinta
+    - powertop
+    - ripgrep
+    - rsync
+    - ShellCheck
+    - sudo
+    - tmux
+    - unzip
+    - util-linux-user
+    - vim-enhanced
+    - vlc
+    - wavemon
+    - xz
+    - zsh
+    - zstd
+
+dev_packages:
+  - "@development-tools"
+  - git
+  - libvirt
+  - nodejs
+  - podman
+  - podman-docker
+  - python3-devel
+  - python3-pip
+  - qemu
+  - virt-manager
+
+remove_packages:
+  - elisa-player
+  - nano
+
+kde_packages: []
+gnome_packages:
+  - gnome-backgrounds-extras
+  - gnome-tweaks
+  - variety
+
+pip_packages:
+  - ansiblelint
+  - black
+  - docutils
+  - elasticsearch
+  - flake8
+  - gitreview
+  - ipdb
+  - jedi
+  - jinjalint
+  - mypy
+  - neovim
+  - numpy
+  - openstackclient
+  - pandoc
+  - pdbpp
+  - pyflakes
+  - pylint
+  - pynvim
+  - remote_pdb
+  - tox
+  - virtualenv
+  - yamllint
+  - zuulfmt
+
+npm_packages:
+  - pnpm
+  - prettier

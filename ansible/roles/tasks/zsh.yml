@@ -1,0 +1,49 @@
+---
+- name: Configure Prezto ZSH
+  shell: echo "Prezto ZSH will be done soon"
+  when: zsh_distro == 'prezto'
+
+- name: Configure starship ZSH
+  shell: echo "Prezto starship will be done soon"
+  when: zsh_distro == 'starship'
+
+- name: Configure Oh My ZSH
+  shell: |
+    curl -SL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | bash
+
+- name: Copy powerlevel10k config file
+  copy:
+    src: /tmp/dotfiles/powerlevel10k/.p10k.zsh
+    dest: ~/.p10k.zsh
+    remote_src: true
+
+- name: Clone powerlevel10k deps
+  git:
+    repo: https://github.com/romkatv/powerlevel10k
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+    depth: 1
+
+- name: Clone autosugestions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+- name: Copy zsh config files
+  copy:
+    src: "/tmp/dotfiles/oh_my_zsh/{{ item }}"
+    dest: ~/{{ item }}
+    remote_src: true
+  loop:
+    - ".zsh_ohmyzsh"
+    - ".zshrc"
+
+- name: Change user shell to ZSH
+  become: true
+  shell: |
+    usermod --shell /bin/zsh {{ ansible_user }}
+
+- name: Add PATH to zshrc
+  lineinfile:
+    path: ~/.zshrc
+    regexp: "export PATH"
+    line: "export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"

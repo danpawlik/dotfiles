@@ -1,0 +1,10 @@
+---
+- name: Setup dotfiles
+  hosts: localhost
+  vars:
+    components:
+      - common
+      - vim
+      - tmux
+  roles:
+    - dotfiles
