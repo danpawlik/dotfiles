@@ -5,8 +5,14 @@
     dest: ~/.emacs.d
     depth: 1
 
+- name: Install emacs
+  become: true
+  yum:
+    name: emacs
+    state: present
+
 - name: Install doom emacs
   shell: |
-    ~/.emacs.d/bin/doom install
+    ~/.emacs.d/bin/doom -y install
   args:
     chdir: ~/.emacs.d

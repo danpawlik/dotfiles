@@ -6,6 +6,10 @@
   include_tasks: common.yml
   when: "'common' in components"
 
+- name: Install nerd fonts
+  include_tasks: nerdfonts.yml
+  when: "'nerdfonts' in components"
+
 - name: Configure vim
   include_tasks: vim.yml
   when: "'vim' in components"

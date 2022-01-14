@@ -1,4 +1,4 @@
-export PATH=$HOME/.local/bin/:$PATH
+export PATH=~/.local/bin:/usr/local/bin:$PATH
 export LANG=en_US.UTF-8
 
 # Disable beep in xorg
@@ -33,3 +33,5 @@ unsetopt correct_all
 ## Exit code
 #PROMPT='%{%f%k%b%}%{%K{${bkg}}%B%F{red}%}%n%{%B%F{blue}%}@%{%B%F{green}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}$ '
 #RPROMPT='[%F{cyan}%?%f]'
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

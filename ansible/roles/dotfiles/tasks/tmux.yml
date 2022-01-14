@@ -6,8 +6,8 @@
 
 - name: Copy tmux config
   copy:
-    src: /tmp/dotfiles/tmux
-    dest: ~/.tmux
+    src: /tmp/dotfiles/tmux/.tmux.conf
+    dest: ~/.tmux.conf
     remote_src: true
 
 - name: Configure tmux

@@ -13,89 +13,63 @@
         - param: max_parallel_downloads
           value: 8
 
+    - name: Update packages
+      yum:
+        name: "*"
+        state: latest
+
     - name: Install rpmfusion
-      package:
+      yum:
         name:
           - "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
           - "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
         state: present
+        disable_gpg_check: "{{ disable_gpg_check }}"
       when: enable_rpmfusion
 
     - name: Install basic packages
-      package:
-        name: common_packages
+      yum:
+        name: "{{ common_packages }}"
         state: latest
+        disable_gpg_check: "{{ disable_gpg_check }}"
       when: common_packages
 
     - name: Install KDE packages
-      package:
-        name: kde_packages
+      yum:
+        name: "{{ kde_packages }}"
         state: latest
-      when: kde_packages
+        disable_gpg_check: "{{ disable_gpg_check }}"
+      when: kde_packages and desktop_env == 'kde'
 
     - name: Install GNOME packages
-      package:
-        name: gnome_packages
+      yum:
+        name: "{{ gnome_packages }}"
         state: latest
-      when: gnome_packages
+        disable_gpg_check: "{{ disable_gpg_check }}"
+      when: gnome_packages and desktop_env == 'gnome'
 
     - name: Install dev packages
-      package:
-        name: dev_packages
+      yum:
+        name: "{{ dev_packages }}"
         state: latest
+        disable_gpg_check: "{{ disable_gpg_check }}"
       when: dev_packages
 
     - name: Remove packages
-      package:
-        name: remove_packages
+      yum:
+        name: "{{ remove_packages }}"
         state: absent
+        disable_gpg_check: "{{ disable_gpg_check }}"
       when: remove_packages
 
     - name: Install npm packages
-      shell: |
-        npm install -g {{ npm_packages }}
+      shell: "npm install -g {{ npm_packages | join(' ') }}"
       when: npm_packages
 
   when: ansible_distribution == 'Fedora'
 
 - name: Install pip packages in user space
   pip:
-    name: pip_packages
+    name: "{{ pip_packages }}"
     extra_args: --user
   when: pip_packages
-
-- name: Install nerd fonts
-  block:
-    - name: Create font directory
-      file:
-        path: ~/.local/share/fonts
-        state: directory
-
-    - name: Clone nerd fonts
-      git:
-        repo: https://github.com/ryanoasis/nerd-fonts
-        dest: /tmp/nerd-fonts
-        depth: 1
-
-    - name: Download nerd fonts - small
-      shell: |
-        ./install.sh {{ item }}
-      args:
-        chdir: /tmp/nerd-fonts
-      loop:
-        - SourceCodePro
-        - RobotoMono
-        - DroidSansMono
-        - Hack
-        - FiraCode
-        - FiraMono
-        - Iosevka
-      when: nerd_fonts == 'small'
-
-    - name: Download nerd fonts - full
-      shell: |
-        ./install.sh -M -O -S
-      args:
-        chdir: /tmp/nerd-fonts
-      when: nerd_fonts == 'full'
-  when: enable_nerd_fonts

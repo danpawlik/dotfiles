@@ -1,0 +1,8 @@
+---
+- name: Setup dotfiles - just vim
+  hosts: localhost
+  vars:
+    components:
+      - vim
+  roles:
+    - dotfiles

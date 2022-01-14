@@ -1,0 +1,60 @@
+- name: Install nerd fonts
+  block:
+    - name: Create font directory
+      file:
+        path: ~/.local/share/fonts
+        state: directory
+
+    - name: Install full version of nerd fonts
+      block:
+        - name: Clone nerd fonts
+          git:
+            repo: https://github.com/ryanoasis/nerd-fonts
+            dest: /tmp/nerd-fonts
+            depth: 1
+
+        - name: Download nerd fonts - full
+          shell: |
+            ./install.sh -M -O -S
+          args:
+            chdir: /tmp/nerd-fonts
+
+      when: nerd_fonts_pack == 'full'
+
+    - name: Install small version of nerd fonts
+      block:
+        - name: Create temp font directory
+          file:
+            path: /tmp/fonts
+            state: directory
+
+        - name: Download fonts
+          get_url:
+            url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}/{{ item }}.zip"
+            dest: /tmp/
+          loop: "{{ nerd_fonts }}"
+
+        - name: Unzip fonts
+          shell: |
+            unzip /tmp/{{ item }}.zip -d /tmp/fonts
+          loop: "{{ nerd_fonts }}"
+
+        - name: Remove windows fonts
+          shell: |
+            find /tmp/fonts -name "*Windows*" -delete
+
+        - name: Move fonts
+          shell: |
+            mv /tmp/fonts/* ~/.local/share/fonts/
+
+        - name: Remove archives
+          file:
+            path: /tmp/{{ item }}.zip
+            state: absent
+          loop: "{{ nerd_fonts }}"
+
+      when: nerd_fonts_pack == 'small'
+
+- name: Update font cache
+  shell: |
+    fc-cache -fv

@@ -24,10 +24,13 @@ If you want to install some other vim distribution, that works well on `neovim` 
 * [Janus](https://github.com/carlhuda/janus)
 * [spf13](https://github.com/spf13/spf13-vim)
 
-Just run:
+
+## Use ansible to install dotfiles
 
 ```shell
-curl -SL https://raw.githubusercontent.com/danpawlik/dotfiles/master/setup-vim.sh | CONFIGURE_VIM=false bash
+sudo yum install -y git ansible ssh-server
+git clone https://github.com/danpawlik/dotfiles
+ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/dotfiles.yml
 ```
 
 ## ZSH and others

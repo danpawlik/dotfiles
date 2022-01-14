@@ -2,9 +2,19 @@
 - name: Setup dotfiles
   hosts: localhost
   vars:
+    disable_gpg_check: true
+    desktop_env: kde
     components:
+      - git
       - common
+      - nerdfonts
       - vim
+      - emacs
       - tmux
+      - alacritty
+      - fzf
+      - zsh
+      - git
+      - system
   roles:
     - dotfiles

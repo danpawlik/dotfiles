@@ -5,21 +5,34 @@
     dest: ~/.vimrc
     remote_src: true
 
-- name: Install vim-plug
+- name: Install vim-plug no metter what distro
   shell: |
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+- name: Create vim directory
+  file:
+    path: ~/.vim/plugin_conf
+    state: directory
+    recurse: true
 
 - name: Copy config files
   copy:
     src: "/tmp/dotfiles/vimrc/{{ item }}"
     dest: "~/.vim/{{ item }}"
     remote_src: true
-    recurse: true
   loop:
     - "general.vim"
     - "plugins_conf.vim"
     - "plugins.vim"
-    - "plugin_conf"
+
+- name: Copy config files for vim_config
+  copy:
+    src: "/tmp/dotfiles/vimrc/plugin_conf/{{ item }}"
+    dest: "~/.vim/plugin_conf/{{ item }}"
+    remote_src: true
+  loop:
+    - "ycm"
+    - "coc"
 
 - name: Copy vimrc file
   copy:
@@ -29,31 +42,45 @@
 
 - name: Setup Neovim
   block:
-    - name: Create neovim dir
-      file:
-        path: ~/.local/nvim
-        state: directory
-        recurse: true
+    - name: Install vim-plug - neovim
+      shell: |
+        curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      when: vim_distro == 'neovim'
 
     - name: Download Neovim appimage
       shell: |
-        curl -L "https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim.appimage" -o /tmp/nvim.appimage
-        cd /tmp/
-        chmod u+x /tmp/nvim.appimage
+        curl -L "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage" -o /tmp/nvim.appimage ;
+        cd /tmp/;
+        chmod u+x /tmp/nvim.appimage ;
         ./nvim.appimage --appimage-extract
 
-    - name: Copy extracted appimage to local dir
-      copy:
-        src: /tmp/squashfs-root
-        dest: ~/.local/nvim
-        recurse: true
-        remote_src: true
+    - name: Create local dir if not exists
+      file:
+        path: ~/.local
+        state: directory
+
+    - name: Copy extracted neovim and make symlink to local bin
+      shell: |
+        cp -a /tmp/squashfs-root/ ~/.local/nvim
 
     - name: Create symbolic link between vimrc and nvim init
       file:
         src: ~/.vimrc
-        dest: ~/.local/nvim/init.vim
+        dest: ~/.config/nvim/init.vim
         state: link
+
+    - name: Create symlink neovim to local bin
+      file:
+        src: ~/.local/nvim/usr/bin/nvim
+        dest: ~/.local/bin/nvim
+        state: link
+
+    - name: Create symlink from neovim to vim
+      file:
+        src: ~/.local/nvim/usr/bin/nvim
+        dest: ~/.local/bin/vim
+        state: link
+
   when: vim_distro == 'neovim'
 
 # Copy vim config files and run plugged
@@ -105,7 +132,7 @@
       loop:
         - "~/.local/bin"
         - "~/.local/yarn"
-
+        - "~/.local/nodejs"
 
     - name: Install xz package
       become: true
@@ -117,8 +144,8 @@
       shell: |
         curl -fLo ~/.local/node-{{ nodejs_version }}-linux-x64.tar.xz https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz
         curl -fLo ~/.local/latest.tar.gz https://yarnpkg.com/latest.tar.gz
-        tar xaf node-{{ nodejs_version }}-linux-x64.tar.xz
-        tar xaf latest.tar.gz  -C "~/.local/yarn" --strip-components 1
+        tar xaf node-{{ nodejs_version }}-linux-x64.tar.xz --strip-components 1 -C ~/.local/nodejs
+        tar xaf latest.tar.gz --strip-components 1 -C ~/.local/yarn
         rm latest.tar.gz
         rm node-{{ nodejs_version }}-linux-x64.tar.xz
       args:
@@ -136,7 +163,7 @@
           dest: "~/.local/bin/node"
         - src: "~/.local/yarn/bin/yarn"
           dest: "~/.local/bin/yarn"
-  when: npm_version.rc != 0 and nodejs_userspace
+  when: npm_version.rc != 0 or nodejs_userspace
 
 - name: Install nodejs package
   block:

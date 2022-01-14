@@ -9,7 +9,7 @@
 
 - name: Configure Oh My ZSH
   shell: |
-    curl -SL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | bash
+    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
 - name: Copy powerlevel10k config file
   copy:
@@ -39,8 +39,7 @@
 
 - name: Change user shell to ZSH
   become: true
-  shell: |
-    usermod --shell /bin/zsh {{ ansible_user }}
+  shell: usermod --shell /bin/zsh $(whoami)
 
 - name: Add PATH to zshrc
   lineinfile:

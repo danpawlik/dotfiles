@@ -4,13 +4,23 @@ components: []
 enable_rpmfusion: true
 enable_nerd_fonts: true
 # small or full
-nerd_fonts: small
+nerd_fonts_pack: small
+nerd_fonts_version: v2.1.0
+nerd_fonts:
+  - SourceCodePro
+  - RobotoMono
+  - DroidSansMono
+  - Hack
+  - FiraCode
+  - FiraMono
+  - Iosevka
 
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
 
 vim_distro: neovim
 vim_config: coc
+nvim_version: nightly
 
 # it install nodejs into ~/.local/nodejs
 nodejs_userspace: true
@@ -79,12 +89,11 @@ gnome_packages:
   - variety
 
 pip_packages:
-  - ansiblelint
   - black
   - docutils
   - elasticsearch
   - flake8
-  - gitreview
+  - git-review
   - ipdb
   - jedi
   - jinjalint
