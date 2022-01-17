@@ -28,7 +28,7 @@ If you want to install some other vim distribution, that works well on `neovim` 
 ## Use ansible to install dotfiles
 
 ```shell
-sudo yum install -y git ansible ssh-server
+sudo yum install -y git ansible
 git clone https://github.com/danpawlik/dotfiles
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/dotfiles.yml
 ```

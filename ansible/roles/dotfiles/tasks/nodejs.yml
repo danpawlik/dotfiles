@@ -1,0 +1,66 @@
+---
+- name: Check if NodeJS is already available
+  environment:
+    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
+  shell: |
+    npm --version
+  register: npm_version
+  ignore_errors: true
+
+- name: Setup NodeJS
+  block:
+    - name: Ensure local dir exists
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: true
+      loop:
+        - "~/.local/bin"
+        - "~/.local/yarn"
+        - "~/.local/nodejs"
+
+    - name: Install xz package
+      become: true
+      package:
+        name: xz
+        state: present
+
+    - name: Install npm to user space
+      shell: |
+        curl -fLo ~/.local/node-{{ nodejs_version }}-linux-x64.tar.xz https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz
+        curl -fLo ~/.local/latest.tar.gz https://yarnpkg.com/latest.tar.gz
+        tar xaf node-{{ nodejs_version }}-linux-x64.tar.xz --strip-components 1 -C ~/.local/nodejs
+        tar xaf latest.tar.gz --strip-components 1 -C ~/.local/yarn
+        rm latest.tar.gz
+        rm node-{{ nodejs_version }}-linux-x64.tar.xz
+      args:
+        chdir: ~/.local
+
+    - name: Create symlinks
+      file:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        state: link
+      loop:
+        - src: "~/.local/nodejs/bin/npm"
+          dest: "~/.local/bin/npm"
+        - src: "~/.local/nodejs/bin/node"
+          dest: "~/.local/bin/node"
+        - src: "~/.local/yarn/bin/yarn"
+          dest: "~/.local/bin/yarn"
+  when: npm_version.rc != 0 or nodejs_userspace
+
+- name: Install nodejs package
+  block:
+    - name: Configure NodeJS repo - Centos 7
+      become: true
+      shell: |
+        curl --silent --location https://rpm.nodesource.com/setup_14.x | bash
+      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
+
+    - name: Install NodeJS
+      become: true
+      package:
+        name: nodejs
+        state: present
+  when: npm_version.rc != 0 and not nodejs_userspace

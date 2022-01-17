@@ -2,8 +2,9 @@
 font:
   size: 8
   # The normal (roman) font face to use.
+  # family: Fira Code
   normal:
-    family: Fira Code
+    family: Source Code Pro
     style: Regular
 
 # https://github.com/mbadolato/iTerm2-Color-Schemes/

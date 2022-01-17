@@ -3,6 +3,7 @@
   hosts: localhost
   vars:
     components:
+      - nodejs
       - vim
   roles:
     - dotfiles

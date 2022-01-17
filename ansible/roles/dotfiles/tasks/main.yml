@@ -10,6 +10,10 @@
   include_tasks: nerdfonts.yml
   when: "'nerdfonts' in components"
 
+- name: Configure nodejs
+  include_tasks: nodejs.yml
+  when: "'nodejs' in components"
+
 - name: Configure vim
   include_tasks: vim.yml
   when: "'vim' in components"

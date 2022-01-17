@@ -1,15 +1,13 @@
 ---
-- name: Configure Prezto ZSH
-  shell: echo "Prezto ZSH will be done soon"
-  when: zsh_distro == 'prezto'
-
-- name: Configure starship ZSH
-  shell: echo "Prezto starship will be done soon"
-  when: zsh_distro == 'starship'
+- name: Check if oh my zsh already exists
+  stat:
+    path: ~/.oh-my-zsh
+  register: _omz_status
 
 - name: Configure Oh My ZSH
   shell: |
-    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+  when: not _omz_status.stat.exists
 
 - name: Copy powerlevel10k config file
   copy:
@@ -39,7 +37,9 @@
 
 - name: Change user shell to ZSH
   become: true
-  shell: usermod --shell /bin/zsh $(whoami)
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
 
 - name: Add PATH to zshrc
   lineinfile:

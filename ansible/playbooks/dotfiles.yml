@@ -8,6 +8,7 @@
       - git
       - common
       - nerdfonts
+      - nodejs
       - vim
       - emacs
       - tmux
