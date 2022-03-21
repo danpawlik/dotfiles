@@ -5,7 +5,7 @@ let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-stylelintplus", "
 
 let g:coc_user_config = {}
 let g:coc_user_config['languageserver'] = {}
-let g:coc_user_config['coc.preferences.formatOnSaveFiletypes'] = ['go', 'python', 'sh']
+let g:coc_user_config['coc.preferences.formatOnSaveFiletypes'] = ['go']
 let g:coc_user_config['suggest.floatEnable'] = v:false
 let g:coc_user_config['suggest.enablePreview'] = v:true
 let g:coc_user_config['diagnostic.checkCurrentLine'] = v:true

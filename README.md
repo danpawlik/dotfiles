@@ -1,4 +1,5 @@
 # My dotfiles
+
 My dotfiles configurtion.
 
 ## Vim configuration
@@ -24,13 +25,34 @@ If you want to install some other vim distribution, that works well on `neovim` 
 * [Janus](https://github.com/carlhuda/janus)
 * [spf13](https://github.com/spf13/spf13-vim)
 
-
 ## Use ansible to install dotfiles
 
 ```shell
 sudo yum install -y git ansible
 git clone https://github.com/danpawlik/dotfiles
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/dotfiles.yml
+```
+
+### Use ansible to install vim
+
+```shell
+sudo yum install -y git ansible
+git clone https://github.com/danpawlik/dotfiles
+ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/vim.yml
+```
+
+When you have an error:
+
+```shell
+No "python3" provider found. Run ":checkhealth provider"
+```
+
+Install `pynvim` package into python user environment for all Python3 releases.
+For example:
+
+```shell
+python3.10 -m pip install --user pynvim
+python3.9 -m pip install --user pynvim
 ```
 
 ## ZSH and others

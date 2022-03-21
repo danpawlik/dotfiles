@@ -12,6 +12,8 @@
           value: True
         - param: max_parallel_downloads
           value: 8
+        - param: minrate
+          value: 10M
 
     - name: Update packages
       yum:
