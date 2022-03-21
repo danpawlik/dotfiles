@@ -24,3 +24,5 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 unsetopt correct_all
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock

@@ -42,3 +42,7 @@
         daemon-reload: true
 
   when: enable_powertop
+
+- name: Enable podman socket
+  shell: |
+    systemctl --user enable --now podman.socket

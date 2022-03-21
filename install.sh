@@ -40,6 +40,12 @@ sudo yum remove -y nano
 
 sudo yum install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
 
+# configure podman - rootless
+sudo systemctl --user enable --now podman.socket
+systemctl --user enable --now podman.socket
+# systemctl --user status podman.socket
+
+
 ## brave
 #sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
 #sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
@@ -85,7 +91,7 @@ fi
 
 # android
 if [ "$INSTALL_ANDROIND_ADB" -eq "0" ]; then
-    sudo yum install -y android-tools.x86_64
+    sudo yum install -y android-tools.x86_64  android-file-transfer
     git clone https://github.com/M0Rf30/android-udev-rules /tmp/android-udev-rules
     sudo bash -x /tmp/android-udev-rules/install.sh "$(whoami)"
 fi

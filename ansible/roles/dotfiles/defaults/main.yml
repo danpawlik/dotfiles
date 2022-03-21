@@ -31,6 +31,7 @@ enable_powertop: false
 
 common_packages:
     - alacritty
+    - android-file-transfer
     - axel
     - bzip2
     - ccze
