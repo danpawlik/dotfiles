@@ -97,6 +97,7 @@ pip_packages:
   - git-review
   - ipdb
   - jedi
+  - jedi-language-server
   - jinjalint
   - mypy
   - neovim

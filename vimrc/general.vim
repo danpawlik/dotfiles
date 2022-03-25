@@ -28,6 +28,7 @@ set ignorecase
 set signcolumn=yes
 set hidden
 set termguicolors
+set autoread
 
 let g:go_version_warning = 0
 
@@ -36,12 +37,6 @@ execute "set <xUp>=\e[1;*A"
 execute "set <xDown>=\e[1;*B"
 execute "set <xRight>=\e[1;*C"
 execute "set <xLeft>=\e[1;*D"
-
-" key mapping
-set pastetoggle=<F2>
-noremap <F3> :ALEFix<CR>
-noremap <F4> :Prettier<CR>
-noremap <C-f> :FZF<CR>
 
 filetype off
 filetype plugin indent on
@@ -55,7 +50,17 @@ match ExtraWhitespace /\s\+$/
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray ctermbg=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=236
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+" key mapping
+set pastetoggle=<F2>
+" autoformat in visual mode
+noremap <F3> gq<CR>
+" use prettier to autoformat
+noremap <F4> :Prettier<CR>
+" autoformat with Ale
+noremap <F5> :ALEFix<CR>
+noremap <C-f> :FZF<CR>
+nnoremap <F6> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 
 "" disable line numbers

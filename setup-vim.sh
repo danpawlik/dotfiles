@@ -170,7 +170,7 @@ EOF
     # Other packages required by Ale
     pip3 install --user neovim mypy pynvim rstcheck proselint \
                         gitlint ansible-lint black yapf vim-vint yamllint \
-                        jedi pylint mypy
+                        jedi jedi-language-server pylint mypy
     sudo npm install -g prettier eslint
     sudo yum install -y ShellCheck ocaml-merlin ripgrep fd-find || true
 fi

@@ -1,4 +1,14 @@
-let g:coc_global_extensions = [ "coc-yaml", "coc-vimlsp", "coc-stylelintplus", "coc-snippets", "coc-sh", "coc-react-refactor", "coc-pyright", "coc-prettier", "coc-pairs", "coc-markdownlint", "coc-json", "coc-jedi", "coc-html", "coc-html-css-support", "coc-go", "coc-git", "coc-eslint", "coc-docker", "coc-marketplace" ]
+" basic plugins
+let g:coc_global_extensions = [ "coc-git", "coc-jedi", "coc-pyright", "coc-go", "coc-snippets", "coc-docker", "coc-vimlsp", "coc-stylelintplus", "coc-sh" ]
+" other basic plugins
+let g:coc_global_extensions += [ "coc-yaml", "coc-html", "coc-markdownlint", "coc-prettier", "coc-pairs" ]
+" web
+let g:coc_global_extensions += [ "coc-react-refactor", "coc-json", "coc-html-css-support", "coc-eslint", "coc-tsserver" ]
+" other
+let g:coc_global_extensions += [ "coc-marketplace" ]
+
+" to check
+" let g:coc_global_extensions += [ "coc-lua", "coc-rls", "coc-ultisnips" ]
 
 " Disable coc reason
 " coc-reason
