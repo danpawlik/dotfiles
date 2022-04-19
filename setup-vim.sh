@@ -5,7 +5,7 @@ VIM_CONFIG="${VIM_CONFIG:-coc}"
 SOURCE_DIR=${SOURCE_DIR:-'/tmp/dotfiles'}
 YCM_FLAGS=${YCM_FLAGS:-'--clang-completer'}
 # Choose version or export NVIM_VERSION=nightly
-NVIM_VERSION=${NVIM_VERSION:-'v0.5.1'}
+NVIM_VERSION=${NVIM_VERSION:-'v0.7.0'}
 SETUP_NVIM="${SETUP_NVIM:-true}"
 USER_NODEJS="${USER_NODEJS:-true}"
 
