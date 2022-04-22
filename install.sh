@@ -24,7 +24,8 @@ sudo dnf install -y htop glances vim-enhanced axel mumble \
                     pinta alacritty keepassxc fwupd vlc \
                     p7zip unzip ccze wavemon powertop \
                     rsync util-linux-user iperf3 \
-                    libavif-tools lshw pavucontrol
+                    libavif-tools lshw pavucontrol \
+                    plymouth-theme-hot-dog
 
 sudo dnf install -y dnf-plugins-core
 

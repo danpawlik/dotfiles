@@ -52,6 +52,7 @@ common_packages:
     - p7zip
     - pavucontrol
     - pinta
+    - plymouth-theme-hot-dog
     - powertop
     - ripgrep
     - rsync
