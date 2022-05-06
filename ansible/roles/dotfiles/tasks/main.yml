@@ -12,11 +12,15 @@
 
 - name: Configure nodejs
   include_tasks: nodejs.yml
-  when: "'nodejs' in components"
+  when: "'nodejs' in components and just_neovim is not defined"
 
 - name: Configure vim
   include_tasks: vim.yml
-  when: "'vim' in components"
+  when: "'vim' in components and just_neovim is not defined"
+
+- name: Configure neovim
+  include_tasks: neovim.yml
+  when: "'vim' in components and just_neovim is defined and just_neovim"
 
 - name: Configure zsh
   include_tasks: zsh.yml

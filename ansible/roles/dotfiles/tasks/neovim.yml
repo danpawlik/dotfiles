@@ -1,0 +1,39 @@
+---
+- name: Download Neovim appimage
+  shell: |
+    curl -L "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage" -o /tmp/nvim.appimage ;
+    cd /tmp/;
+    chmod u+x /tmp/nvim.appimage ;
+    ./nvim.appimage --appimage-extract
+
+- name: Create local dir if not exists
+  file:
+    path: ~/.local
+    state: directory
+
+- name: Copy extracted neovim and make symlink to local bin
+  shell: |
+    cp -a /tmp/squashfs-root/ ~/.local/nvim
+
+- name: Ensure userspace local bin exists
+  file:
+    path: ~/.local/bin
+    state: directory
+
+- name: Create symlink neovim to local bin
+  file:
+    src: ~/.local/nvim/usr/bin/nvim
+    dest: ~/.local/bin/nvim
+    state: link
+
+- name: Create optional symlink from neovim to vim in userspace bin
+  file:
+    src: ~/.local/nvim/usr/bin/nvim
+    dest: ~/.local/bin/vim
+    state: link
+
+- name: Create symlink from nvim to /usr/bin
+  file:
+    src: ~/.local/nvim/usr/bin/nvim
+    dest: /usr/bin/nvim
+    state: link

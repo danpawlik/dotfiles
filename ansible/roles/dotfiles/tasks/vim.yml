@@ -40,48 +40,20 @@
     dest: "~/.vimrc"
     remote_src: true
 
-- name: Setup Neovim
-  block:
-    - name: Install vim-plug - neovim
-      shell: |
-        curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      when: vim_distro == 'neovim'
-
-    - name: Download Neovim appimage
-      shell: |
-        curl -L "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage" -o /tmp/nvim.appimage ;
-        cd /tmp/;
-        chmod u+x /tmp/nvim.appimage ;
-        ./nvim.appimage --appimage-extract
-
-    - name: Create local dir if not exists
-      file:
-        path: ~/.local
-        state: directory
-
-    - name: Copy extracted neovim and make symlink to local bin
-      shell: |
-        cp -a /tmp/squashfs-root/ ~/.local/nvim
-
-    - name: Create symbolic link between vimrc and nvim init
-      file:
-        src: ~/.vimrc
-        dest: ~/.config/nvim/init.vim
-        state: link
-
-    - name: Create symlink neovim to local bin
-      file:
-        src: ~/.local/nvim/usr/bin/nvim
-        dest: ~/.local/bin/nvim
-        state: link
-
-    - name: Create symlink from neovim to vim
-      file:
-        src: ~/.local/nvim/usr/bin/nvim
-        dest: ~/.local/bin/vim
-        state: link
-
+- name: Install vim-plug - neovim
+  shell: |
+    curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   when: vim_distro == 'neovim'
+
+- name: Setup Neovim
+  include_tasks: neovim.yml
+  when: vim_distro == 'neovim'
+
+- name: Create symbolic link between vimrc and nvim init
+  file:
+    src: ~/.vimrc
+    dest: ~/.config/nvim/init.vim
+    state: link
 
 # Copy vim config files and run plugged
 - name: Configure plugin for YouCompleteMe
@@ -203,6 +175,7 @@
       - jedi
       - pylint
     extra_args: --user
+    executable: pip3
   when: pip_packages
 
 - name: Install additional npm packages

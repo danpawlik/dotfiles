@@ -41,6 +41,12 @@ git clone https://github.com/danpawlik/dotfiles
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/vim.yml
 ```
 
+On Centos 7, you can run it with:
+
+```shell
+ansible-playbook --ask-become-pass -e ansible_python_interpreter=/usr/bin/python2 ansible/playbooks/vim.yml
+```
+
 When you have an error:
 
 ```shell
@@ -76,3 +82,88 @@ $HOME/.tmux/plugins/tpm/bin/install_plugins
 ![Tmux screenshot](https://raw.githubusercontent.com/danpawlik/dotfiles/master/screenshots/default.png)
 ![Tmux screenshot multiuser](https://raw.githubusercontent.com/danpawlik/dotfiles/master/screenshots/multiuser.png)
 ![Tmux screenshot production](https://raw.githubusercontent.com/danpawlik/dotfiles/master/screenshots/tmux-production.png)
+
+## Vim alternative distributions
+
+You can always install just neovim, then choose proper distribution:
+
+```shell
+yum install -y git python3-pip
+pip3 install -U setuptools pip
+pip3 install ansible==2.9.13
+export PATH=$PATH:/usr/local/bin
+git clone https://github.com/danpawlik/dotfiles
+ansible-playbook --ask-become-pass -e just_neovim=true dotfiles/ansible/playbooks/vim.yml
+```
+
+Or for Centos 7:
+
+```shell
+ansible-playbook --ask-become-pass \
+  -e just_neovim=true \
+  -e ansible_python_interpreter=/usr/bin/python2 \
+  dotfiles/ansible/playbooks/vim.yml
+```
+
+Distros, for example:
+
+* `https://github.com/AstroNvim/AstroNvim`
+
+```shell
+git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+nvim +PackerSync
+```
+
+Works well on `Centos 7` and newer.
+
+* `https://github.com/NvChad/NvChad`
+
+```shell
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
+```
+
+NOTE:
+Replace vim with python some nvim-treesitter on `Centos 7`:
+
+```shell
+sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs/treesitter.lua
+```
+
+* `https://github.com/LunarVim/LunarVim`
+
+```shell
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+```
+
+NOTE:
+Disable some nvim-treesitter on `Centos 7`:
+
+```shell
+sed -i '/  \"javascript\"/d' ~/.config/lvim/config.lua
+sed -i '/  \"typescript\"/d' ~/.config/lvim/config.lua
+sed -i '/  \"tsx\"/d' ~/.config/lvim/config.lua
+```
+
+* `https://github.com/CosmicNvim/CosmicNvim`
+
+```shell
+git clone https://github.com/CosmicNvim/CosmicNvim.git ~/.config/nvim --depth 1
+nvim +CosmicReloadSync
+```
+
+NOTE:
+Disable some nvim-treesitter on `Centos 7`:
+
+```shell
+sed -i '/javascript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+sed -i '/typescript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+```
+
+NOTE:
+To disable mouse copy visualizatio, add on the end to the `~/.config/nvim/init.lua`
+
+```lua
+vim.cmd [[set mouse-=a]]
+```
