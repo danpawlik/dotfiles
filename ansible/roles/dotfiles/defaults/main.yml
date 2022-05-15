@@ -39,6 +39,7 @@ common_packages:
     - dnf-plugins-core
     - fd-find
     - fwupd
+    - fzf
     - glances
     - gnupg
     - htop
@@ -65,6 +66,7 @@ common_packages:
     - vlc
     - wavemon
     - xz
+    - xset
     - zsh
     - zstd
 
@@ -83,6 +85,17 @@ dev_packages:
 remove_packages:
   - elisa-player
   - nano
+  - akregator
+  - dragon
+  - pim-sieve-editor
+  - mediawriter
+  - kmines
+  - kmail
+  - kmouth
+  - konversation
+  - kontact
+  - kf5-ktnef
+  - kmahjongg
 
 kde_packages: []
 gnome_packages:

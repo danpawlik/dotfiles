@@ -1,6 +1,5 @@
 ---
 - name: Configure git params
-  shell: |
-    git config --global core.editor vim
-    git config --global core.pager cat
-    git config --global pager.branch false
+  copy:
+    src: gitconfig
+    dest: "~/.gitconfig"

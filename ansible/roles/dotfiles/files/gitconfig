@@ -1,0 +1,14 @@
+[user]
+	name = Some user
+	email = someuser@test.com
+[pager]
+	branch = false
+[merge]
+	tool = vimdiff
+[core]
+    editor = nvim
+    pager = less
+[gitreview]
+	username = someuser
+[pull]
+	rebase = true

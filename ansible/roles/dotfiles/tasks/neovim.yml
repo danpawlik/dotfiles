@@ -31,9 +31,3 @@
     src: ~/.local/nvim/usr/bin/nvim
     dest: ~/.local/bin/vim
     state: link
-
-- name: Create symlink from nvim to /usr/bin
-  file:
-    src: ~/.local/nvim/usr/bin/nvim
-    dest: /usr/bin/nvim
-    state: link

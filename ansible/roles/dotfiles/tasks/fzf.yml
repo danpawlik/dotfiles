@@ -4,9 +4,15 @@
     repo: https://github.com/junegunn/fzf
     dest: /tmp/fzf
     depth: 1
+  run_once: true
 
 - name: Setup fzf
   shell: |
     ./install --all
   args:
     chdir: /tmp/fzf
+
+- name: Copy zshrc file
+  copy:
+    src: fzf.zsh
+    dest: ~/.fzf.zsh

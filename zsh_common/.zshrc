@@ -25,4 +25,12 @@ unsetopt correct_all
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+alias vimdiff="nvim"
+alias vimdiff="nvim -d"
+export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:$PATH
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey "\033[1~" beginning-of-line
+bindkey "\033[4~" end-of-line

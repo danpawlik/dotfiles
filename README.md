@@ -87,6 +87,8 @@ $HOME/.tmux/plugins/tpm/bin/install_plugins
 
 You can always install just neovim, then choose proper distribution:
 
+### Preparation
+
 ```shell
 yum install -y git python3-pip
 pip3 install -U setuptools pip
@@ -107,7 +109,7 @@ ansible-playbook --ask-become-pass \
 
 Distros, for example:
 
-* `https://github.com/AstroNvim/AstroNvim`
+### <https://github.com/AstroNvim/AstroNvim>
 
 ```shell
 git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
@@ -116,7 +118,7 @@ nvim +PackerSync
 
 Works well on `Centos 7` and newer.
 
-* `https://github.com/NvChad/NvChad`
+### <https://github.com/NvChad/NvChad>
 
 ```shell
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
@@ -130,10 +132,13 @@ Replace vim with python some nvim-treesitter on `Centos 7`:
 sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs/treesitter.lua
 ```
 
-* `https://github.com/LunarVim/LunarVim`
+### <https://github.com/LunarVim/LunarVim>
 
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+# or
+git clone https://github.com/LunarVim/LunarVim ~/.config/nvim
+nvim +PackerSync
 ```
 
 NOTE:
@@ -145,7 +150,7 @@ sed -i '/  \"typescript\"/d' ~/.config/lvim/config.lua
 sed -i '/  \"tsx\"/d' ~/.config/lvim/config.lua
 ```
 
-* `https://github.com/CosmicNvim/CosmicNvim`
+### <https://github.com/CosmicNvim/CosmicNvim>
 
 ```shell
 git clone https://github.com/CosmicNvim/CosmicNvim.git ~/.config/nvim --depth 1
@@ -161,9 +166,26 @@ sed -i '/typescript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
 sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
 ```
 
-NOTE:
+## Post configuration
+
 To disable mouse copy visualizatio, add on the end to the `~/.config/nvim/init.lua`
 
 ```lua
 vim.cmd [[set mouse-=a]]
+```
+
+### Install additional languages
+
+Run inside the neovim distro:
+
+```shell
+:TSInstall python
+:TSInstall go
+:TSInstall rust
+```
+
+or one line:
+
+```shell
+:TSInstall bash css dockerfile go haskell html http javascript json markdown python rst rust typescript vim yaml
 ```

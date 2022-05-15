@@ -4,8 +4,10 @@
   package:
     name: git
     state: present
+  run_once: true
 
 - name: Clone dotfiles repo
   git:
     repo: https://github.com/danpawlik/dotfiles
     dest: /tmp/dotfiles
+  run_once: true
