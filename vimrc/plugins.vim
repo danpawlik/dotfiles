@@ -79,5 +79,9 @@ Plug 'jsit/toast.vim'
 Plug 'vimpostor/vim-prism'
 Plug 'k4yt3x/ayu-vim-darker'
 
+"" beta
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'nvim-treesitter/playground'
+
 call plug#end()
 """"" end plugged
