@@ -1,7 +1,7 @@
 " basic plugins
 let g:coc_global_extensions = [ "coc-git", "coc-jedi", "coc-pyright", "coc-go", "coc-snippets", "coc-docker", "coc-vimlsp", "coc-stylelintplus", "coc-sh" ]
 " other basic plugins
-let g:coc_global_extensions += [ "coc-yaml", "coc-html", "coc-markdownlint", "coc-prettier", "coc-pairs" ]
+let g:coc_global_extensions += [ "coc-yaml", "coc-html", "coc-markdownlint", "coc-prettier", "coc-pairs"]
 " web
 let g:coc_global_extensions += [ "coc-react-refactor", "coc-json", "coc-html-css-support", "coc-eslint", "coc-tsserver" ]
 " other
@@ -15,6 +15,38 @@ let g:coc_global_extensions += [ "coc-marketplace" ]
 
 let g:coc_user_config = {}
 let g:coc_user_config['languageserver'] = {}
+
+" Other languages: https://github.com/neoclide/coc.nvim/wiki/Language-servers
+let g:coc_user_config['languageserver']['golang'] = {
+    \ "command": "gopls",
+    \ "rootPatterns": ["go.mod"],
+    \ "filetypes": ["go"]
+    \}
+
+let g:coc_user_config['languageserver']['dhall'] = {
+    \ "command": "dhall-lsp-server",
+    \ "filetypes": [ "dhall" ]
+    \ }
+
+let g:coc_user_config['languageserver']['dockerfile'] = {
+    \ "command": "docker-langserver",
+    \ "filetypes": ["dockerfile"],
+    \ "args": ["--stdio"]
+    \ }
+
+let g:coc_user_config['languageserver']['haskell'] = {
+    \ "command": "haskell-language-server-wrapper",
+    \ "args": ["--lsp"],
+    \ "rootPatterns": [ "*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml" ],
+    \ "filetypes": [ "haskell", "ihaskell" ]
+    \ }
+
+let g:coc_user_config['languageserver']['rust'] = {
+    \ "command": "rust-analyzer",
+    \ "filetypes": ["rust"],
+    \ "rootPatterns": ["Cargo.toml"]
+    \ }
+
 let g:coc_user_config['coc.preferences.formatOnSaveFiletypes'] = ['go']
 let g:coc_user_config['suggest.floatEnable'] = v:false
 let g:coc_user_config['suggest.enablePreview'] = v:true
