@@ -46,3 +46,11 @@
 - name: Enable podman socket
   shell: |
     systemctl --user enable --now podman.socket
+
+- name: Increase map count
+  become: true
+  sysctl:
+    name: vm.max_map_count
+    value: "262144"
+    state: present
+    reload: true
