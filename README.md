@@ -168,10 +168,15 @@ sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
 
 ## Post configuration
 
-To disable mouse copy visualizatio, add on the end to the `~/.config/nvim/init.lua`
+To disable mouse copy as visualization or remove whitespaces, add on the end to the `~/.config/nvim/init.lua`
 
 ```lua
 vim.cmd [[set mouse-=a]]
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
 ```
 
 ### Install additional languages

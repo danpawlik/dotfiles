@@ -13,7 +13,55 @@
           [connection]
           wifi.powersave = 2
         dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
-  when: wifi_disable_powersave
+      when: wifi_disable_powersave
+
+    ## https://wiki.archlinux.org/title/NetworkManager#DHCP_client
+    #    - name: Change default dhcp client when issue with OpenWRT and VPN
+    #      copy:
+    #        content: |
+    #          [main]
+    #          dhcp=dhclient
+    #          # dhcp=dhcpcd
+    #          # dhcp=internal
+    #        dest: /etc/NetworkManager/conf.d/00-dhcp-client.conf
+
+    #    ## Try to fix error:
+    #    # Using degraded feature set UDP instead of UDP+EDNS0 for DNS server 192.168.88.1,
+    #    # where 192.168.88.1 is an router base on OpenWRT.
+    #    # By default, the DNS cache is enabled on the router, so it might
+    #    # be problematic when local connection + VPN + Virtual interfaces + etc.
+    #    # is configured.
+    #    # https://superuser.com/questions/1676584/using-degraded-feature-set-tcp-instead-of-udp-for-dns-server
+    #    - name: Disable DNSSec
+    #      become: true
+    #      lineinfile:
+    #        path: /etc/systemd/resolved.conf
+    #        regexp: '^DNSSEC='
+    #        line: 'DNSSEC=no'
+
+    - name: Disable systemd-resolved
+      become: true
+      service:
+        name: systemd-resolved
+        state: stopped
+        enabled: false
+      register: _disable_resolved
+
+    - name: Set dns to default in Network Manger
+      become: true
+      ini_file:
+        path: /etc/NetworkManager/NetworkManager.conf
+        section: main
+        option: dns
+        value: default
+        no_extra_spaces: true
+
+    - name: Remove resolved conf when service stopped
+      become: true
+      file:
+        path: /etc/resolv.conf
+        state: absent
+      when: _disable_resolved.changed
 
 - name: Configure powertop service
   become: true
