@@ -184,13 +184,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 Run inside the neovim distro:
 
 ```shell
-:TSInstall python
-:TSInstall go
-:TSInstall rust
+:TSInstall bash css dockerfile go haskell html http javascript json markdown python rst rust typescript vim yaml
 ```
 
-or one line:
+or
 
 ```shell
-:TSInstall bash css dockerfile go haskell html http javascript json markdown python rst rust typescript vim yaml
+:LspInstall bashls dhall_lsp_server dockerls dotls eslint gopls grammarly graphql hls html jsonls marksman pyright reason_ls rust_analyzer
 ```
