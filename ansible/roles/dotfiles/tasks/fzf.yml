@@ -8,11 +8,4 @@
 
 - name: Setup fzf
   shell: |
-    ./install --all
-  args:
-    chdir: /tmp/fzf
-
-- name: Copy zshrc file
-  copy:
-    src: fzf.zsh
-    dest: ~/.fzf.zsh
+    /tmp/fzf/install --all

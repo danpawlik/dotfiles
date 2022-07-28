@@ -13,6 +13,6 @@
 
 - name: Install doom emacs
   shell: |
-    ~/.emacs.d/bin/doom -y install
+     ~/.emacs.d/bin/doom install --install --fonts --force
   args:
     chdir: ~/.emacs.d

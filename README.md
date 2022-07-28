@@ -135,10 +135,13 @@ sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs
 ### <https://github.com/LunarVim/LunarVim>
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
-# or
-git clone https://github.com/LunarVim/LunarVim ~/.config/nvim
-nvim +PackerSync
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+```
+
+And copy my config into the LunarVim dir:
+
+```shell
+cp vim-lua/lunar-vim.lua ~/.config/lvim/config.lua
 ```
 
 NOTE:
