@@ -2,4 +2,11 @@ alias agent='eval `ssh-agent -s`'
 alias docker='podman'
 alias pogoda='curl -H "Accept-Language: pl" wttr.in/wroclaw'
 alias cleanup-repo='git fetch origin; git rebase --abort; git cherry-pick --abort; git merge --abort; git reset --hard HEAD; git checkout origin/master ; git clean -d -f -x'
-alias week='date +"So this is week: V"'
+alias week='date +"So this is week: %V"'
+
+if [ -f "$HOME/.zsh_aliases_work" ]; then
+    source "$HOME/.zsh_aliases_work"
+fi
+
+alias vim="~/.local/bin/nvim"
+alias emacs="emacs -nw"

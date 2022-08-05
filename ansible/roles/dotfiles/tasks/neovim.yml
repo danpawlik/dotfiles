@@ -13,7 +13,7 @@
 
 - name: Copy extracted neovim and make symlink to local bin
   shell: |
-    cp -a /tmp/squashfs-root/ ~/.local/nvim
+    cp -a /tmp/squashfs-root ~/.local/nvim/
 
 - name: Ensure userspace local bin exists
   file:

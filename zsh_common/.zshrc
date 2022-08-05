@@ -34,3 +34,11 @@ export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
 
 bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
+
+# pnpm
+export PNPM_HOME="/home/dpawlik/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+#
+source <(kubectl completion zsh)
+alias k='kubectl'

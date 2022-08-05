@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = false
-lvim.colorscheme = "onedark"
+lvim.colorscheme = "papercolor"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -161,6 +161,7 @@ lvim.plugins = {
   -- colorscheme
   { "cpea2506/one_monokai.nvim" },
   { "navarasu/onedark.nvim" },
+  { "nlknguyen/papercolor-theme" },
   -- check how the markdown looks like by typing: :MarkdownPreview
   { "iamcco/markdown-preview.nvim" },
 }

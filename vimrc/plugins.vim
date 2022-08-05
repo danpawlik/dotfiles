@@ -72,6 +72,8 @@ Plug 'prettier/vim-prettier'
 "colorscheme
 Plug 'sjl/badwolf'
 Plug 'tomasr/molokai'
+Plug 'sickill/vim-monokai'
+Plug 'nlknguyen/papercolor-theme'
 Plug 'SiddharthShyniben/pitch'
 Plug 'rafalbromirski/vim-aurora'
 Plug 'srcery-colors/srcery-vim'

@@ -1,37 +1,37 @@
-export PATH=~/.local/bin:/usr/local/bin:$PATH
-export LANG=en_US.UTF-8
-
-# Disable beep in xorg
-xset b off
-
 if [ -f "$HOME/.zsh_aliases" ]; then
     source "$HOME/.zsh_aliases"
 fi
 
-#ZSH_THEME="agnoster"
-#ZSH_THEME="fishy"
-#ZSH_THEME="risto"
-#ZSH_THEME="michelebologna"
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# CASE_SENSITIVE="true"
-HYPHEN_INSENSITIVE="false"
-HIST_STAMPS="yyyy-mm-dd"
-plugins=(git git-extras python pip tmux ansible cp dnf yum )
+if [ -f "$HOME/.zsh_ohmyzsh" ]; then
+    source "$HOME/.zsh_ohmyzsh"
+fi
 
-export ZSH=$HOME/.oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+xset b off
 
+export PATH=~/android-platform-tools:$HOME/.local/bin/:$PATH
+export LANG=en_US.UTF-8
 export EDITOR='vim'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
+
 unsetopt correct_all
-#
-## History line
-#PROMPT='%{%f%k%b%}%{%K{${bkg}}%B%F{red}%}%n%{%B%F{blue}%}@%{%B%F{green}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}$ '
-#RPROMPT='!%{%B%F{cyan}%}%!%{%f%k%b%}'
-#
-## Exit code
-#PROMPT='%{%f%k%b%}%{%K{${bkg}}%B%F{red}%}%n%{%B%F{blue}%}@%{%B%F{green}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}$ '
-#RPROMPT='[%F{cyan}%?%f]'
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+alias vimdiff="nvim"
+alias vimdiff="nvim -d"
+export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:$PATH
+export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey "\033[1~" beginning-of-line
+bindkey "\033[4~" end-of-line
+
+# pnpm
+export PNPM_HOME="/home/dpawlik/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+#
+source <(kubectl completion zsh)
+alias k='kubectl'
