@@ -20,7 +20,7 @@ zsh_distro: oh_my_zsh
 
 vim_distro: neovim
 vim_config: coc
-nvim_version: v0.7.2
+nvim_version: nightly
 
 # it install nodejs into ~/.local/nodejs
 nodejs_userspace: true

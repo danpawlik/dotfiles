@@ -8,12 +8,15 @@
 
 - name: Create local dir if not exists
   file:
-    path: ~/.local
+    path: ~/.local/nvim
     state: directory
+    recurse: true
 
 - name: Copy extracted neovim and make symlink to local bin
-  shell: |
-    cp -a /tmp/squashfs-root ~/.local/nvim/
+  copy:
+    src: /tmp/squashfs-root/
+    dest: ~/.local/nvim
+    remote_src: true
 
 - name: Ensure userspace local bin exists
   file:
