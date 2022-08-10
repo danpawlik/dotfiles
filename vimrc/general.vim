@@ -30,6 +30,7 @@ set hidden
 set termguicolors
 set autoread
 
+let g:mapleader='\'
 let g:go_version_warning = 0
 
 " skip whole words with arrows

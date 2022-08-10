@@ -185,7 +185,8 @@ vim.api.nvim_create_autocmd("FileType", {
 --------------------------------------------------------------------------
 
 -- disable visual mouse mark
-vim.cmd [[set mouse-=a]]
+-- vim.cmd [[set mouse-=a]]
+vim.opt.mouse = 'v'
 
 -- remove whitespaces
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -194,7 +195,8 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- add color column
-vim.cmd [[ set colorcolumn=80 ]]
+-- vim.cmd [[ set colorcolumn=80 ]]
+vim.opt.colorcolumn = "80"
 
 -- Show errors near the code
 -- note: you can always type: g l or <space> g l
@@ -215,13 +217,13 @@ cfg = {}
 require "lsp_signature".setup(cfg)
 
 -- shade
-require'shade'.setup({
+require 'shade'.setup({
   overlay_opacity = 50,
   opacity_step = 1,
   keys = {
-    brightness_up    = '<C-Up>',
-    brightness_down  = '<C-Down>',
-    toggle           = '<Leader>s',
+    brightness_up   = '<C-Up>',
+    brightness_down = '<C-Down>',
+    toggle          = '<Leader>s',
   }
 })
 
