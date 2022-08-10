@@ -10,3 +10,9 @@ source $HOME/.vim/general.vim
 
 "source $HOME/.vim/plugin_conf/coc
 "source $HOME/.vim/plugin_conf/ycm
+
+" NOTE: Dunno why, in new neovim, mouse-=a does not work, so enable visual
+" mark, then disable.
+set mouse=a
+set mouse-=a
+set viminfo='100,<1000,s100,h
