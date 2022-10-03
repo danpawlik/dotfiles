@@ -187,11 +187,17 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 Run inside the neovim distro:
 
 ```shell
-:TSInstall bash css dockerfile go haskell html http javascript json markdown python rst rust typescript vim yaml
+:TSInstall bash cmake comment css dockerfile go graphql haskell html http javascript json make markdown python rst rust typescript vim yaml
 ```
 
 or
 
 ```shell
-:LspInstall bashls dhall_lsp_server dockerls dotls eslint gopls grammarly graphql hls html jsonls marksman pyright reason_ls rust_analyzer
+:LspInstall bashls dhall_lsp_server dockerls dotls eslint gopls grammarly graphql hls html jsonls marksman pyright reason_ls rust_analyzer ansible-language-server lua-language-server quick-lint-js yaml-language-server
+```
+
+Additional tools:
+
+```shell
+npm install -g @ansible/ansible-language-server
 ```
