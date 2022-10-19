@@ -134,8 +134,18 @@ sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs
 
 ### <https://github.com/LunarVim/LunarVim>
 
+Before, install:
+
+```shell
+sudo yum group install -y "C Development Tools and Libraries"
+```
+
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+
+# or
+
+LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y
 ```
 
 And copy my config into the LunarVim dir:
@@ -200,4 +210,12 @@ Additional tools:
 
 ```shell
 npm install -g @ansible/ansible-language-server
+```
+
+### Removing
+
+```shell
+rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim
+# to uninstall just lvim
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
 ```
