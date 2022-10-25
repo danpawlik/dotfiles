@@ -132,20 +132,32 @@ Replace vim with python some nvim-treesitter on `Centos 7`:
 sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs/treesitter.lua
 ```
 
+### <https://github.com/CosmicNvim/CosmicNvim>
+
+```shell
+git clone https://github.com/CosmicNvim/CosmicNvim.git ~/.config/nvim --depth 1
+nvim +CosmicReloadSync
+```
+
+NOTE:
+Disable some nvim-treesitter on `Centos 7`:
+
+```shell
+sed -i '/javascript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+sed -i '/typescript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
+```
+
 ### <https://github.com/LunarVim/LunarVim>
 
 Before, install:
 
 ```shell
-sudo yum group install -y "C Development Tools and Libraries"
+sudo yum install -y neovim cargo glibc-static libstdc++-static g++
 ```
 
 ```shell
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-
-# or
-
-LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh) -y
 ```
 
 And copy my config into the LunarVim dir:
@@ -161,22 +173,6 @@ Disable some nvim-treesitter on `Centos 7`:
 sed -i '/  \"javascript\"/d' ~/.config/lvim/config.lua
 sed -i '/  \"typescript\"/d' ~/.config/lvim/config.lua
 sed -i '/  \"tsx\"/d' ~/.config/lvim/config.lua
-```
-
-### <https://github.com/CosmicNvim/CosmicNvim>
-
-```shell
-git clone https://github.com/CosmicNvim/CosmicNvim.git ~/.config/nvim --depth 1
-nvim +CosmicReloadSync
-```
-
-NOTE:
-Disable some nvim-treesitter on `Centos 7`:
-
-```shell
-sed -i '/javascript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
-sed -i '/typescript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
-sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
 ```
 
 ## Post configuration
