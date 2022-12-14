@@ -69,6 +69,9 @@ Plug 'prettier/vim-prettier'
 " Plug 'google/vim-codefmt'
 " Plug 'google/vim-glaive'
 
+" Decrypt automatically base64 content
+Plug 'christianrondeau/vim-base64'
+
 "colorscheme
 Plug 'sjl/badwolf'
 Plug 'tomasr/molokai'

@@ -185,6 +185,8 @@ lvim.plugins = {
   { "nlknguyen/papercolor-theme" },
   -- check how the markdown looks like by typing: :MarkdownPreview
   { "iamcco/markdown-preview.nvim" },
+  -- decrypt base64 content
+  { "christianrondeau/vim-base64" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
