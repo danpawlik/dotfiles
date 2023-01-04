@@ -1,7 +1,7 @@
 ---
 - name: Install git package
   become: true
-  package:
+  dnf:
     name: git
     state: present
   run_once: true

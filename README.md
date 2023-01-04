@@ -199,7 +199,7 @@ Run inside the neovim distro:
 or
 
 ```shell
-:LspInstall bashls dhall_lsp_server dockerls dotls eslint gopls grammarly graphql hls html jsonls marksman pyright reason_ls rust_analyzer ansible-language-server lua-language-server quick-lint-js yaml-language-server
+:LspInstall ansible-language-server bash-language-server codespell commitlint dhall-lsp dockerfile-language-server dot-language-server eslint-lsp flake8 gitlint goimports golangci-lint gopls grammarly-languageserver graphql-language-service-cli html-lsp jq json-lsp markdownlint marksman prettier pylint pyright reason-language-server rstcheck rust-analyzer shellcheck shfmt yamlfmt
 ```
 
 Additional tools:
