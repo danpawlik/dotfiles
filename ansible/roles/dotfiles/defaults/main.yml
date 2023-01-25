@@ -72,7 +72,9 @@ common_packages:
 
 dev_packages:
   - "@development-tools"
+  - ghc
   - git
+  - krb5-devel
   - libvirt
   - nodejs
   - podman
@@ -104,28 +106,42 @@ gnome_packages:
   - variety
 
 pip_packages:
+  - ansible==2.9.13
+  - ansible-core==2.14.1
+  - ansible-lint==6.11.0
   - black
+  - bodhi-client
   - docutils
-  - elasticsearch
   - flake8
   - git-review
   - ipdb
   - jedi
   - jedi-language-server
   - jinjalint
+  - koji
   - mypy
   - neovim
   - numpy
+  - mypy-extensions
+  - opensearch-py
   - openstackclient
   - pandoc
   - pdbpp
+  - pelican
+  - pep8
+  - pycodestyle
   - pyflakes
   - pylint
   - pynvim
   - remote_pdb
+  - rstcheck
+  - ruamel.yaml
+  - Sphinx
   - tox
   - virtualenv
   - yamllint
+  - yapf
+  - yt-dlp
   - zuulfmt
 
 npm_packages:
