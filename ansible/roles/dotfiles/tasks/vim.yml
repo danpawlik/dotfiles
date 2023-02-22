@@ -175,7 +175,6 @@
       - jedi
       - pylint
     extra_args: --user
-    executable: /usr/local/bin/pip3
   when: pip_packages
 
 - name: Install additional npm packages

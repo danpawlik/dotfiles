@@ -117,8 +117,6 @@ pip_packages:
   - ipdb
   - jedi
   - jedi-language-server
-  - jinjalint
-  - koji
   - mypy
   - neovim
   - numpy

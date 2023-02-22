@@ -13,6 +13,7 @@
           [connection]
           wifi.powersave = 2
         dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+      register: wifi_powersave
       when: wifi_disable_powersave
 
     ## https://wiki.archlinux.org/title/NetworkManager#DHCP_client
@@ -56,12 +57,20 @@
         value: default
         no_extra_spaces: true
 
-    - name: Remove resolved conf when service stopped
+    - name: Clear resolv.conf file
       become: true
-      file:
-        path: /etc/resolv.conf
-        state: absent
+      copy:
+        content: |
+          # CLEARED BY ANSIBLE
+        dest: /etc/resolv.conf
       when: _disable_resolved.changed
+
+    - name: Restart NetworkManager
+      become: true
+      service:
+        name: NetworkManager
+        state: restarted
+      when: _disable_resolved.changed or wifi_powersave is defined and wifi_powersave.changed
 
 - name: Configure powertop service
   become: true
