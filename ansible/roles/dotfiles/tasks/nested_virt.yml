@@ -1,0 +1,31 @@
+---
+- name: Install packages
+  become: true
+  yum:
+    name:
+      - qemu-kvm-common
+    state: present
+
+- name: Check if CPU vendor is Intel
+  shell: |
+    grep -qi intel /proc/cpuinfo
+  ignore_errors: true
+  register: _intel_vendor
+
+- name: Enable nested virtualization - Intel
+  become: true
+  lineinfile:
+    path: /etc/modprobe.d/kvm.conf
+    regexp: '^#options kvm_intel nested=1'
+    line: 'options kvm_intel nested=1'
+  when: _intel_vendor.rc == 0
+  register: _nested_intel
+
+- name: Enable nested virtualization - AMD
+  become: true
+  lineinfile:
+    path: /etc/modprobe.d/kvm.conf
+    regexp: '^#options kvm_amd nested=1'
+    line: 'options kvm_amd nested=1'
+  when: _intel_vendor.rc == 1
+  register: _nested_amd

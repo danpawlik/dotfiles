@@ -4,6 +4,7 @@ components: []
 enable_rpmfusion: true
 enable_nerd_fonts: true
 enable_kubernetes_tools: true
+enable_nested_virtualization: true
 # small or full
 nerd_fonts_pack: small
 nerd_fonts_version: v2.1.0

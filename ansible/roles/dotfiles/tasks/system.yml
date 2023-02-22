@@ -111,3 +111,7 @@
     value: "262144"
     state: present
     reload: true
+
+- name: Enable nested virtualization
+  include_tasks: nested_virt.yml
+  when: enable_nested_virtualization
