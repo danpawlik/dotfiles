@@ -53,3 +53,7 @@
 - name: Configure system
   include_tasks: system.yml
   when: "'system' in components"
+
+- name: Configure Kubernetes packages
+  include_tasks: kubernetes.yml
+  when: "'kubernetes' in components"
