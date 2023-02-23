@@ -35,6 +35,7 @@ common_packages:
     - alacritty
     - android-file-transfer
     - axel
+    - bmon
     - bzip2
     - ccze
     - curl
@@ -109,9 +110,8 @@ gnome_packages:
   - variety
 
 pip_packages:
-  - ansible==2.9.13
-  - ansible-core==2.14.1
-  - ansible-lint==6.11.0
+  - ansible-core==2.13.7
+  - ansible-lint
   - black
   - bodhi-client
   - docutils
