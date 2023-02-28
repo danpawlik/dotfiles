@@ -57,3 +57,7 @@
 - name: Configure Kubernetes packages
   include_tasks: kubernetes.yml
   when: "'kubernetes' in components"
+
+- name: Configure flatpak
+  include_tasks: flatpak.yml
+  when: "'flatpak' in components"

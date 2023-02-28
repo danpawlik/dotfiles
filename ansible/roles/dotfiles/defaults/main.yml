@@ -148,3 +148,7 @@ pip_packages:
 npm_packages:
   - pnpm
   - prettier
+
+flatpak_packages:
+  # Element.io
+  - im.riot.Riot
