@@ -32,46 +32,47 @@ wifi_disable_powersave: true
 enable_powertop: false
 
 common_packages:
-    - alacritty
-    - android-file-transfer
-    - axel
-    - bmon
-    - bzip2
-    - ccze
-    - curl
-    - dnf-plugins-core
-    - fd-find
-    - fwupd
-    - fzf
-    - glances
-    - gnupg
-    - htop
-    - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    - iperf3
-    - keepassxc
-    - libavif-tools
-    - lshw
-    - marked
-    - mumble
-    - p7zip
-    - pavucontrol
-    - pinta
-    - plymouth-theme-hot-dog
-    - powertop
-    - ripgrep
-    - rsync
-    - ShellCheck
-    - sudo
-    - tmux
-    - unzip
-    - util-linux-user
-    - vim-enhanced
-    - vlc
-    - wavemon
-    - xz
-    - xset
-    - zsh
-    - zstd
+  - alacritty
+  - android-file-transfer
+  - axel
+  - bmon
+  - bzip2
+  - ccze
+  - curl
+  - dnf-plugins-core
+  - fd-find
+  - fwupd
+  - fzf
+  - glances
+  - gnupg
+  - htop
+  - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+  - iperf3
+  - keepassxc
+  - koji
+  - libavif-tools
+  - lshw
+  - marked
+  - mumble
+  - p7zip
+  - pavucontrol
+  - pinta
+  - plymouth-theme-hot-dog
+  - powertop
+  - ripgrep
+  - rsync
+  - ShellCheck
+  - sudo
+  - tmux
+  - unzip
+  - util-linux-user
+  - vim-enhanced
+  - vlc
+  - wavemon
+  - xz
+  - xset
+  - zsh
+  - zstd
 
 dev_packages:
   - "@development-tools"
@@ -127,6 +128,7 @@ pip_packages:
   - opensearch-py
   - openstackclient
   - pandoc
+  - passlib
   - pdbpp
   - pelican
   - pep8

@@ -30,6 +30,7 @@ If you want to install some other vim distribution, that works well on `neovim` 
 ```shell
 sudo yum install -y git ansible
 git clone https://github.com/danpawlik/dotfiles
+ansible-galaxy collection install community.general
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/dotfiles.yml
 ```
 
