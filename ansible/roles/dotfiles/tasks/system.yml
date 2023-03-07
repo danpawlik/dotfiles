@@ -115,3 +115,10 @@
 - name: Enable nested virtualization
   include_tasks: nested_virt.yml
   when: enable_nested_virtualization
+
+- name: Add user to libvirt group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: libvirt
+    append: true
