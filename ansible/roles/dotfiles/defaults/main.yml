@@ -154,3 +154,5 @@ npm_packages:
 flatpak_packages:
   # Element.io
   - im.riot.Riot
+  # Signal
+  - org.signal.Signal
