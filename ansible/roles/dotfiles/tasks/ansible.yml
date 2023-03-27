@@ -1,0 +1,5 @@
+---
+- name: Install Ansible collections
+  shell: |
+    ansible-galaxy collection install {{ item }}
+  loop: "{{ ansible_collections }}"

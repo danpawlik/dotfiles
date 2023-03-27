@@ -68,6 +68,7 @@ common_packages:
   - util-linux-user
   - vim-enhanced
   - vlc
+  - virt-viewer
   - wavemon
   - xz
   - xset
@@ -156,3 +157,8 @@ flatpak_packages:
   - im.riot.Riot
   # Signal
   - org.signal.Signal
+
+ansible_collections:
+  - community.general
+  - community.crypto
+  - ansible.posix

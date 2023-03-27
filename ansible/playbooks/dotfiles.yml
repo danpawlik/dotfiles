@@ -19,5 +19,6 @@
       - system
       - kubernetes
       - flatpak
+      - ansible
   roles:
     - dotfiles

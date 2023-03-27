@@ -61,3 +61,7 @@
 - name: Configure flatpak
   include_tasks: flatpak.yml
   when: "'flatpak' in components"
+
+- name: Configure ansible
+  include_tasks: ansible.yml
+  when: "'ansible' in components"
