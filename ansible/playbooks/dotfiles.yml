@@ -20,5 +20,6 @@
       - kubernetes
       - flatpak
       - ansible
+      - visualstudio
   roles:
     - dotfiles

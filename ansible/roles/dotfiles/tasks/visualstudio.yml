@@ -1,0 +1,19 @@
+---
+- name: Setup Visual Studio repository
+  become: true
+  copy:
+    content: |
+      [code]
+      name=Visual Studio Code
+      baseurl=https://packages.microsoft.com/yumrepos/vscode
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+    dest: /etc/yum.repos.d/vscode.repo
+
+- name: Install Visual Studio Code
+  become: true
+  dnf:
+    name: code
+    state: present
+    update_cache: true

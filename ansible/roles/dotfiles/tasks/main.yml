@@ -65,3 +65,7 @@
 - name: Configure ansible
   include_tasks: ansible.yml
   when: "'ansible' in components"
+
+- name: Configure Visual Studio Code
+  include_tasks: visualstudio.yml
+  when: "'visualstudio' in components"
