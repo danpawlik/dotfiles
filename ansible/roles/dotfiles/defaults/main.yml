@@ -80,9 +80,12 @@ dev_packages:
   - "gcc-c++"
   - ghc
   - git
+  - golang
+  - golang-x-tools-gopls
   - krb5-devel
   - libvirt
   - nodejs
+  - openssl
   - podman
   - podman-docker
   - python3-devel

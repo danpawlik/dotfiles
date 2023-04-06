@@ -61,3 +61,7 @@ let g:coc_user_config['coc.preferences.formatOnType'] = v:false
 let g:coc_user_config['diagnostic-languageserver.filetypes'] = {"sh": "shellcheck"}
 let g:coc_user_config['markdownlint.config.default'] = v:true
 let g:coc_user_config['markdownlint.config.line_length'] = v:false
+
+" https://github.com/josa42/coc-go
+" let g:coc_user_config['go.goplsOptions'] = {"deepCompletion": v:true, "completeUnimported": v:true, "gofumpt": v:true}
+let g:coc_user_config['go.goplsOptions'] = {"deepCompletion": v:true, "completeUnimported": v:true}
