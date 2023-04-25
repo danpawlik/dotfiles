@@ -133,28 +133,14 @@ Replace vim with python some nvim-treesitter on `Centos 7`:
 sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs/treesitter.lua
 ```
 
-### <https://github.com/CosmicNvim/CosmicNvim>
-
-```shell
-git clone https://github.com/CosmicNvim/CosmicNvim.git ~/.config/nvim --depth 1
-nvim +CosmicReloadSync
-```
-
-NOTE:
-Disable some nvim-treesitter on `Centos 7`:
-
-```shell
-sed -i '/javascript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
-sed -i '/typescript/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
-sed -i '/tsx/d' ~/.config/nvim/lua/cosmic/plugins/treesitter/init.lua
-```
-
 ### <https://github.com/LunarVim/LunarVim>
 
 Before, install:
 
 ```shell
-sudo yum install -y neovim cargo glibc-static libstdc++-static g++
+# if Centos
+sudo yum install -y epel-relase
+sudo yum install -y neovim cargo gcc-c++ gcc
 ```
 
 ```shell
@@ -203,10 +189,10 @@ or
 :LspInstall ansible-language-server bash-language-server codespell commitlint dhall-lsp dockerfile-language-server dot-language-server eslint-lsp flake8 gitlint goimports golangci-lint gopls grammarly-languageserver graphql-language-service-cli html-lsp jq json-lsp markdownlint marksman prettier pylint pyright reason-language-server rstcheck rust-analyzer shellcheck shfmt yamlfmt
 ```
 
-Additional tools:
+You can choose the Lsp packages to be installed via plugin manager and press "i" on desired plugin:
 
 ```shell
-npm install -g @ansible/ansible-language-server
+:Mason
 ```
 
 ### Removing
@@ -215,4 +201,6 @@ npm install -g @ansible/ansible-language-server
 rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim
 # to uninstall just lvim
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
+# For vim config and neovim
+sudo rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim
 ```
