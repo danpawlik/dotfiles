@@ -1,9 +1,11 @@
 " basic plugins
 let g:coc_global_extensions = [ "coc-git", "coc-jedi", "coc-pyright", "coc-go", "coc-snippets", "coc-docker", "coc-vimlsp", "coc-stylelintplus", "coc-sh" ]
 " other basic plugins
-let g:coc_global_extensions += [ "coc-yaml", "coc-html", "coc-markdownlint", "coc-prettier", "coc-pairs"]
+let g:coc_global_extensions += [ "coc-yaml", "coc-html", "coc-markdownlint", "coc-prettier", "coc-pairs", "coc-helper", "coc-spell-checker" ]
 " web
 let g:coc_global_extensions += [ "coc-react-refactor", "coc-json", "coc-html-css-support", "coc-eslint", "coc-tsserver" ]
+" dev
+let g:coc_global_extensions += [ "coc-clangd" ]
 " other
 let g:coc_global_extensions += [ "coc-marketplace" ]
 

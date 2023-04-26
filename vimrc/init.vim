@@ -8,8 +8,7 @@ source $HOME/.vim/plugins.vim
 source $HOME/.vim/plugins_conf.vim
 source $HOME/.vim/general.vim
 
-"source $HOME/.vim/plugin_conf/coc
-"source $HOME/.vim/plugin_conf/ycm
+source $HOME/.vim/plugin_conf/coc
 
 " NOTE: Dunno why, in new neovim, mouse-=a does not work, so enable visual
 " mark, then disable.

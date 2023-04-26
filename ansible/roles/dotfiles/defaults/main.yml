@@ -21,7 +21,6 @@ nerd_fonts:
 zsh_distro: oh_my_zsh
 
 vim_distro: neovim
-vim_config: coc
 nvim_version: nightly
 
 # it install nodejs into ~/.local/nodejs

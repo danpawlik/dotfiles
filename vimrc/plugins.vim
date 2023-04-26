@@ -8,11 +8,7 @@
 """" plugged
 call plug#begin('~/.vim/plugged')
 
-"Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-"Plug 'Shougo/deoplete.nvim'
-"Plug 'davidhalter/jedi-vim'
-"Plug 'zxqfl/tabnine-vim', { 'do': './install.py --clang-completer' }
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Helpers
 " Automatic closing of brackets/tmux/statusline/fuzyy finder

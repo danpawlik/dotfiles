@@ -25,13 +25,12 @@
     - "plugins_conf.vim"
     - "plugins.vim"
 
-- name: Copy config files for vim_config
+- name: Copy config files
   copy:
     src: "/tmp/dotfiles/vimrc/plugin_conf/{{ item }}"
     dest: "~/.vim/plugin_conf/{{ item }}"
     remote_src: true
   loop:
-    - "ycm"
     - "coc"
 
 - name: Copy vimrc file
@@ -55,91 +54,6 @@
     dest: ~/.config/nvim/init.vim
     state: link
 
-# Copy vim config files and run plugged
-- name: Configure plugin for YouCompleteMe
-  block:
-    - name: Uncomment ycm in vimrc
-      lineinfile:
-        path: ~/.vimrc
-        regexp: ".*ycm"
-        line: "source $HOME/.vim/plugin_conf/ycm"
-
-    - name: Uncomment ycm in vim plugins file
-      lineinfile:
-        path: ~/.vim/plugins.vim
-        regexp: ".*YouCompleteMe"
-        line: "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }"
-  when: vim_config == 'ycm'
-
-- name: Configure plugin for COC
-  block:
-    - name: Uncomment coc in vimrc
-      lineinfile:
-        path: ~/.vimrc
-        regexp: ".*coc"
-        line: "source $HOME/.vim/plugin_conf/coc"
-
-    - name: Uncomment coc in vim plugins file
-      lineinfile:
-        path: ~/.vim/plugins.vim
-        regexp: ".*coc"
-        line: "Plug 'neoclide/coc.nvim', { 'branch': 'release' }"
-  when: vim_config == 'coc'
-
-### YCM ###
-- name: Configure YouCompleteMe
-  environment:
-    PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
-  block:
-    - name: Install additional packages
-      become: true
-      package:
-        name:
-          - automake
-          - gcc
-          - gcc-c++
-          - kernel-devel
-          - cmake
-          - make
-          - python3-devel
-          - golang
-        state: present
-
-    - name: Install packages when Centos 7
-      become: true
-      package:
-        name:
-          - devtoolset-8
-          - centos-release-scl
-          - cmake
-          - scl-utils
-        state: present
-      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
-
-    - name: Install vim plugins - vim
-      shell: |
-        vim +PlugInstall +qall
-      when: vim_distro == 'vim'
-
-    - name: Install vim plugins - neovim
-      shell: |
-        ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
-      when: vim_distro == 'neovim'
-
-    - name: Install YCM on Centos 7
-      shell: |
-        scl enable devtoolset-8 - << \EOF
-          ~/.vim/plugged/YouCompleteMe/install.py --all
-        EOF
-      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
-
-    - name: Install YCM on Centos 8 and later
-      shell: |
-        ~/.vim/plugged/YouCompleteMe/install.py --all
-      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Fedora' and ansible_lsb.major_release|int >= 8
-  when: vim_config == 'ycm'
-
-### COC ###
 - name: Configure vim coc
   environment:
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
@@ -153,7 +67,6 @@
       shell: |
         ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
       when: vim_distro == 'neovim'
-  when: vim_config == 'coc'
 
 - name: Install additional packages for vim
   pip:
