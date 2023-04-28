@@ -10,6 +10,22 @@ source $HOME/.vim/general.vim
 
 source $HOME/.vim/plugin_conf/coc
 
+" Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+" More info here: https://github.com/joshdick/onedark.vim#installation
+if (empty($TMUX))
+  if (has('nvim'))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  if (has('termguicolors'))
+    set termguicolors
+  endif
+endif
+
+silent! colorscheme PaperColor
+" silent! colorscheme material
+" silent! colorscheme tender
+" silent! colorscheme molokai
+
 " NOTE: Dunno why, in new neovim, mouse-=a does not work, so enable visual
 " mark, then disable.
 set mouse=a

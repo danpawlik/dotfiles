@@ -1,6 +1,7 @@
 [user]
-	name = Some user
-	email = someuser@test.com
+	name = Daniel P
+	email = dpawlik@test.com
+	signingkey = /home/dpawlik/.ssh/id_rsa.pub
 [pager]
 	branch = false
 [merge]
@@ -12,3 +13,5 @@
 	username = someuser
 [pull]
 	rebase = true
+[gpg]
+	format = ssh

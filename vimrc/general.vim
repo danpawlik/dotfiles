@@ -42,8 +42,6 @@ execute "set <xLeft>=\e[1;*D"
 filetype off
 filetype plugin indent on
 
-silent! colorscheme PaperColor
-
 " remove automaticly whitespaces on the end of all files / highlight whitechars
 autocmd BufWritePre * :%s/\s\+$//e
 highlight ExtraWhitespace ctermbg=red guibg=red

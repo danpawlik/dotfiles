@@ -71,14 +71,12 @@ Plug 'christianrondeau/vim-base64'
 "colorscheme
 Plug 'sjl/badwolf'
 Plug 'tomasr/molokai'
-Plug 'sickill/vim-monokai'
 Plug 'nlknguyen/papercolor-theme'
-Plug 'SiddharthShyniben/pitch'
 Plug 'rafalbromirski/vim-aurora'
-Plug 'srcery-colors/srcery-vim'
-Plug 'jsit/toast.vim'
-Plug 'vimpostor/vim-prism'
-Plug 'k4yt3x/ayu-vim-darker'
+Plug 'challenger-deep-theme/vim'
+Plug 'kaicataldo/material.vim'
+Plug 'rakr/vim-one'
+Plug 'jacoborus/tender.vim'
 
 "" beta
 "Plug 'nvim-treesitter/nvim-treesitter'
