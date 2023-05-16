@@ -198,9 +198,9 @@ You can choose the Lsp packages to be installed via plugin manager and press "i"
 ### Removing
 
 ```shell
-rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim
 # to uninstall just lvim
 bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
+
 # For vim config and neovim
-sudo rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim
+sudo rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/coc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim ~/.local/bin/node ~/.local/bin/npm ~/.local/bin/vim
 ```
