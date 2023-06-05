@@ -1,10 +1,13 @@
 ---
-- name: Download Neovim appimage
+- name: Download nvim appimage
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage"
+    dest: /tmp/nvim.appimage
+    mode: '0755'
+
+- name: Extract Neovim appimage
   shell: |
-    curl -L "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage" -o /tmp/nvim.appimage ;
-    cd /tmp/;
-    chmod u+x /tmp/nvim.appimage ;
-    ./nvim.appimage --appimage-extract
+    cd /tmp && ./nvim.appimage --appimage-extract
 
 - name: Create local dir if not exists
   file:

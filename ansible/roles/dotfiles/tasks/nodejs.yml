@@ -25,16 +25,28 @@
         name: xz
         state: present
 
-    - name: Install npm to user space
-      shell: |
-        curl -fLo ~/.local/node-{{ nodejs_version }}-linux-x64.tar.xz https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz
-        curl -fLo ~/.local/latest.tar.gz https://yarnpkg.com/latest.tar.gz
-        tar xaf node-{{ nodejs_version }}-linux-x64.tar.xz --strip-components 1 -C ~/.local/nodejs
-        tar xaf latest.tar.gz --strip-components 1 -C ~/.local/yarn
-        rm latest.tar.gz
-        rm node-{{ nodejs_version }}-linux-x64.tar.xz
-      args:
-        chdir: ~/.local
+    - name: Create dirs
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: true
+      loop:
+        - "~/.local/nodejs"
+        - "~/.local/yarn"
+
+    - name: Download and unpack nodejs
+      ansible.builtin.unarchive:
+        src: "https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz"
+        dest: ~/.local/nodejs
+        remote_src: true
+        extra_opts: [--strip-components=1]
+
+    - name: Download and unpack yarn
+      ansible.builtin.unarchive:
+        src: "https://yarnpkg.com/latest.tar.gz"
+        dest: ~/.local/yarn
+        remote_src: true
+        extra_opts: [--strip-components=1]
 
     - name: Create symlinks
       file:
