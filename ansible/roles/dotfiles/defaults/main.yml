@@ -24,8 +24,9 @@ vim_distro: neovim
 nvim_version: nightly
 
 # it install nodejs into ~/.local/nodejs
+# https://nodejs.org/dist/latest-v20.x/
 nodejs_userspace: true
-nodejs_version: v20.2.0
+nodejs_version: v20.5.0
 
 wifi_disable_powersave: true
 enable_powertop: false
