@@ -23,6 +23,7 @@ Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'luochen1990/rainbow'
 Plug 'mileszs/ack.vim'
+Plug 'preservim/nerdtree'
 
 " Git / shows git diff markers
 Plug 'tpope/vim-fugitive'
