@@ -80,7 +80,7 @@ Plug 'rakr/vim-one'
 Plug 'jacoborus/tender.vim'
 
 "" beta
-"Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Plug 'nvim-treesitter/playground'
 
 call plug#end()

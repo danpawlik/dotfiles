@@ -133,7 +133,11 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+" autocmd VimEnter * NERDTree
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+
+" show and explain function parameters
+inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
