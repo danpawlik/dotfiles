@@ -26,7 +26,7 @@ nvim_version: nightly
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/
 nodejs_userspace: true
-nodejs_version: v20.5.0
+nodejs_version: v20.5.1
 
 wifi_disable_powersave: true
 enable_powertop: false
@@ -39,6 +39,7 @@ common_packages:
   - bzip2
   - ccze
   - curl
+  - dmidecode
   - dnf-plugins-core
   - fd-find
   - fwupd
@@ -48,12 +49,15 @@ common_packages:
   - htop
   - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
   - iperf3
+  - iotop
   - keepassxc
   - koji
   - libavif-tools
+  - libguestfs
   - lshw
   - marked
   - mumble
+  - nmap-ncat
   - p7zip
   - pavucontrol
   - pinta
@@ -63,6 +67,7 @@ common_packages:
   - rsync
   - ShellCheck
   - sudo
+  - sysstat
   - tmux
   - unzip
   - util-linux-user
@@ -76,7 +81,11 @@ common_packages:
   - zstd
 
 dev_packages:
+  - cargo
   - "@development-tools"
+  - dhall
+  - dhall-json
+  - "g++"
   - "gcc-c++"
   - ghc
   - git
@@ -117,6 +126,7 @@ gnome_packages:
 pip_packages:
   - ansible-core==2.13.7
   - ansible-lint
+  - bindep
   - black
   - bodhi-client
   - docutils
@@ -143,9 +153,11 @@ pip_packages:
   - remote_pdb
   - rstcheck
   - ruamel.yaml
+  - setuptools
   - Sphinx
   - tox
   - virtualenv
+  - wheel
   - yamllint
   - yapf
   - yt-dlp
@@ -166,3 +178,4 @@ ansible_collections:
   - community.crypto
   - ansible.posix
   - openstack.cloud
+  - kubernetes.core
