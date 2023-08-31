@@ -19,7 +19,7 @@
           args:
             chdir: /tmp/nerd-fonts
 
-      when: nerd_fonts_pack == 'full'
+      when: nerd_fonts_pack == 'full' and nerd_fonts_install == 'direct'
 
     - name: Install small version of nerd fonts
       block:
@@ -50,7 +50,27 @@
             state: absent
           loop: "{{ nerd_fonts }}"
 
-      when: nerd_fonts_pack == 'small'
+      when: nerd_fonts_pack == 'small' and nerd_fonts_install | lower == 'direct'
+
+- name: Install nerd fonts by using package
+  become: true
+  when: nerd_fonts_install | lower == 'package'
+  package:
+    name: "{{ nerd_fonts_package }}"
+    state: present
+
+- name: Install patched fonts
+  when: nerd_fonts_install | lower == 'patched'
+  get_url:
+    url: "{{ item }}"
+    dest: "~/.local/share/fonts/{{ item | basename }}"
+  loop: "{{ nerd_fonts_patched }}"
+
+- name: Remove uncecessary fonts
+  shell: |
+    ls | grep -iE 'light|bold|italic|medium' | grep -vi 'mono' | xargs rm
+  args:
+    chdir: ~/.local/share/fonts
 
 - name: Update font cache
   shell: |

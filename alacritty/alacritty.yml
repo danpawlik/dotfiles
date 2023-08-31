@@ -1,7 +1,9 @@
 # Font configuration
 font:
   normal:
-    family: monospace
+    #family: RobotoMono Nerd Font Mono
+    #family: Hack Nerd Font Mono
+    familly: Iosevka Nerd Font Mono
     style: Regular
   size: 9.0
 

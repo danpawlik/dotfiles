@@ -5,6 +5,9 @@ enable_rpmfusion: true
 enable_nerd_fonts: true
 enable_kubernetes_tools: true
 enable_nested_virtualization: true
+
+# package, direct or patched
+nerd_fonts_install: patched
 # small or full
 nerd_fonts_pack: small
 nerd_fonts_version: v3.0.2
@@ -13,8 +16,30 @@ nerd_fonts:
   - RobotoMono
   - DroidSansMono
   - Hack
+  - JetBrainsMono
   - FiraCode
   - Iosevka
+  - CascadiaCode
+
+nerd_fonts_package:
+  - adobe-source-code-pro-fonts
+  - google-roboto-fonts
+  - google-roboto-mono-fonts
+  - google-droid-sans-fonts
+  - google-droid-sans-mono-fonts
+  - source-foundry-hack-fonts
+  - fira-code-fonts
+  - cascadia-code-fonts
+
+nerd_fonts_patched:
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/SourceCodePro/Regular/SauceCodeProNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/RobotoMono/Regular/RobotoMonoNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/DroidSansMono/DroidSansMNerdFontMono-Regular.otf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/Hack/Regular/HackNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/Iosevka/Regular/IosevkaNerdFontMono-Regular.ttf"
+  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/CascadiaCode/Regular/CaskaydiaCoveNerdFontMono-Regular.ttf"
 
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
@@ -25,7 +50,7 @@ nvim_version: nightly
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/
 nodejs_userspace: true
-nodejs_version: v20.5.1
+nodejs_version: v20.6.1
 
 wifi_disable_powersave: true
 enable_powertop: false
@@ -59,6 +84,7 @@ common_packages:
   - nmap-ncat
   - p7zip
   - pavucontrol
+  - pipewire-plugin-libcamera
   - pinta
   - plymouth-theme-hot-dog
   - powertop
@@ -89,6 +115,7 @@ dev_packages:
   - ghc
   - git
   - golang
+  - golang-honnef-tools
   - golang-x-tools-gopls
   - krb5-devel
   - libvirt
