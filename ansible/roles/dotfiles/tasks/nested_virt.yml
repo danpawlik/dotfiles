@@ -3,7 +3,7 @@
   become: true
   yum:
     name:
-      - qemu-kvm-common
+      - qemu-common
     state: present
 
 - name: Check if CPU vendor is Intel

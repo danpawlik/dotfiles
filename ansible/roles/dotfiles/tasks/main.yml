@@ -6,6 +6,10 @@
   include_tasks: common.yml
   when: "'common' in components"
 
+- name: Configure ansible
+  include_tasks: ansible.yml
+  when: "'ansible' in components"
+
 - name: Install nerd fonts
   include_tasks: nerdfonts.yml
   when: "'nerdfonts' in components"
@@ -61,10 +65,6 @@
 - name: Configure flatpak
   include_tasks: flatpak.yml
   when: "'flatpak' in components"
-
-- name: Configure ansible
-  include_tasks: ansible.yml
-  when: "'ansible' in components"
 
 - name: Configure Visual Studio Code
   include_tasks: visualstudio.yml

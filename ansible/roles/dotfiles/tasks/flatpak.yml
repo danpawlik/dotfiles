@@ -6,5 +6,5 @@
 
 - name: Install flatpak packages
   shell: |
-    flatpak install {{ item }}
+    flatpak install -y {{ item }}
   loop: "{{ flatpak_packages }}"

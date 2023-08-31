@@ -3,6 +3,8 @@
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
+    force: true
+  ignore_errors: true
 
 - name: Copy tmux config
   copy:

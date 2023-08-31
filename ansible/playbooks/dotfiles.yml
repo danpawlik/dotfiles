@@ -7,6 +7,7 @@
     components:
       - git
       - common
+      - ansible
       - nerdfonts
       - nodejs
       - vim
@@ -19,7 +20,6 @@
       - system
       - kubernetes
       - flatpak
-      - ansible
       - visualstudio
   roles:
     - dotfiles

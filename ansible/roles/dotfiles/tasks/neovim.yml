@@ -15,7 +15,7 @@
     state: directory
     recurse: true
 
-- name: Copy extracted neovim and make symlink to local bin
+- name: Copy extracted neovim
   copy:
     src: /tmp/squashfs-root/
     dest: ~/.local/nvim

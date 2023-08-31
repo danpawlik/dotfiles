@@ -28,16 +28,13 @@
             path: /tmp/fonts
             state: directory
 
-        - name: Download fonts
-          get_url:
-            url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}/{{ item }}.zip"
-            dest: /tmp/
+        - name: Download and unzip fonts
+          ansible.builtin.unarchive:
+            src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}/{{ item }}.zip"
+            dest: /tmp/fonts
+            remote_src: true
           loop: "{{ nerd_fonts }}"
-
-        - name: Unzip fonts
-          shell: |
-            unzip /tmp/{{ item }}.zip -d /tmp/fonts
-          loop: "{{ nerd_fonts }}"
+          ignore_errors: true
 
         - name: Remove windows fonts
           shell: |

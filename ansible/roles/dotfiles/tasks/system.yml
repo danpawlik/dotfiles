@@ -59,10 +59,9 @@
 
     - name: Clear resolv.conf file
       become: true
-      copy:
-        content: |
-          # CLEARED BY ANSIBLE
-        dest: /etc/resolv.conf
+      file:
+        path: /etc/resolv.conf
+        state: absent
       when: _disable_resolved.changed
 
     - name: Restart NetworkManager
@@ -71,6 +70,12 @@
         name: NetworkManager
         state: restarted
       when: _disable_resolved.changed or wifi_powersave is defined and wifi_powersave.changed
+      register: _nm_restarted
+
+    - name: Wait few seconds before continue
+      ansible.builtin.pause:
+        seconds: 30
+      when: _nm_restarted.changed
 
 - name: Configure powertop service
   become: true
@@ -119,6 +124,6 @@
 - name: Add user to libvirt group
   become: true
   user:
-    name: "{{ ansible_user }}"
+    name: "{{ ansible_user_id }}"
     groups: libvirt
     append: true

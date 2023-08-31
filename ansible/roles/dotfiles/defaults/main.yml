@@ -7,14 +7,13 @@ enable_kubernetes_tools: true
 enable_nested_virtualization: true
 # small or full
 nerd_fonts_pack: small
-nerd_fonts_version: v3.0.1
+nerd_fonts_version: v3.0.2
 nerd_fonts:
   - SourceCodePro
   - RobotoMono
   - DroidSansMono
   - Hack
   - FiraCode
-  - FiraMono
   - Iosevka
 
 # available: prezto, starship, oh_my_zsh
