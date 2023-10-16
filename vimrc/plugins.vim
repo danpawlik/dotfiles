@@ -83,5 +83,8 @@ Plug 'jacoborus/tender.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Plug 'nvim-treesitter/playground'
 
+" Ansible
+Plug 'pearofducks/ansible-vim'
+
 call plug#end()
 """"" end plugged
