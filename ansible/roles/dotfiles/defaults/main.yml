@@ -150,7 +150,7 @@ gnome_packages:
   - variety
 
 pip_packages:
-  - ansible-core==2.13.7
+  - ansible-core
   - ansible-lint
   - bindep
   - black

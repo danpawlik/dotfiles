@@ -3,7 +3,6 @@
   git:
     repo: https://github.com/hlissner/doom-emacs
     dest: ~/.emacs.d
-    depth: 1
 
 - name: Install emacs
   become: true

@@ -71,6 +71,7 @@
     ls | grep -iE 'light|bold|italic|medium' | grep -vi 'mono' | xargs rm
   args:
     chdir: ~/.local/share/fonts
+  ignore_errors: true
 
 - name: Update font cache
   shell: |
