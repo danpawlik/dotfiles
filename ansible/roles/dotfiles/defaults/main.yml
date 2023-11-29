@@ -205,3 +205,5 @@ ansible_collections:
   - ansible.posix
   - openstack.cloud
   - kubernetes.core
+  - community.mysql
+  - community.postgresql
