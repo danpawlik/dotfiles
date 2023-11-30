@@ -50,7 +50,7 @@ nvim_version: nightly
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/
 nodejs_userspace: true
-nodejs_version: v20.6.1
+nodejs_version: latest
 
 wifi_disable_powersave: true
 enable_powertop: false

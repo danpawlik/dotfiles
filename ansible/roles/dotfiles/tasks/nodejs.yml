@@ -8,12 +8,21 @@
   ignore_errors: true
 
 - name: Setup NodeJS
+  when: npm_version.rc != 0 or nodejs_userspace
   block:
+    - name: Remove old local dirs
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "~/.local/bin"
+        - "~/.local/yarn"
+        - "~/.local/nodejs"
+
     - name: Ensure local dir exists
       file:
         path: "{{ item }}"
         state: directory
-        recurse: true
       loop:
         - "~/.local/bin"
         - "~/.local/yarn"
@@ -25,18 +34,22 @@
         name: xz
         state: present
 
-    - name: Create dirs
-      file:
-        path: "{{ item }}"
-        state: directory
-        recurse: true
-      loop:
-        - "~/.local/nodejs"
-        - "~/.local/yarn"
+    - name: Get latest version
+      when: nodejs_version == "latest"
+      block:
+        - name: Fetch publication page
+          get_url:
+            url: https://nodejs.org/dist/latest/
+            dest: /tmp/nodejs-latest
 
-    - name: Download and unpack nodejs
+        - name: Get version
+          shell: |
+            sed -r 's/^.*href="([^"]+)".*/\1/' /tmp/nodejs-latest | grep linux-x64.tar.gz | cut -f2 -d'-'
+          register: latest_nodejs_version
+
+    - name: "Download and unpack nodejs version {{ latest_nodejs_version.stdout | default(nodejs_version) }}"
       ansible.builtin.unarchive:
-        src: "https://nodejs.org/dist/{{ nodejs_version }}/node-{{ nodejs_version }}-linux-x64.tar.xz"
+        src: "https://nodejs.org/dist/{{ latest_nodejs_version.stdout | default(nodejs_version) }}/node-{{ latest_nodejs_version.stdout | default(nodejs_version) }}-linux-x64.tar.xz"
         dest: ~/.local/nodejs
         remote_src: true
         extra_opts: [--strip-components=1]
@@ -60,9 +73,9 @@
           dest: "~/.local/bin/node"
         - src: "~/.local/yarn/bin/yarn"
           dest: "~/.local/bin/yarn"
-  when: npm_version.rc != 0 or nodejs_userspace
 
 - name: Install nodejs package
+  when: npm_version.rc != 0 and not nodejs_userspace
   block:
     - name: Configure NodeJS repo - Centos 7
       become: true
@@ -75,4 +88,3 @@
       package:
         name: nodejs
         state: present
-  when: npm_version.rc != 0 and not nodejs_userspace
