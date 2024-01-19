@@ -11,6 +11,7 @@
       - nerdfonts
       - nodejs
       - vim
+      - lvim
       - emacs
       - tmux
       - alacritty

@@ -26,6 +26,10 @@
   include_tasks: neovim.yml
   when: "'vim' in components and just_neovim is defined and just_neovim"
 
+- name: Configure lunarvim
+  include_tasks: lvim.yml
+  when: "'lvim' in components"
+
 - name: Configure zsh
   include_tasks: zsh.yml
   when: "'zsh' in components"
