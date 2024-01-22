@@ -110,3 +110,13 @@
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
   shell: |
     npm install -g prettier eslint
+
+- name: Install gopls
+  ansible.builtin.shell: |
+    go install golang.org/x/tools/gopls@latest
+
+- name: Add PATH to bashrc
+  lineinfile:
+    path: ~/.bashrc
+    regexp: "export PATH"
+    line: "export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"
