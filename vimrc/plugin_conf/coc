@@ -59,6 +59,11 @@ let g:coc_user_config['python.jediEnabled'] = v:true
 let g:coc_user_config['python.formatting.provider'] = "yapf"
 let g:coc_user_config['python.linting.flake8Enabled'] = v:true
 let g:coc_user_config['python.linting.mypyEnabled'] = v:false
+let g:coc_user_config['python.analysis.typeCheckingMode'] = "off"
+let g:coc_user_config['pyright.inlayHints.variableTypes'] = v:false
+let g:coc_user_config['pyright.inlayHints.functionReturnTypes'] = v:false
+let g:coc_user_config['pyright.disableDiagnostics'] = v:false
+
 let g:coc_user_config['coc.preferences.formatOnType'] = v:false
 let g:coc_user_config['diagnostic-languageserver.filetypes'] = {"sh": "shellcheck"}
 let g:coc_user_config['markdownlint.config.default'] = v:true

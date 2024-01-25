@@ -127,3 +127,15 @@
     name: "{{ ansible_user_id }}"
     groups: libvirt
     append: true
+
+- name: Change journal size
+  become: true
+  ansible.builtin.lineinfile:
+    dest: /etc/systemd/journald.conf
+    regexp: "{{ item.regex }}"
+    line: "{{ item.line }}"
+  loop:
+    - regex: '^#SystemMaxUse='
+      line: 'SystemMaxUse=500M'
+    - regex: '^#SystemMaxFileSize='
+      line: 'SystemMaxFileSize=100M'
