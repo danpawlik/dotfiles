@@ -141,3 +141,9 @@ nnoremap <C-f> :NERDTreeFind<CR>
 
 " show and explain function parameters
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END

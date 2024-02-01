@@ -25,6 +25,11 @@ Plug 'luochen1990/rainbow'
 Plug 'mileszs/ack.vim'
 Plug 'preservim/nerdtree'
 
+" Enable mason - treesitter and lsp markerplace
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+
 " Git / shows git diff markers
 Plug 'tpope/vim-fugitive'
 

@@ -25,12 +25,13 @@
 - name: Copy config files
   copy:
     src: "/tmp/dotfiles/vimrc/{{ item }}"
-    dest: "~/.vim/{{ item }}"
+    dest: ~/.vim/
     remote_src: true
   loop:
     - "general.vim"
     - "plugins_conf.vim"
     - "plugins.vim"
+    - "lua"
 
 - name: Copy config files
   copy:
@@ -67,6 +68,14 @@
     src: ~/.vimrc
     dest: ~/.config/nvim/init.vim
     state: link
+  when: vim_distro == 'neovim'
+
+- name: Create symlink to lua dir
+  ansible.builtin.file:
+    src: ~/.vim/lua
+    dest: ~/.config/nvim/lua
+    state: link
+  when: vim_distro == 'neovim'
 
 - name: Configure vim coc
   environment:
@@ -79,7 +88,8 @@
 
     - name: Install vim plugins - neovim
       shell: |
-        ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
+        # old way: ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
+        ~/.local/nvim/usr/bin/nvim --headless +PlugInstall +qall
       when: vim_distro == 'neovim'
 
 - name: Install additional packages for vim
