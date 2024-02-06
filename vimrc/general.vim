@@ -22,7 +22,7 @@ set ttyfast
 set backspace=indent,eol,start
 set updatetime=300
 set shortmess+=c
-set colorcolumn=80
+set colorcolumn=80,120
 set copyindent
 set ignorecase
 set signcolumn=yes
