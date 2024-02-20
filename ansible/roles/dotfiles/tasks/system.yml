@@ -109,13 +109,14 @@
   shell: |
     systemctl --user enable --now podman.socket
 
-- name: Increase map count
+- name: Increase sysctl values
   become: true
   sysctl:
-    name: vm.max_map_count
-    value: "262144"
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
     state: present
     reload: true
+  loop: "{{ sysctl_params }}"
 
 - name: Enable nested virtualization
   include_tasks: nested_virt.yml
