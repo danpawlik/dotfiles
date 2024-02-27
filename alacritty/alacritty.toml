@@ -1,0 +1,248 @@
+[font]
+size = 9.0
+
+[font.normal]
+family = "RobotoMonoNerdFontMono"
+#family = "Hack"
+#family = "FiraCodeNerdFontMono"
+#family = "JetBrains Mono"
+#family = "DroidSansMNerdFontMono"
+#family = "Monaspace Argon"
+#family = "FiraCodeNerdFontMonoRegNerdFont"
+#family = "RedHatMono"
+style = "Regular"
+
+########################################################
+## My theme - I don't remember what it was based on
+#[colors.primary]
+#background = "#000000"
+#foreground = "#ffffff"
+#
+#[colors.normal]
+#black = "#000000"
+#blue = "#3465a4"
+#cyan = "#06989a"
+#green = "#4e9a06"
+#magenta = "#75507b"
+#red = "#cc0000"
+#white = "#d3d7cf"
+#yellow = "#c4a000"
+#
+#[colors.bright]
+#black = "#555753"
+#blue = "#729fcf"
+#cyan = "#34e2e2"
+#green = "#8ae234"
+#magenta = "#ad7fa8"
+#red = "#ef2929"
+#white = "#eeeeec"
+#yellow = "#fce94f"
+#
+#[colors.cursor]
+#cursor = "#ffffff"
+#text = "#000000"
+#
+#[colors.selection]
+#background = "#b5d5ff"
+#text = "#000000"
+######################################################
+
+#######################################################
+### https://github.com/dguo/blood-moon/blob/main/applications/alacritty/blood-moon.yml
+[colors.primary]
+#background = '0x10100E'
+#foreground = '0xC6C6C4'
+background = "#000000"
+foreground = "#ffffff"
+
+[colors.normal]
+black =   '0x10100E'
+red =     '0xC40233'
+green =   '0x009F6B'
+yellow =  '0xFFD700'
+blue =    '0x0087BD'
+magenta = '0x9A4EAE'
+cyan =    '0x20B2AA'
+white =   '0xC6C6C4'
+
+[colors.bright]
+black =   '0x696969'
+red =     '0xFF2400'
+green =   '0x03C03C'
+yellow =  '0xFDFF00'
+blue =    '0x007FFF'
+magenta = '0xFF1493'
+cyan =    '0x00CCCC'
+white =   '0xFFFAFA'
+#######################################################
+
+#######################################################
+## Seti theme - https://themer.dev/
+#[colors.primary]
+#background = "#0e1112"
+#foreground = "#B8BBBA"
+#
+#[colors.cursor]
+#text = "#0E1112"
+#cursor = "#A074C4"
+#
+#[colors.selection]
+#text = "#0E1112"
+#background = "#519ABA"
+#
+#[colors.normal]
+#black = "#474A4A"
+#red = "#CC3E44"
+#green = "#8DC149"
+#yellow = "#CBCB41"
+#blue = "#519ABA"
+#magenta = "#F55385"
+#cyan = "#7494A3"
+#white = "#B8BBBA"
+#
+#[colors.bright]
+#black = "#636666"
+#red = "#CE5D61"
+#green = "#9BC565"
+#yellow = "#CDCD5F"
+#blue = "#6BA6C0"
+#magenta = "#EE6D95"
+#cyan = "#87A1AD"
+#white = "#D4D7D6"
+#
+#[colors.dim]
+#black = "#2A2D2E"
+#red = "#A6353A"
+#green = "#749E3E"
+#yellow = "#A5A638"
+#blue = "#447F98"
+#magenta = "#C7466E"
+#cyan = "#607A86"
+#white = "#9B9E9E"
+#######################################################
+
+#######################################################
+## Github Universe theme - https://themer.dev/
+#[colors.primary]
+#background = "#0c0d0d" ## changed
+#foreground = "#DEDFDF"
+#
+#[colors.cursor]
+#text = "#23292D"
+#cursor = "#5073B8"
+#
+#[colors.selection]
+#text = "#23292D"
+#background = "#1299AD"
+#
+#[colors.normal]
+#black = "#616668"
+#red = "#e21818"  ## changed
+#green = "#6EBB82"
+#yellow = "#F79532"
+#blue = "#1299AD"
+#magenta = "#A067AB"
+#cyan = "#09B399"
+#white = "#DEDFDF"
+#
+#[colors.bright]
+#black = "#555753"
+#blue = "#729fcf"
+#cyan = "#34e2e2"
+#green = "#8ae234"
+#magenta = "#ad7fa8"
+#red = "#ef2929"
+#white = "#eeeeec"
+#yellow = "#fce94f"
+#
+#[colors.dim]
+#black = "#42474B"
+#red = "#C6476C"
+#green = "#5F9E71"
+#yellow = "#CD7F31"
+#blue = "#158393"
+#magenta = "#875B92"
+#cyan = "#0E9783"
+#white = "#BFC0C2"
+#######################################################
+
+########################################################
+## https://github.com/dodeca12/Monokai-Charcoal-Theme-for-Alacritty/blob/main/monokai_charcoal_white.yaml
+#[colors.primary]
+#background ='#000000'
+#foreground ='#FFFFFF'
+#
+#[colors.normal]
+#black =  '#1a1a1a'
+#red =    '#ff1100' ## changed from f4005f
+#green =  '#98e024'
+#yellow = '#fa8419'
+#blue =   '#9d65ff'
+#magenta ='#FF00FF' ## changed from f4005f
+#cyan =   '#58d1eb'
+#white =  '#c4c5b5'
+#
+#[colors.bright]
+#black =  '#625e4c'
+#red =    '#ff1100' ## changed from f4005f
+#green =  '#98e024'
+#yellow = '#e0d561'
+#blue =   '#9d65ff'
+#magenta ='#FF00FF' ## changed from f4005f
+#cyan =   '#58d1eb'
+#white =  '#f6f6ef'
+########################################################
+
+#######################################################
+## Molokai custom
+#[colors.primary]
+#background = "#000000"
+#foreground = "#ffffff"
+#
+#[colors.normal]
+#black = '0x1B1D1E'
+#red = '0xF92672'
+#green = '0xA6E22E'
+#yellow = '0xFD971F'
+#blue = '0x66D9EF'
+#magenta = '0xAE81FF'
+#cyan = '0x38CCD1'
+#white = '0xF8F8F2'
+#
+#[colors.bright]
+#black = '0x75715E'
+#red = '0xF92672'
+#green = '0xA6E22E'
+#yellow = '0xFD971F'
+#blue = '0x66D9EF'
+#magenta = '0xAE81FF'
+#cyan = '0x38CCD1'
+#white = '0xF8F8F2'
+#######################################################
+
+########################################################
+#### PaperColor
+#[colors.primary]
+#background = '0x1c1c1c'
+#foreground = '0xd0d0d0'
+#
+#[colors.normal]
+#black = '0x1c1c1c'
+#red = '0xaf0000'
+#green = '0x008700'
+#yellow = '0x5f8700'
+#blue = '0x0087af'
+#magenta = '0x87875f'
+#cyan = '0x005f87'
+#white = '0xd0d0d0'
+#
+#[colors.bright]
+#black = '0x585858'
+#red = '0xd75f5f'
+#green = '0x5f875f'
+#yellow = '0xaf8700'
+#blue = '0x5f87af'
+#magenta = '0x87875f'
+#cyan = '0x005f87'
+#white = '0xffffff'
+########################################################
