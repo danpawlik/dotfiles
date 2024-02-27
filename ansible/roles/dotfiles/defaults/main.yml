@@ -41,6 +41,13 @@ nerd_fonts_patched:
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/Iosevka/Regular/IosevkaNerdFontMono-Regular.ttf"
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/CascadiaCode/Regular/CaskaydiaCoveNerdFontMono-Regular.ttf"
 
+other_fonts:
+  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceArgon-Regular.otf"
+  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceKrypton-Regular.otf"
+  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceNeon-Regular.otf"
+  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceRadon-Regular.otf"
+  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceXenon-Regular.otf"
+
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
 

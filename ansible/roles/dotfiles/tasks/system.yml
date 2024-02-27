@@ -140,3 +140,10 @@
       line: 'SystemMaxUse=500M'
     - regex: '^#SystemMaxFileSize='
       line: 'SystemMaxFileSize=100M'
+
+# Trying to fix sound issue
+- name: Remove alsa state daemon file
+  become: true
+  ansible.builtin.file:
+    path: /etc/alsa/state-daemon.conf
+    state: absent

@@ -67,12 +67,17 @@
   loop: "{{ nerd_fonts_patched }}"
 
 - name: Remove uncecessary fonts
-  shell: |
+  ansible.builtin.shell: |
     ls | grep -iE 'light|bold|italic|medium' | grep -vi 'mono' | xargs rm
   args:
     chdir: ~/.local/share/fonts
   ignore_errors: true
 
+- name: Install other fonts
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "~/.local/share/fonts/{{ item | basename }}"
+  loop: "{{ other_fonts }}"
+
 - name: Update font cache
-  shell: |
-    fc-cache -fv
+  ansible.builtin.command: fc-cache -fv
