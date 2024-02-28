@@ -47,40 +47,51 @@ style = "Regular"
 #text = "#000000"
 ######################################################
 
-#######################################################
-### https://github.com/dguo/blood-moon/blob/main/applications/alacritty/blood-moon.yml
-[colors.primary]
-#background = '0x10100E'
-#foreground = '0xC6C6C4'
-background = "#000000"
-foreground = "#ffffff"
-
-[colors.normal]
-black =   '0x10100E'
-red =     '0xC40233'
-green =   '0x009F6B'
-yellow =  '0xFFD700'
-blue =    '0x0087BD'
-magenta = '0x9A4EAE'
-cyan =    '0x20B2AA'
-white =   '0xC6C6C4'
-
-[colors.bright]
-black =   '0x696969'
-red =     '0xFF2400'
-green =   '0x03C03C'
-yellow =  '0xFDFF00'
-blue =    '0x007FFF'
-magenta = '0xFF1493'
-cyan =    '0x00CCCC'
-white =   '0xFFFAFA'
-#######################################################
-
-#######################################################
-## Seti theme - https://themer.dev/
+########################################################
+#### https://github.com/dguo/blood-moon/blob/main/applications/alacritty/blood-moon.yml
 #[colors.primary]
-#background = "#0e1112"
-#foreground = "#B8BBBA"
+##background = '0x10100E'
+##foreground = '0xC6C6C4'
+#background = "#000000"
+#foreground = "#ffffff"
+#
+#[colors.normal]
+#black =   '0x10100E'
+#red =     '0xC40233'
+#green =   '0x009F6B'
+#yellow =  '0xFFD700'
+#blue =    '#004eeb' # changed from 0x0087BD
+#magenta = '0x9A4EAE'
+#cyan =    '0x20B2AA'
+#white =   '0xC6C6C4'
+#
+#[colors.bright]
+#black =   '0x696969'
+#red =     '0xFF2400'
+#green =   '0x03C03C'
+#yellow =  '0xFDFF00'
+#blue =    '0x007FFF'
+#magenta = '0xFF1493'
+#cyan =    '0x00CCCC'
+#white =   '0xFFFAFA'
+#
+#[colors.selection]
+#background = "0x585858"
+#text = "0xd0d0d0"
+#
+#[colors.cursor]
+#text = "0xd0d0d0"
+#cursor = "0xd0d0d0"
+#
+########################################################
+
+#######################################################
+### Seti theme - https://themer.dev/
+#[colors.primary]
+##background = "#0e1112"
+##foreground = "#B8BBBA"
+#background = "#000000"
+#foreground = "#ffffff"
 #
 #[colors.cursor]
 #text = "#0E1112"
@@ -121,11 +132,13 @@ white =   '0xFFFAFA'
 #white = "#9B9E9E"
 #######################################################
 
-#######################################################
+########################################################
 ## Github Universe theme - https://themer.dev/
 #[colors.primary]
-#background = "#0c0d0d" ## changed
-#foreground = "#DEDFDF"
+##background = "#0c0d0d"
+##foreground = "#DEDFDF"
+#background = "#000000"
+#foreground = "#ffffff"
 #
 #[colors.cursor]
 #text = "#23292D"
@@ -193,32 +206,32 @@ white =   '0xFFFAFA'
 #white =  '#f6f6ef'
 ########################################################
 
-#######################################################
-## Molokai custom
-#[colors.primary]
-#background = "#000000"
-#foreground = "#ffffff"
-#
-#[colors.normal]
-#black = '0x1B1D1E'
-#red = '0xF92672'
-#green = '0xA6E22E'
-#yellow = '0xFD971F'
-#blue = '0x66D9EF'
-#magenta = '0xAE81FF'
-#cyan = '0x38CCD1'
-#white = '0xF8F8F2'
-#
-#[colors.bright]
-#black = '0x75715E'
-#red = '0xF92672'
-#green = '0xA6E22E'
-#yellow = '0xFD971F'
-#blue = '0x66D9EF'
-#magenta = '0xAE81FF'
-#cyan = '0x38CCD1'
-#white = '0xF8F8F2'
-#######################################################
+######################################################
+# Molokai custom
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+
+[colors.normal]
+black = '0x1B1D1E'
+red = '#f92424' # changed from 0xF92672
+green = '#35c318' # changef rom 0xA6E22E
+yellow = '0xFD971F'
+blue = '#004be0'
+magenta = '0xAE81FF'
+cyan = '0x38CCD1'
+white = '0xF8F8F2'
+
+[colors.bright]
+black = '0x75715E'
+red = '0xF92672'
+green = '0xA6E22E'
+yellow = '0xFD971F'
+blue = '0x66D9EF'
+magenta = '0xAE81FF'
+cyan = '0x38CCD1'
+white = '0xF8F8F2'
+######################################################
 
 ########################################################
 #### PaperColor
