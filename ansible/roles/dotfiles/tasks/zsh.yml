@@ -45,4 +45,4 @@
   lineinfile:
     path: ~/.zshrc
     regexp: "export PATH"
-    line: "export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"
+    line: "export PATH=~/.local/share/nvim/mason/bin/:~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"

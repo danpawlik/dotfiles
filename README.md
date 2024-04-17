@@ -179,21 +179,20 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 Run inside the neovim distro:
 
-```shell
-:TSInstall bash cmake comment css dockerfile go graphql haskell html http javascript json make markdown python rst rust typescript vim yaml
-```
-
-or
-
-```shell
-:LspInstall ansible-language-server bash-language-server codespell commitlint dhall-lsp dockerfile-language-server dot-language-server eslint-lsp flake8 gitlint goimports golangci-lint gopls grammarly-languageserver graphql-language-service-cli html-lsp jq json-lsp markdownlint marksman prettier pylint pyright reason-language-server rstcheck rust-analyzer shellcheck shfmt yamlfmt
-```
-
 You can choose the Lsp packages to be installed via plugin manager and press "i" on desired plugin:
 
 ```shell
 :Mason
 ```
+
+via Mason:
+
+```shell
+:MasonInstall ansible-lint ansible-language-server autotools-language-server bash-language-server checkmake commitlint dhall-lsp dockerfile-language-server gitlint goimports gopls harper-ls helm-ls html-lsp jedi-language-server jinja-lsp jq-lsp json-lsp lua-language-server markdownlint misspell prettier pyright python-lsp-server rstcheck ruby-lsp rust-analyzer shellcheck staticcheck systemdlint trivy yaml-language-server yamllint vim-language-server
+```
+
+Make sure, that `~/.local/share/nvim/mason/bin/` is set in the PATH.
+Additional configs: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
 
 ### Removing
 

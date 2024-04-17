@@ -1,0 +1,28 @@
+-- --- https://github.com/neovim/nvim-lspconfig/issues/726
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- require('lspconfig')['pyright'].setup{
+--     capabilities = capabilities,
+--     on_attach = on_attach,settings = {
+--         pyright = {
+--             autoImportCompletion = true,
+--             inlayHints = {
+--                 variableTypes = false,
+--             }
+--         },
+--         python = {
+--             analysis = {
+--                 autoSearchPaths = true,
+--                 diagnosticMode = 'openFilesOnly',
+--                 useLibraryCodeForTypes = true,
+--                 typeCheckingMode = 'basic',
+--     			diagnosticSeverityOverrides = {
+--     				reportUnusedExpression = "none",
+--     			},
+--     			inlayHints = {
+--     			    variableTypes = false,
+--     			    functionReturnTypes = false,
+--     			},
+--             }
+--         }
+--     }
+-- }
