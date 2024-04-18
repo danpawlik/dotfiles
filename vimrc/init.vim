@@ -9,6 +9,7 @@ source $HOME/.vim/plugins_conf.vim
 source $HOME/.vim/general.vim
 
 " Temporary comment vim coc to use vim mason.
+" source $HOME/.vim/coc_conf.vim
 " source $HOME/.vim/plugin_conf/coc
 source $HOME/.vim/lua/init.lua
 

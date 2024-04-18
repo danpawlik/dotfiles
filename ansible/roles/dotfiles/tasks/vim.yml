@@ -30,6 +30,7 @@
   loop:
     - "general.vim"
     - "plugins_conf.vim"
+    - "coc_conf.vim"
     - "plugins.vim"
     - "lua"
 
@@ -105,13 +106,28 @@
     - src: nvim-treesitter/
       dest: nvim-treesitter
 
-- name: Comment coc plugin
-  when: not nvim_use_coc
-  ansible.builtin.lineinfile:
-    path: ~/.vim/plugins.vim
-    regexp: "^Plug 'neoclide/coc.nvim', { 'branch': 'release' }"
-    line: |
-      " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+- name: Configure vim coc
+  when: nvim_use_coc
+  block:
+    # NOTE: there is no need to comment lua config, when Mason
+    # packages are not installed.
+    - name: Enable vim-coc config
+      ansible.builtin.lineinfile:
+        path: ~/.vimrc
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      loop:
+        - regexp: '^" source $HOME/.vim/plugin_conf/coc'
+          line: 'source $HOME/.vim/plugin_conf/coc'
+        - regexp: '^" source $HOME/.vim/coc_conf.vim'
+          line: 'source $HOME/.vim/coc_conf.vim'
+
+    - name: Uncomment coc plugin
+      ansible.builtin.lineinfile:
+        path: ~/.vim/plugins.vim
+        regexp: |
+          " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+        line: "Plug 'neoclide/coc.nvim', { 'branch': 'release' }"
 
 - name: Install neovim plugins
   shell: |
@@ -126,17 +142,6 @@
   when: not nvim_use_coc
   ansible.builtin.shell: |
     ~/.local/nvim/usr/bin/nvim --headless -c "TSInstall {{ treesitter_packages | join(' ') }}" -c qall
-
-- name: Configure vim coc
-  when: nvim_use_coc
-  block:
-    # NOTE: there is no need to comment lua config, when Mason
-    # packages are not installed.
-    - name: Enable vim-coc config
-      ansible.builtin.lineinfile:
-        path: ~/.vimrc
-        regexp: '^" source $HOME/.vim/plugin_conf/coc'
-        line: source $HOME/.vim/plugin_conf/coc
 
     # NOTE: Mason is installing packages in venv or node_modules dir.
     # No need to install packages one more time, when it would be not used by vim.
