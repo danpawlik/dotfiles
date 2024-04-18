@@ -208,7 +208,6 @@ mason_packages:
   - gitlint
   - goimports
   - gopls
-  - harper-ls
   - helm-ls
   - html-lsp
   - jedi-language-server
@@ -233,6 +232,28 @@ mason_packages:
   - vim-language-server
   - yaml-language-server
   - yamllint
+
+treesitter_packages:
+  - bash
+  - cmake
+  - comment
+  - css
+  - dockerfile
+  - go
+  - graphql
+  - haskell
+  - html
+  - http
+  - javascript
+  - json
+  - make
+  - markdown
+  - python
+  - rst
+  - rust
+  - typescript
+  - vim
+  - yaml
 
 npm_packages:
   - pnpm

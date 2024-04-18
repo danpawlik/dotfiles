@@ -4,7 +4,6 @@ require'lspconfig'.bashls.setup{}
 require'lspconfig'.dhall_lsp_server.setup{}
 require'lspconfig'.dockerls.setup{}
 require'lspconfig'.gopls.setup{}
-require'lspconfig'.harper_ls.setup{}
 require'lspconfig'.helm_ls.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.jedi_language_server.setup{}
