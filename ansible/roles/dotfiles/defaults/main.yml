@@ -50,9 +50,8 @@ other_fonts:
 
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
-
-vim_distro: neovim
 nvim_version: nightly
+nvim_use_coc: false
 
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/
@@ -218,19 +217,22 @@ mason_packages:
   - json-lsp
   - lua-language-server
   - markdownlint
+  - marksman
   - misspell
   - prettier
   - pyright
   - python-lsp-server
   - rstcheck
+  - ruff
+  - ruff-lsp
   - rust-analyzer
   - shellcheck
   - staticcheck
   - systemdlint
   - trivy
+  - vim-language-server
   - yaml-language-server
   - yamllint
-  - vim-language-server
 
 npm_packages:
   - pnpm

@@ -188,11 +188,23 @@ You can choose the Lsp packages to be installed via plugin manager and press "i"
 via Mason:
 
 ```shell
-:MasonInstall ansible-lint ansible-language-server autotools-language-server bash-language-server checkmake commitlint dhall-lsp dockerfile-language-server gitlint goimports gopls harper-ls helm-ls html-lsp jedi-language-server jinja-lsp jq-lsp json-lsp lua-language-server markdownlint misspell prettier pyright python-lsp-server rstcheck rust-analyzer shellcheck staticcheck systemdlint trivy yaml-language-server yamllint vim-language-server
+:MasonInstall ansible-lint ansible-language-server autotools-language-server bash-language-server checkmake commitlint dhall-lsp dockerfile-language-server gitlint goimports gopls harper-ls helm-ls html-lsp jedi-language-server jinja-lsp jq-lsp json-lsp lua-language-server markdownlint marksman misspell prettier pyright python-lsp-server rstcheck ruff ruff-lsp rust-analyzer shellcheck staticcheck systemdlint trivy vim-language-server yaml-language-server yamllint
 ```
 
 Make sure, that `~/.local/share/nvim/mason/bin/` is set in the PATH.
 Additional configs: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
+
+To check what `LSP` or `TS` plugins are enabled, type in vim:
+
+```shell
+LspInfo
+```
+
+For TS:
+
+```shell
+TSModuleInfo
+```
 
 ### Removing
 
