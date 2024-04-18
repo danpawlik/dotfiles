@@ -1,3 +1,4 @@
 require("configs.mason")
-require("configs.lspconfig")
-require("configs.plugins")
+--- from https://github.com/neovim/nvim-lspconfig
+require("lspconfig")
+require("configs.overwrite")

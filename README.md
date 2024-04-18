@@ -188,7 +188,7 @@ You can choose the Lsp packages to be installed via plugin manager and press "i"
 via Mason:
 
 ```shell
-:MasonInstall ansible-lint ansible-language-server autotools-language-server bash-language-server checkmake commitlint dhall-lsp dockerfile-language-server gitlint goimports gopls harper-ls helm-ls html-lsp jedi-language-server jinja-lsp jq-lsp json-lsp lua-language-server markdownlint misspell prettier pyright python-lsp-server rstcheck ruby-lsp rust-analyzer shellcheck staticcheck systemdlint trivy yaml-language-server yamllint vim-language-server
+:MasonInstall ansible-lint ansible-language-server autotools-language-server bash-language-server checkmake commitlint dhall-lsp dockerfile-language-server gitlint goimports gopls harper-ls helm-ls html-lsp jedi-language-server jinja-lsp jq-lsp json-lsp lua-language-server markdownlint misspell prettier pyright python-lsp-server rstcheck rust-analyzer shellcheck staticcheck systemdlint trivy yaml-language-server yamllint vim-language-server
 ```
 
 Make sure, that `~/.local/share/nvim/mason/bin/` is set in the PATH.

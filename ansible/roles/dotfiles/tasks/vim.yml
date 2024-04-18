@@ -52,32 +52,48 @@
     path: ~/.config/nvim/autoload
     state: directory
 
-- name: Download vim plug
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    dest: ~/.config/nvim/autoload/plug.vim
-    mode: "0644"
+- name: Do neovim
   when: vim_distro == 'neovim'
+  block:
+    - name: Download vim plug
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: ~/.config/nvim/autoload/plug.vim
+        mode: "0644"
 
-- name: Setup Neovim
-  include_tasks: neovim.yml
-  when: vim_distro == 'neovim'
+    - name: Setup Neovim
+      include_tasks: neovim.yml
 
-- name: Create symbolic link between vimrc and nvim init
-  file:
-    src: ~/.vimrc
-    dest: ~/.config/nvim/init.vim
-    state: link
-  when: vim_distro == 'neovim'
+    - name: Create symbolic link between vimrc and nvim init
+      file:
+        src: ~/.vimrc
+        dest: ~/.config/nvim/init.vim
+        state: link
 
-- name: Create symlink to lua dir
-  ansible.builtin.file:
-    src: ~/.vim/lua
-    dest: ~/.config/nvim/lua
-    state: link
-  when: vim_distro == 'neovim'
+    - name: Create symlink to lua dir
+      ansible.builtin.file:
+        src: ~/.vim/lua
+        dest: ~/.config/nvim/lua
+        state: link
+      when: vim_distro == 'neovim'
 
-- name: Configure vim coc
+    - name: Clone nvim-lspconfig
+      ansible.builtin.git:
+        repo: https://github.com/neovim/nvim-lspconfig
+        dest: /tmp/nvim-lspconfig
+
+    - name: Copy lspconfig and lspconfig.lua
+      ansible.builtin.copy:
+        src: "/tmp/nvim-lspconfig/lua/{{ item.src }}"
+        dest: "~/.vim/lua/{{ item.dest }}"
+        remote_src: true
+      loop:
+        - src: lspconfig.lua
+          dest: lspconfig.lua
+        - src: lspconfig
+          dest: lspconfig
+
+- name: Configure vim plugins
   environment:
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
   block:
@@ -91,6 +107,10 @@
         # old way: ~/.local/nvim/usr/bin/nvim +PlugInstall +qall
         ~/.local/nvim/usr/bin/nvim --headless +PlugInstall +qall
       when: vim_distro == 'neovim'
+
+    - name: Install mason packages
+      ansible.builtin.shell: |
+        ~/.local/nvim/usr/bin/nvim --headless -c "MasonInstall {{ mason_packages | join(' ') }}" -c qall
 
 - name: Install additional packages for vim
   pip:
@@ -129,4 +149,4 @@
   lineinfile:
     path: ~/.bashrc
     regexp: "export PATH"
-    line: "export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"
+    line: "export PATH=~/.local/share/nvim/mason/bin/:~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"
