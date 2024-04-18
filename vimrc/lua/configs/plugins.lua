@@ -1,4 +1,4 @@
-require'lspconfig'.ansiblels.setup{}
+-- require'lspconfig'.ansiblels.setup{}
 require'lspconfig'.autotools_ls.setup{}
 require'lspconfig'.bashls.setup{}
 require'lspconfig'.dhall_lsp_server.setup{}
