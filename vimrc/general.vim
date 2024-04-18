@@ -86,29 +86,3 @@ let g:rainbow_active = 1
 "  autocmd FileType go AutoFormatBuffer gofmt
 "  autocmd FileType python AutoFormatBuffer yapf
 "augroup END
-
-"" beta
-" NOTE: Install TS after, by using command: :TSInstall <languages>
-" More info: https://github.com/danpawlik/dotfiles#post-configuration
-"lua << EOF
-"require "nvim-treesitter.configs".setup {
-"  playground = {
-"    enable = true,
-"    disable = {},
-"    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-"    persist_queries = false, -- Whether the query persists across vim sessions
-"    keybindings = {
-"      toggle_query_editor = 'o',
-"      toggle_hl_groups = 'i',
-"      toggle_injected_languages = 't',
-"      toggle_anonymous_nodes = 'a',
-"      toggle_language_display = 'I',
-"      focus_language = 'f',
-"      unfocus_language = 'F',
-"      update = 'R',
-"      goto_node = '<cr>',
-"      show_help = '?',
-"    },
-"  }
-"}
-"EOF

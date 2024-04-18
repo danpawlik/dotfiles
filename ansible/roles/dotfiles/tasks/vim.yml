@@ -74,38 +74,6 @@
     dest: ~/.config/nvim/lua
     state: link
 
-- name: Clone nvim-lspconfig
-  ansible.builtin.git:
-    repo: https://github.com/neovim/nvim-lspconfig
-    dest: /tmp/nvim-lspconfig
-
-- name: Copy lspconfig and lspconfig.lua
-  ansible.builtin.copy:
-    src: "/tmp/nvim-lspconfig/lua/{{ item.src }}"
-    dest: "~/.vim/lua/{{ item.dest }}"
-    remote_src: true
-  loop:
-    - src: lspconfig.lua
-      dest: lspconfig.lua
-    - src: lspconfig/
-      dest: lspconfig
-
-- name: Clone nvim-treesitter
-  ansible.builtin.git:
-    repo: https://github.com/nvim-treesitter/nvim-treesitter
-    dest: /tmp/nvim-treesitter
-
-- name: Copy nvim-treesitter and nvim-treesitter.lua
-  ansible.builtin.copy:
-    src: "/tmp/nvim-treesitter/lua/{{ item.src }}"
-    dest: "~/.vim/lua/{{ item.dest }}"
-    remote_src: true
-  loop:
-    - src: nvim-treesitter.lua
-      dest: nvim-treesitter.lua
-    - src: nvim-treesitter/
-      dest: nvim-treesitter
-
 - name: Configure vim coc
   when: nvim_use_coc
   block:
