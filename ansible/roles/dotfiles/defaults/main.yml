@@ -234,16 +234,22 @@ mason_packages:
 
 treesitter_packages:
   - bash
+  - c
   - cmake
   - comment
   - css
   - dockerfile
+  - dhall
   - go
   - graphql
   - haskell
+  - helm
   - html
   - http
+  - lua
+  - luadoc
   - javascript
+  - jq
   - json
   - make
   - markdown
@@ -252,6 +258,8 @@ treesitter_packages:
   - rust
   - typescript
   - vim
+  - vimdoc
+  - yaml
   - yaml
 
 npm_packages:

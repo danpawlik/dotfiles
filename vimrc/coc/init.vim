@@ -11,7 +11,6 @@ source $HOME/.vim/general.vim
 " Temporary comment vim coc to use vim mason.
 source $HOME/.vim/coc_conf.vim
 source $HOME/.vim/coc
-source $HOME/.vim/lua/init.lua
 
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 " More info here: https://github.com/joshdick/onedark.vim#installation

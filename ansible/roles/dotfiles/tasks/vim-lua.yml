@@ -8,6 +8,14 @@
     - init.lua
     - lua/
 
+- name: Install mason packages
+  ansible.builtin.shell: |
+    ~/.local/nvim/usr/bin/nvim --headless -c "MasonInstall {{ mason_packages | join(' ') }}" -c qall
+
+- name: Install treesitter packages
+  ansible.builtin.shell: |
+    timeout 120 ~/.local/nvim/usr/bin/nvim --headless -c "TSInstall {{ treesitter_packages | join(' ') }}" -c qall
+
 - name: Add PATH to bashrc
   lineinfile:
     path: ~/.bashrc
