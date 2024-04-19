@@ -1,4 +1,28 @@
 -- from https://github.com/nvim-lua/kickstart.nvim
+vim.g.encoding = "uft-8"
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smarttab = true
+vim.opt.autoindent = true
+-- vim.opt.background = "dark"
+vim.opt.hlsearch = true
+vim.g.nofoldenable = true
+-- vim.g.wildmenu = true
+vim.opt.cursorline = true
+vim.opt.cursorcolumn = true
+vim.opt.smartindent = true
+vim.opt.smartcase = true
+vim.g.nowrap = true
+-- vim.g.ttyfast = true
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+-- vim.g.colorcolumn = 80, 120
+vim.opt.ignorecase = true
+vim.opt.signcolumn = "yes"
+vim.o.termguicolors = true
+vim.o.autoread = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
@@ -8,24 +32,13 @@ vim.opt.showmode = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.breakindent = true
 vim.opt.undofile = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.signcolumn = "yes"
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 -- vim.opt.list = true
 -- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
-vim.opt.cursorline = true
 vim.opt.scrolloff = 10
-vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
 
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
@@ -605,6 +618,7 @@ require("lazy").setup({
 		end,
 	},
 	{ "nlknguyen/papercolor-theme" },
+	{ "ntpeters/vim-better-whitespace" },
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -739,11 +753,22 @@ require("lazy").setup({
 	},
 })
 
-vim.o.termguicolors = true
-vim.cmd([[silent! colorscheme PaperColor]])
+-- vim.cmd([[silent! colorscheme PaperColor]])
+-- vim.cmd([[silent! colorscheme material]])
+-- vim.cmd([[silent! colorscheme tender]])
+vim.cmd([[silent! colorscheme molokai]])
+-- vim.cmd([[silent! colorscheme badwolf]])
 
 -- remove whitechars
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*" },
 	command = [[%s/\s\+$//e]],
 })
+-- color column
+vim.api.nvim_set_option_value("colorcolumn", "80", {})
+
+-- Highlight unicode symbols/chars
+vim.cmd("highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout")
+vim.cmd([[
+  autocmd BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
+]])
