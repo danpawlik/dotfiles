@@ -150,7 +150,7 @@ bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/
 And copy my config into the LunarVim dir:
 
 ```shell
-cp vim-lua/lunar-vim.lua ~/.config/lvim/config.lua
+cp lvim/lunar-vim.lua ~/.config/lvim/config.lua
 ```
 
 NOTE:

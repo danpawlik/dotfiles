@@ -1,0 +1,67 @@
+---
+- name: Copy config files
+  copy:
+    src: "/tmp/dotfiles/vimrc/coc/{{ item }}"
+    dest: ~/.vim/
+    remote_src: true
+  loop:
+    - "general.vim"
+    - "plugins_conf.vim"
+    - "coc_conf.vim"
+    - "plugins.vim"
+    - "lua"
+    - "coc"
+
+- name: Copy vimrc file
+  copy:
+    src: "/tmp/dotfiles/vimrc/coc/init.vim"
+    dest: "~/.vimrc"
+    remote_src: true
+
+- name: Ensure directories exists
+  file:
+    path: ~/.config/nvim/autoload
+    state: directory
+
+- name: Download vim plug
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: ~/.config/nvim/autoload/plug.vim
+    mode: "0644"
+
+- name: Setup Neovim
+  include_tasks: neovim.yml
+
+- name: Create symbolic link between vimrc and nvim init
+  file:
+    src: ~/.vimrc
+    dest: ~/.config/nvim/init.vim
+    state: link
+
+- name: Create symlink to lua dir
+  ansible.builtin.file:
+    src: ~/.vim/lua
+    dest: ~/.config/nvim/lua
+    state: link
+
+- name: Install neovim plugins
+  shell: |
+    ~/.local/nvim/usr/bin/nvim --headless +PlugInstall +qall
+
+# NOTE: Mason is installing packages in venv or node_modules dir.
+# No need to install packages one more time, when it would be not used by vim.
+- name: Install additional packages for neovim when coc config set
+  when: pip_packages
+  pip:
+    name: "{{ pip_packages }}"
+    extra_args: --user --force-reinstall
+
+- name: Install gopls
+  ansible.builtin.shell: |
+    go install golang.org/x/tools/gopls@latest
+
+- name: Add PATH to bashrc
+  lineinfile:
+    path: ~/.bashrc
+    regexp: "export PATH"
+    line: "export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"

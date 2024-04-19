@@ -712,3 +712,9 @@ require("lazy").setup({
 
 vim.o.termguicolors = true
 vim.cmd([[silent! colorscheme PaperColor]])
+
+-- remove whitechars
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	pattern = { "*" },
+	command = [[%s/\s\+$//e]],
+})

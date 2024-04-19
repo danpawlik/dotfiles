@@ -1,0 +1,15 @@
+---
+- name: Copy config
+  ansible.builtin.copy:
+    src: /tmp/dotfiles/vimrc/kickstart/{{ item }}
+    dest: ~/.config/nvim/{{ item }}
+    remote_src: true
+  loop:
+    - init.lua
+    - lua/
+
+- name: Add PATH to bashrc
+  lineinfile:
+    path: ~/.bashrc
+    regexp: "export PATH"
+    line: "export PATH=~/.local/share/nvim/mason/bin/:~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"

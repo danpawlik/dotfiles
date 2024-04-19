@@ -15,6 +15,11 @@
     state: directory
     recurse: true
 
+- name: Ensure config dir exists
+  ansible.builtin.file:
+    path: ~/.config/nvim
+    state: directory
+
 - name: Copy extracted neovim
   copy:
     src: /tmp/squashfs-root/

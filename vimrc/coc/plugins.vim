@@ -8,7 +8,7 @@
 """" plugged
 call plug#begin('~/.vim/plugged')
 
-" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Helpers
 " Automatic closing of brackets/tmux/statusline/fuzyy finder
@@ -67,7 +67,7 @@ Plug 'eslint/eslint'
 Plug 'prettier/vim-prettier'
 
 "" autoformatter: if you are using vim coc,
-"" change settings in $HOME/.vim/plugin_conf/coc
+"" change settings in $HOME/.vim/coc
 " Plug 'google/vim-maktaba'
 " Plug 'google/vim-codefmt'
 " Plug 'google/vim-glaive'
