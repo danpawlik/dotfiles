@@ -9,7 +9,7 @@
       - common
       - ansible
       - nerdfonts
-      - nodejs
+      # - nodejs
       - vim
       - lvim
       - emacs
