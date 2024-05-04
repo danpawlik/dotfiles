@@ -4,6 +4,7 @@ components: []
 enable_rpmfusion: true
 enable_nerd_fonts: true
 enable_kubernetes_tools: true
+kubernetes_repo_version: v1.29
 enable_nested_virtualization: true
 
 # package, direct or patched
