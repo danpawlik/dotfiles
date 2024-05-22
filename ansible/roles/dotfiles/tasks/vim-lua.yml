@@ -1,4 +1,10 @@
 ---
+- name: Ensure C compiler is available
+  become: true
+  ansible.builtin.package:
+    name: gcc
+    state: present
+
 - name: Copy config
   ansible.builtin.copy:
     src: /tmp/dotfiles/vimrc/kickstart/{{ item }}
