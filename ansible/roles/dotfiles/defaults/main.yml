@@ -199,7 +199,6 @@ pip_packages:
 # for neovim
 mason_packages:
   - ansible-lint
-  - autotools-language-server
   - bash-language-server
   - checkmake
   - commitlint
