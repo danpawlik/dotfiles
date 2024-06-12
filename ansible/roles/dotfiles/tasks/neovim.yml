@@ -20,6 +20,11 @@
     path: ~/.config/nvim
     state: directory
 
+- name: Ensure old neovim dir does not exists
+  ansible.builtin.file:
+    path: ~/.local/nvim
+    state: absent
+
 - name: Copy extracted neovim
   copy:
     src: /tmp/squashfs-root/

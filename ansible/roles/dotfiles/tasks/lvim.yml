@@ -5,6 +5,12 @@
     name: cargo
     state: present
 
+- name: Remove first old lunar vim
+  ansible.builtin.shell: |
+    bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh) -y
+  register: _lunar_uninstall
+  failed_when: _lunar_uninstall.rc not in [0,1]
+
 - name: Install lunar vim - nightly version
   ansible.builtin.shell: |
     bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y

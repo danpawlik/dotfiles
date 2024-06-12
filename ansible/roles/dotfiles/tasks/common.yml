@@ -71,7 +71,8 @@
   when: ansible_distribution == 'Fedora'
 
 - name: Install pip packages in user space
-  pip:
+  ansible.builtin.pip:
     name: "{{ pip_packages }}"
+    state: forcereinstall
     extra_args: --user
   when: pip_packages
