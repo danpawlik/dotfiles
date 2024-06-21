@@ -3,7 +3,7 @@ alias docker='podman'
 alias pogoda='curl -H "Accept-Language: pl" wttr.in/wroclaw'
 # alias cleanup-repo='git fetch origin; git rebase --abort; git cherry-pick --abort; git merge --abort; git reset --hard HEAD; git checkout origin/master; git checkout origin/main; git pull --rebase ; git clean -d -f -x'
 #alias cleanup-repo='git rebase --abort; git cherry-pick --abort; git merge --abort;git remote update; git reset --hard HEAD;  git checkout origin/master; git checkout origin/main; git pull --rebase ; git clean -d -f -x'
-alias cleanup-repo='git rebase --abort; git cherry-pick --abort; git merge --abort; git remote update;  git reset --hard origin/main; git reset --hard origin/master; git clean -d -f -x'
+alias cleanup-repo='git rebase --abort; git cherry-pick --abort; git merge --abort; git remote update; git checkout master; git checkout main; git reset --hard origin/master;  git reset --hard origin/main; git clean -d -f -x'
 
 alias week='date +"So this is week: %V"'
 
@@ -13,3 +13,5 @@ fi
 
 alias vim="~/.local/bin/nvim"
 alias emacs="emacs -nw"
+
+alias sshn='ssh -o StrictHostKeyChecking=no'
