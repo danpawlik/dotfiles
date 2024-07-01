@@ -1,5 +1,11 @@
 ---
+- name: Check if file already exists
+  ansible.builtin.stat:
+    path: ~/.gitconfig
+  register: _git_config_stat
+
 - name: Configure git params
-  copy:
+  when: not _git_config_stat.stat.exists
+  ansible.builtin.copy:
     src: gitconfig
     dest: "~/.gitconfig"
