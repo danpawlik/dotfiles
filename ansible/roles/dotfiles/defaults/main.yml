@@ -72,6 +72,7 @@ common_packages:
   - curl
   - dmidecode
   - dnf-plugins-core
+  - fastfetch
   - fd-find
   - fwupd
   - fzf
