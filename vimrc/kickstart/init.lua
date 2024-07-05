@@ -604,6 +604,9 @@ require("lazy").setup({
 	},
 	{ "sjl/badwolf" },
 	{ "tomasr/molokai" },
+	{ "ray-x/aurora" },
+	{ "NTBBloodbath/doom-one.nvim" },
+	{ "ofirgall/ofirkai.nvim" },
 	{ "rafalbromirski/vim-aurora" },
 	{ "challenger-deep-theme/vim" },
 	{ "kaicataldo/material.vim" },
@@ -761,8 +764,11 @@ require("lazy").setup({
 -- vim.cmd([[silent! colorscheme PaperColor]])
 -- vim.cmd([[silent! colorscheme material]])
 -- vim.cmd([[silent! colorscheme tender]])
-vim.cmd([[silent! colorscheme molokai]])
+-- vim.cmd([[silent! colorscheme molokai]])
 -- vim.cmd([[silent! colorscheme badwolf]])
+-- vim.cmd([[silent! colorscheme aurora]])
+-- vim.cmd([[silent! colorscheme doom-one]])
+vim.cmd([[silent! colorscheme ofirkai]])
 
 -- remove whitechars
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
