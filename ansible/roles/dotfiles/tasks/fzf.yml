@@ -3,8 +3,7 @@
   git:
     repo: https://github.com/junegunn/fzf
     dest: ~/.fzf
-    depth: 1
-  run_once: true
+    update: true
 
 - name: Setup fzf
   shell: |
