@@ -93,7 +93,7 @@ common_packages:
   - p7zip
   - pavucontrol
   - pipewire-plugin-libcamera
-  - pinta
+  - kolourpaint
   - plymouth-theme-hot-dog
   - powertop
   - ripgrep
