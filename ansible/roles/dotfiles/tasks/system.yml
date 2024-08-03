@@ -135,6 +135,7 @@
     dest: /etc/systemd/journald.conf
     regexp: "{{ item.regex }}"
     line: "{{ item.line }}"
+    create: true
   loop:
     - regex: '^#SystemMaxUse='
       line: 'SystemMaxUse=500M'
