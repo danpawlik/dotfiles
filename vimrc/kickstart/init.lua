@@ -681,6 +681,8 @@ require("lazy").setup({
 				"dockerfile",
 				"dhall",
 				"go",
+				"git_rebase",
+				"gitcommit",
 				"graphql",
 				"haskell",
 				"helm",
