@@ -70,6 +70,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	"prettier/vim-prettier",
 
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
@@ -785,3 +786,8 @@ vim.cmd("highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout")
 vim.cmd([[
   autocmd BufReadPost * syntax match nonascii "[^\u0000-\u007F]"
 ]])
+
+-- prettier
+vim.g["prettier#autoformat"] = 1
+vim.g["prettier#config#use_tabs"] = "auto"
+vim.g["prettier#config#tab_width"] = "2"
