@@ -56,6 +56,8 @@ nodejs_userspace: true
 nodejs_version: latest
 
 wifi_disable_powersave: true
+disable_systemd_resolved: true
+nm_dns_workaround: true
 enable_powertop: false
 
 common_packages:

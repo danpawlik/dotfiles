@@ -1,12 +1,14 @@
 ---
+- name: Create NetworkManager conf.d dir
+  become: true
+  file:
+    path: /etc/NetworkManager/conf.d
+    state: directory
+
 - name: Disable Wireless powersave
   become: true
+  when: wifi_disable_powersave
   block:
-    - name: Create NetworkManager conf.d dir
-      file:
-        path: /etc/NetworkManager/conf.d
-        state: directory
-
     - name: Disable power save for Wireless device
       copy:
         content: |
@@ -14,34 +16,13 @@
           wifi.powersave = 2
         dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
       register: wifi_powersave
-      when: wifi_disable_powersave
 
-    ## https://wiki.archlinux.org/title/NetworkManager#DHCP_client
-    #    - name: Change default dhcp client when issue with OpenWRT and VPN
-    #      copy:
-    #        content: |
-    #          [main]
-    #          dhcp=dhclient
-    #          # dhcp=dhcpcd
-    #          # dhcp=internal
-    #        dest: /etc/NetworkManager/conf.d/00-dhcp-client.conf
 
-    #    ## Try to fix error:
-    #    # Using degraded feature set UDP instead of UDP+EDNS0 for DNS server 192.168.88.1,
-    #    # where 192.168.88.1 is an router base on OpenWRT.
-    #    # By default, the DNS cache is enabled on the router, so it might
-    #    # be problematic when local connection + VPN + Virtual interfaces + etc.
-    #    # is configured.
-    #    # https://superuser.com/questions/1676584/using-degraded-feature-set-tcp-instead-of-udp-for-dns-server
-    #    - name: Disable DNSSec
-    #      become: true
-    #      lineinfile:
-    #        path: /etc/systemd/resolved.conf
-    #        regexp: '^DNSSEC='
-    #        line: 'DNSSEC=no'
-
+- name: Disable systemd-resolved
+  become: true
+  when: disable_systemd_resolved
+  block:
     - name: Disable systemd-resolved
-      become: true
       service:
         name: systemd-resolved
         state: stopped
@@ -49,7 +30,6 @@
       register: _disable_resolved
 
     - name: Set dns to default in Network Manger
-      become: true
       ini_file:
         path: /etc/NetworkManager/NetworkManager.conf
         section: main
@@ -58,14 +38,12 @@
         no_extra_spaces: true
 
     - name: Clear resolv.conf file
-      become: true
       file:
         path: /etc/resolv.conf
         state: absent
       when: _disable_resolved.changed
 
     - name: Restart NetworkManager
-      become: true
       service:
         name: NetworkManager
         state: restarted
@@ -77,8 +55,36 @@
         seconds: 30
       when: _nm_restarted.changed
 
+# More info: https://wiki.archlinux.org/title/NetworkManager
+- name: Enable dnsmasq to make DNS lookups of VPN hosts will be routed to the relevant VPN's DNS servers
+  become: true
+  when: nm_dns_workaround
+  block:
+    - name: Enable dnsmasq
+      ansible.builtin.copy:
+        content: |
+          [main]
+          dns=dnsmasq
+        dest: /etc/NetworkManager/conf.d/dns.conf
+      register: _enable_dnsmasq
+
+    - name: Set cache for dnsmasq
+      ansible.builtin.copy:
+        content: |
+          cache-size=10000
+        dest: /etc/NetworkManager/dnsmasq.d/cache.conf
+      register: _dnsmasq_cache
+
+    - name: Restart NetworkManager
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: restarted
+      when: _enable_dnsmasq.changed or _dnsmasq_cache.changed
+      register: _nm_restarted
+
 - name: Configure powertop service
   become: true
+  when: enable_powertop
   block:
     - name: Create service file
       copy:
@@ -103,7 +109,6 @@
         enabled: true
         daemon-reload: true
 
-  when: enable_powertop
 
 - name: Enable podman socket
   shell: |
