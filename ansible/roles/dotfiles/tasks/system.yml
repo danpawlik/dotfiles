@@ -153,3 +153,10 @@
   ansible.builtin.file:
     path: /etc/alsa/state-daemon.conf
     state: absent
+
+- name: Disable automatic suspend after a while
+  ansible.builtin.command: xset s off
+
+- name: Disable automatic suspend after a while - do also as root
+  become: true
+  ansible.builtin.command: xset s off
