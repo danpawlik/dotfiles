@@ -11,7 +11,7 @@ enable_nested_virtualization: true
 nerd_fonts_install: patched
 # small or full
 nerd_fonts_pack: small
-nerd_fonts_version: v3.2.1
+nerd_fonts_version: v3.3.0
 nerd_fonts:
   - RobotoMono
   - DroidSansMono
@@ -122,7 +122,6 @@ dev_packages:
   - git
   - golang
   - golang-honnef-tools
-  - golang-x-tools-gopls
   - krb5-devel
   - libvirt
   - nodejs
@@ -200,6 +199,7 @@ mason_packages:
   - ansible-lint
   - bash-language-server
   - checkmake
+  - codespell
   - commitlint
   - dhall-lsp
   - dockerfile-language-server
@@ -230,6 +230,7 @@ mason_packages:
   - vim-language-server
   - yaml-language-server
   - yamllint
+  - yamlfmt
 
 treesitter_packages:
   - bash
@@ -258,7 +259,6 @@ treesitter_packages:
   - typescript
   - vim
   - vimdoc
-  - yaml
   - yaml
 
 npm_packages:
