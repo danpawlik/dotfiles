@@ -622,7 +622,9 @@ require("lazy").setup({
 		end,
 	},
 	{ "nlknguyen/papercolor-theme" },
-	{ "ntpeters/vim-better-whitespace" },
+
+	-- remove white characters
+	{ "thirtythreeforty/lessspace.vim" },
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -773,11 +775,10 @@ require("lazy").setup({
 -- vim.cmd([[silent! colorscheme doom-one]])
 vim.cmd([[silent! colorscheme ofirkai]])
 
--- remove whitechars
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*" },
-	command = [[%s/\s\+$//e]],
-})
+-- highlight whitechars
+vim.cmd("highlight ExtraWhitespace ctermbg=red guibg=red")
+vim.cmd("match ExtraWhitespace /\\s\\+$/")
+
 -- color column
 vim.api.nvim_set_option_value("colorcolumn", "80", {})
 

@@ -1,22 +1,22 @@
 ---
-- name: Setup Kubernetes tools
-  block:
-    - name: Configure repository
-      become: true
-      copy:
-        content: |
-          [kubernetes]
-          name=Kubernetes
-          baseurl=https://pkgs.k8s.io/core:/stable:/{{ kubernetes_repo_version }}/rpm/
-          enabled=1
-          gpgcheck=1
-          gpgkey=https://pkgs.k8s.io/core:/stable:/{{ kubernetes_repo_version }}/rpm/repodata/repomd.xml.key
-          # exclude=kubelet kubeadm kubectl
-        dest: /etc/yum.repos.d/kubernetes.repo
-
-    - name: Install Kubernetes tools
-      become: true
-      yum:
-        name: kubectl
-        state: present
-  when: enable_kubernetes_tools and ansible_distribution == 'Fedora'
+#- name: Setup Kubernetes tools
+#  block:
+#    - name: Configure repository
+#      become: true
+#      copy:
+#        content: |
+#          [kubernetes]
+#          name=Kubernetes
+#          baseurl=https://pkgs.k8s.io/core:/stable:/{{ kubernetes_repo_version }}/rpm/
+#          enabled=1
+#          gpgcheck=1
+#          gpgkey=https://pkgs.k8s.io/core:/stable:/{{ kubernetes_repo_version }}/rpm/repodata/repomd.xml.key
+#          # exclude=kubelet kubeadm kubectl
+#        dest: /etc/yum.repos.d/kubernetes.repo
+#
+#    - name: Install Kubernetes tools
+#      become: true
+#      yum:
+#        name: kubectl
+#        state: present
+#  when: enable_kubernetes_tools and ansible_distribution == 'Fedora'
