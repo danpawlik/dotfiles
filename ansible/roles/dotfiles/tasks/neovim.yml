@@ -1,7 +1,15 @@
 ---
-- name: Download nvim appimage
+- name: "Download nvim appimage - {{ nvim_version }}"
+  when: nvim_version != 'nightly'
   ansible.builtin.get_url:
     url: "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim.appimage"
+    dest: /tmp/nvim.appimage
+    mode: '0755'
+
+- name: Download nvim appimage - nightly
+  when: nvim_version | lower == 'nightly'
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim-linux-x86_64.appimage"
     dest: /tmp/nvim.appimage
     mode: '0755'
 
