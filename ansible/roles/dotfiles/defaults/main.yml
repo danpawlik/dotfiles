@@ -196,7 +196,7 @@ pip_packages:
 
 # for neovim
 mason_packages:
-  - ansible-lint
+  # - ansible-lint
   - bash-language-server
   - checkmake
   - codespell
@@ -209,7 +209,7 @@ mason_packages:
   - helm-ls
   - html-lsp
   - jedi-language-server
-  - jinja-lsp
+  # - jinja-lsp
   - jq-lsp
   - json-lsp
   - lua-language-server
