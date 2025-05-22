@@ -124,6 +124,7 @@ dev_packages:
   - golang-honnef-tools
   - krb5-devel
   - libvirt
+  - luarocks
   - nodejs
   - openssl
   - podman
