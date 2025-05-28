@@ -1,8 +1,8 @@
 -- from https://github.com/nvim-lua/kickstart.nvim
 vim.g.encoding = "uft-8"
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.autoindent = true
@@ -73,28 +73,6 @@ local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
 require("lazy").setup({
-
-	-- Install custom plugins
-	{ "sjl/badwolf" },
-	{ "tomasr/molokai" },
-	{ "ray-x/aurora" },
-	{ "NTBBloodbath/doom-one.nvim" },
-	{ "ofirgall/ofirkai.nvim" },
-	{ "rafalbromirski/vim-aurora" },
-	{ "challenger-deep-theme/vim" },
-	{ "kaicataldo/material.vim" },
-	{ "rakr/vim-one" },
-	{ "jacoborus/tender.vim" },
-	--	{
-	--		"folke/tokyonight.nvim",
-	--		priority = 1000,
-	--		init = function()
-	--			--      vim.cmd.colorscheme("tokyonight-night")
-	--			vim.cmd.hi("Comment gui=none")
-	--		end,
-	--	},
-	{ "nlknguyen/papercolor-theme" },
-	{ "prettier/vim-prettier" },
 
 	-- remove white characters
 	{ "thirtythreeforty/lessspace.vim" },
@@ -537,10 +515,16 @@ require("lazy").setup({
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
-				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
+				bashls = {},
+				yamlls = {},
+				dockerls = {},
+				ansiblels = {},
+				marksman = {},
+				pyright = {},
+				clangd = {},
+				taplo = {},
+				typos_lsp = {},
+
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
@@ -557,7 +541,9 @@ require("lazy").setup({
 					settings = {
 						Lua = {
 							completion = {
+								autoRequire = true,
 								callSnippet = "Replace",
+								displayContext = 1,
 							},
 							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
 							-- diagnostics = { disable = { 'missing-fields' } },
@@ -582,12 +568,53 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"ansible-language-server",
+				"ansible-lint",
+				"bash-language-server",
+				"checkmake",
+				"clangd",
+				"clang-format",
+				"codespell",
+				"commitlint",
+				"cspell",
+				"dhall-lsp",
+				"dockerfile-language-server",
+				"gitlint",
+				"goimports",
+				"gopls",
+				"hadolint",
+				"helm-ls",
+				"html-lsp",
+				"jedi-language-server",
+				"jq-lsp",
+				"jsonlint",
+				"json-lsp",
+				"luacheck",
+				"lua-language-server",
+				"markdownlint",
+				"marksman",
+				"misspell",
+				"prettier",
+				"pyright",
+				"rstcheck",
+				"ruff",
+				"rust-analyzer",
+				"shellcheck",
+				"shfmt",
+				"staticcheck",
+				"stylua",
+				"systemdlint",
+				"trivy",
+				"vim-language-server",
+				"yamlfmt",
+				"yaml-language-server",
+				"yamllint",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
-				ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-				automatic_installation = false,
+				ensure_installed = { "gopls", "bashls", "pylsp" }, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
@@ -818,32 +845,34 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
-				"diff",
 				"cmake",
 				"comment",
 				"css",
-				"dockerfile",
 				"dhall",
-				"go",
-				"git_rebase",
+				"diff",
+				"dockerfile",
 				"gitcommit",
+				"git_rebase",
+				"go",
 				"graphql",
 				"haskell",
 				"helm",
 				"html",
 				"http",
-				"lua",
-				"luadoc",
 				"javascript",
 				"jq",
 				"json",
+				"lua",
+				"luadoc",
 				"make",
 				"markdown",
 				"markdown_inline",
 				"python",
-				"rst",
 				"query",
+				"regex",
+				"rst",
 				"rust",
+				"toml",
 				"typescript",
 				"vim",
 				"vimdoc",
@@ -859,6 +888,8 @@ require("lazy").setup({
 				additional_vim_regex_highlighting = { "ruby" },
 			},
 			indent = { enable = true, disable = { "ruby" } },
+			incremental_selection = { enable = true },
+			textobjects = { enable = true },
 		},
 		-- There are additional nvim-treesitter modules that you can use to interact
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -894,6 +925,39 @@ require("lazy").setup({
 	-- Or use telescope!
 	-- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
 	-- you can continue same window with `<space>sr` which resumes last telescope search
+	--
+	-- Install custom plugins
+	{ "sjl/badwolf" },
+	{ "tomasr/molokai" },
+	{ "ray-x/aurora" },
+	{ "NTBBloodbath/doom-one.nvim" },
+	{ "ofirgall/ofirkai.nvim" },
+	{ "rafalbromirski/vim-aurora" },
+	{ "challenger-deep-theme/vim" },
+	{ "kaicataldo/material.vim" },
+	{ "rakr/vim-one" },
+	{ "jacoborus/tender.vim" },
+	{
+		"navarasu/onedark.nvim",
+		--		priority = 1000,
+		--		config = function()
+		--			require("onedark").setup({
+		--				style = "darker",
+		--			})
+		--			require("onedark").load()
+		--		end,
+	},
+
+	{
+		"folke/tokyonight.nvim",
+		--		priority = 1000,
+		--		init = function()
+		--			--      vim.cmd.colorscheme("tokyonight-night")
+		--			vim.cmd.hi("Comment gui=none")
+		--		end,
+	},
+	{ "nlknguyen/papercolor-theme" },
+	{ "prettier/vim-prettier" },
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -915,15 +979,25 @@ require("lazy").setup({
 		},
 	},
 })
+require("lspconfig").yamlls.setup({
+	settings = {
+		yaml = {
+			schemas = {
+				["https://json.schemastore.org/kubernetes.json"] = "/*.k8s.yaml",
+			},
+		},
+	},
+})
 
 -- vim.cmd([[silent! colorscheme PaperColor]])
 -- vim.cmd([[silent! colorscheme material]])
 -- vim.cmd([[silent! colorscheme tender]])
--- vim.cmd([[silent! colorscheme molokai]])
+vim.cmd([[silent! colorscheme molokai]])
 -- vim.cmd([[silent! colorscheme badwolf]])
 -- vim.cmd([[silent! colorscheme aurora]])
 -- vim.cmd([[silent! colorscheme doom-one]])
-vim.cmd([[silent! colorscheme ofirkai]])
+-- vim.cmd([[silent! colorscheme ofirkai]])
+-- NOTE: onedar.nvim is on the top
 
 -- highlight whitechars
 vim.cmd("highlight ExtraWhitespace ctermbg=red guibg=red")
