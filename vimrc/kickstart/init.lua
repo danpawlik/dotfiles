@@ -805,6 +805,7 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
+			require("mini.completion").setup()
 
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,
@@ -926,8 +927,6 @@ require("lazy").setup({
 	{ "kaicataldo/material.vim" },
 	{ "rakr/vim-one" },
 	{ "jacoborus/tender.vim" },
-	{ "hrsh7th/cmp-buffer", lazy = true },
-	{ "hrsh7th/cmp-omni", lazy = true },
 	{ "navarasu/onedark.nvim" },
 	{ "folke/tokyonight.nvim" },
 	{ "nlknguyen/papercolor-theme" },
