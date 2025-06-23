@@ -296,18 +296,7 @@ require("lazy").setup({
 	},
 
 	-- LSP Plugins
-	{
-		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-		-- used for completion, annotations and signatures of Neovim apis
-		"folke/lazydev.nvim",
-		ft = "lua",
-		opts = {
-			library = {
-				-- Load luvit types when the `vim.uv` word is found
-				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-			},
-		},
-	},
+	{ "folke/lazydev.nvim", config = true },
 	{
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
@@ -937,25 +926,10 @@ require("lazy").setup({
 	{ "kaicataldo/material.vim" },
 	{ "rakr/vim-one" },
 	{ "jacoborus/tender.vim" },
-	{
-		"navarasu/onedark.nvim",
-		--		priority = 1000,
-		--		config = function()
-		--			require("onedark").setup({
-		--				style = "darker",
-		--			})
-		--			require("onedark").load()
-		--		end,
-	},
-
-	{
-		"folke/tokyonight.nvim",
-		--		priority = 1000,
-		--		init = function()
-		--			--      vim.cmd.colorscheme("tokyonight-night")
-		--			vim.cmd.hi("Comment gui=none")
-		--		end,
-	},
+	{ "hrsh7th/cmp-buffer", lazy = true },
+	{ "hrsh7th/cmp-omni", lazy = true },
+	{ "navarasu/onedark.nvim" },
+	{ "folke/tokyonight.nvim" },
 	{ "nlknguyen/papercolor-theme" },
 	{ "prettier/vim-prettier" },
 }, {
