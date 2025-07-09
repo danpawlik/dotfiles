@@ -20,48 +20,44 @@
         name: "*"
         state: latest
 
+    # FIXME: Changed to shell because current ansible
+    # contains a bug https://github.com/ansible/ansible/issues/85124
     - name: Install rpmfusion
-      yum:
-        name:
-          - "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
-          - "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
-        state: present
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: enable_rpmfusion
+      become: true
+      ansible.builtin.shell: >
+        dnf install -y
+        https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+        https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
 
     - name: Install basic packages
       yum:
         name: "{{ common_packages }}"
         state: latest
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: common_packages
 
     - name: Install KDE packages
       yum:
         name: "{{ kde_packages }}"
         state: latest
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: kde_packages and desktop_env == 'kde'
 
     - name: Install GNOME packages
       yum:
         name: "{{ gnome_packages }}"
         state: latest
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: gnome_packages and desktop_env == 'gnome'
 
     - name: Install dev packages
       yum:
         name: "{{ dev_packages }}"
         state: latest
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: dev_packages
 
     - name: Remove packages
       yum:
         name: "{{ remove_packages }}"
         state: absent
-        disable_gpg_check: "{{ disable_gpg_check }}"
       when: remove_packages
 
     - name: Install npm packages

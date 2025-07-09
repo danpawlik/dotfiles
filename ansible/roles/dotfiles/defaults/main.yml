@@ -4,14 +4,14 @@ components: []
 enable_rpmfusion: true
 enable_nerd_fonts: true
 enable_kubernetes_tools: true
-kubernetes_repo_version: v1.30
+kubernetes_repo_version: v1.33
 enable_nested_virtualization: true
 
 # package, direct or patched
 nerd_fonts_install: patched
 # small or full
 nerd_fonts_pack: small
-nerd_fonts_version: v3.3.0
+nerd_fonts_version: v3.4.0
 nerd_fonts:
   - RobotoMono
   - DroidSansMono
@@ -36,7 +36,6 @@ nerd_fonts_patched:
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/Hack/Regular/HackNerdFontMono-Regular.ttf"
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"
-  - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/CascadiaCode/Regular/CaskaydiaCoveNerdFontMono-Regular.ttf"
 
 other_fonts:
   - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceArgon-Regular.otf"
@@ -60,6 +59,8 @@ disable_systemd_resolved: true
 nm_dns_workaround: true
 enable_powertop: false
 
+# FIXME: enable chrome install when Ansible version is 2.18
+# because of https://github.com/ansible/ansible/issues/85124
 common_packages:
   - alacritty
   - android-file-transfer
@@ -72,12 +73,13 @@ common_packages:
   - dnf-plugins-core
   - fastfetch
   - fd-find
+  - ffmpeg
   - fwupd
   - fzf
   - glances
   - gnupg
   - htop
-  - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+#  - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
   - iperf3
   - iotop
   - keepassxc
