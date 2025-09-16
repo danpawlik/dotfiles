@@ -15,3 +15,4 @@ alias vim="~/.local/bin/nvim"
 alias emacs="emacs -nw"
 
 alias sshn='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+alias scpn='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

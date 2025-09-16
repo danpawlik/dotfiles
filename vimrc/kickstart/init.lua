@@ -649,7 +649,11 @@ require("lazy").setup({
 				end
 			end,
 			formatters_by_ft = {
+				ansible = { "ansible-lint" },
 				lua = { "stylua" },
+				-- fixme: change ansible-lint to yamlfmt when .yamlfmt config ready
+				yaml = { "ansible-lint" },
+				yml = { "ansible-lint" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--

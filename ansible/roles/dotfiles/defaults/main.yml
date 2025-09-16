@@ -37,12 +37,7 @@ nerd_fonts_patched:
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
   - "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/{{ nerd_fonts_version }}/patched-fonts/FiraCode/Regular/FiraCodeNerdFontMono-Regular.ttf"
 
-other_fonts:
-  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceArgon-Regular.otf"
-  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceKrypton-Regular.otf"
-  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceNeon-Regular.otf"
-  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceRadon-Regular.otf"
-  - "https://raw.githubusercontent.com/githubnext/monaspace/main/fonts/otf/MonaspaceXenon-Regular.otf"
+other_fonts: []
 
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
@@ -79,7 +74,6 @@ common_packages:
   - glances
   - gnupg
   - htop
-#  - https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
   - iperf3
   - iotop
   - keepassxc
@@ -94,7 +88,6 @@ common_packages:
   - pavucontrol
   - pipewire-plugin-libcamera
   - kolourpaint
-  - plymouth-theme-hot-dog
   - powertop
   - ripgrep
   - rsync
@@ -139,13 +132,18 @@ dev_packages:
 remove_packages:
   - elisa-player
   - nano
+  - nano-default-editor 
   - akregator
+  - akregator-libs
   - dragon
   - pim-sieve-editor
   - mediawriter
   - kmines
   - kmail
+  - kmail-libs
   - kmouth
+  - kontact
+  - kontact-libs
   - konversation
   - kontact
   - kf5-ktnef
