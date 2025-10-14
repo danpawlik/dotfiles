@@ -1,8 +1,8 @@
 -- from https://github.com/nvim-lua/kickstart.nvim
 vim.g.encoding = "uft-8"
-vim.opt.tabstop = 2
+-- vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.autoindent = true
@@ -953,15 +953,6 @@ require("lazy").setup({
 			start = "🚀",
 			task = "📌",
 			lazy = "💤 ",
-		},
-	},
-})
-require("lspconfig").yamlls.setup({
-	settings = {
-		yaml = {
-			schemas = {
-				["https://json.schemastore.org/kubernetes.json"] = "/*.k8s.yaml",
-			},
 		},
 	},
 })
