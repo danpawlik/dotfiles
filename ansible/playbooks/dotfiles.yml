@@ -11,8 +11,8 @@
       - nerdfonts
       # - nodejs
       - vim
-      # - lvim
-      - emacs
+      - lvim
+      # - emacs
       - tmux
       - alacritty
       - fzf

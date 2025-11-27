@@ -84,10 +84,10 @@ common_packages:
   - marked
   - mumble
   - nmap-ncat
-  - p7zip
   - pavucontrol
   - pipewire-plugin-libcamera
   - kolourpaint
+  - 7zip.x86_64
   - powertop
   - ripgrep
   - rsync
@@ -132,7 +132,7 @@ dev_packages:
 remove_packages:
   - elisa-player
   - nano
-  - nano-default-editor 
+  - nano-default-editor
   - akregator
   - akregator-libs
   - dragon
@@ -156,7 +156,7 @@ gnome_packages:
   - variety
 
 pip_packages:
-  - ansible-core
+  - ansible-core==2.16.3
   - ansible-lint
   - bindep
   - black
