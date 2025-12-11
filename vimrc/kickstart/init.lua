@@ -810,6 +810,7 @@ require("lazy").setup({
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
 			require("mini.completion").setup()
+			require("mini.diff").setup()
 
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,
@@ -830,6 +831,7 @@ require("lazy").setup({
 			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
+
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -935,6 +937,8 @@ require("lazy").setup({
 	{ "folke/tokyonight.nvim" },
 	{ "nlknguyen/papercolor-theme" },
 	{ "prettier/vim-prettier" },
+	-- do logs as CCZE
+	{ "mtdl9/vim-log-highlighting", ft = { "text", "log" } },
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -984,3 +988,43 @@ vim.cmd([[
 vim.g["prettier#autoformat"] = 1
 vim.g["prettier#config#use_tabs"] = "auto"
 vim.g["prettier#config#tab_width"] = "2"
+
+-- make colors in vimdiff
+vim.cmd("highlight! link DiffText MatchParen")
+
+-- Simple Ansible log highlighting
+-- FIXME: improve vimdiff
+vim.api.nvim_create_autocmd({ "BufEnter", "BufRead" }, {
+	callback = function(args)
+		local bufnr = args.buf
+		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+		for i, line in ipairs(lines) do
+			if line:match("FAILED") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleFailed", i - 1, 0, -1)
+			elseif line:match("changed:") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleChanged", i - 1, 0, -1)
+			elseif line:match("ok:") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleOK", i - 1, 0, -1)
+			end
+		end
+	end,
+})
+
+vim.cmd([[
+    highlight AnsibleFailed ctermfg=white ctermbg=darkred guifg=white guibg=#5c0000
+    highlight AnsibleChanged ctermfg=blue ctermbg=NONE guifg=#4dabf7 guibg=NONE
+    highlight AnsibleOK ctermfg=green ctermbg=NONE guifg=#51cf66 guibg=NONE
+  ]])
+
+-- Change colorscheme when in diff mode
+vim.api.nvim_create_autocmd({ "OptionSet", "BufEnter" }, {
+	pattern = "diff",
+	callback = function(args)
+		if vim.o.diff then
+			vim.cmd("colorscheme badwolf")
+		else
+			vim.cmd("colorscheme molokai")
+		end
+	end,
+})
