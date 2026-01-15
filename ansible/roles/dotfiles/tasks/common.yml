@@ -34,35 +34,35 @@
       yum:
         name: "{{ common_packages }}"
         state: latest
-      when: common_packages
+      when: common_packages | bool
 
     - name: Install KDE packages
       yum:
         name: "{{ kde_packages }}"
         state: latest
-      when: kde_packages and desktop_env == 'kde'
+      when: (kde_packages | bool) and (desktop_env == 'kde')
 
     - name: Install GNOME packages
       yum:
         name: "{{ gnome_packages }}"
         state: latest
-      when: gnome_packages and desktop_env == 'gnome'
+      when: (gnome_packages | bool) and (desktop_env == 'gnome')
 
     - name: Install dev packages
       yum:
         name: "{{ dev_packages }}"
         state: latest
-      when: dev_packages
+      when: dev_packages | bool
 
     - name: Remove packages
       yum:
         name: "{{ remove_packages }}"
         state: absent
-      when: remove_packages
+      when: remove_packages | bool
 
     - name: Install npm packages
       shell: "npm install -g {{ npm_packages | join(' ') }}"
-      when: npm_packages
+      when: npm_packages | bool
 
   when: ansible_distribution == 'Fedora'
 
@@ -71,4 +71,4 @@
     name: "{{ pip_packages }}"
     state: forcereinstall
     extra_args: --user
-  when: pip_packages
+  when: pip_packages | bool
