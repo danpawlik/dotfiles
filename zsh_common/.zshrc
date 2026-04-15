@@ -16,7 +16,6 @@ fi
 
 xset b off
 
-export PATH=~/android-platform-tools:$HOME/.local/bin/:$PATH
 export LANG=en_US.UTF-8
 export EDITOR='vim'
 export SSH_KEY_PATH="~/.ssh/id_rsa"
@@ -27,7 +26,6 @@ unsetopt correct_all
 
 alias vimdiff="nvim"
 alias vimdiff="nvim -d"
-export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:$PATH
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -36,9 +34,10 @@ bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
 
 # pnpm
-export PNPM_HOME="/home/dpawlik/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export PNPM_HOME="~/.local/share/pnpm"
 # pnpm end
 #
 source <(kubectl completion zsh)
 alias k='kubectl'
+
+export PATH=~/android-platform-tools:~/.local/bin:~/go/bin:/usr/local/bin/:~/.cargo/bin/:~/.local/share/nvim/mason/bin/:$PNPM_HOME:$PATH

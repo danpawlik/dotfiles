@@ -40,9 +40,3 @@
   user:
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh
-
-- name: Add PATH to zshrc
-  lineinfile:
-    path: ~/.zshrc
-    regexp: "export PATH"
-    line: "export PATH=~/.local/share/nvim/mason/bin/:~/.local/bin:~/go/bin:/usr/local/bin/:{{ ansible_env.PATH }}"
