@@ -1,0 +1,36 @@
+# Font Settings 
+font-family = "RobotoMono Nerd Font Mono"
+font-size = 11
+
+# Colors (Molokai custom)
+background = #000000
+foreground = #ffffff
+
+palette = 0=#1B1D1E
+palette = 1=#f92424
+palette = 2=#35c318
+palette = 3=#FD971F
+palette = 4=#004be0
+palette = 5=#AE81FF
+palette = 6=#38CCD1
+palette = 7=#F8F8F2
+palette = 8=#75715E
+palette = 9=#F92672
+palette = 10=#A6E22E
+palette = 11=#FD971F
+palette = 12=#66D9EF
+palette = 13=#AE81FF
+palette = 14=#38CCD1
+palette = 15=#F8F8F2
+
+cursor-color = #ffffff
+cursor-text = #000000
+selection-background = #585858
+selection-foreground = #d0d0d0
+
+# Optional
+minimum-contrast = 3
+cursor-style = block
+mouse-hide-while-typing = true
+
+wide-handle = true
