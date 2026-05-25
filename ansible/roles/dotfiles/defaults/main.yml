@@ -43,6 +43,7 @@ other_fonts: []
 zsh_distro: oh_my_zsh
 nvim_version: nightly
 nvim_use_coc: false
+nvim_minimal: false
 
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/

@@ -1,4 +1,9 @@
 ---
+- name: Create temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: _tmp_dir
+
 - name: "Download nvim appimage - {{ nvim_version }}"
   when: nvim_version != 'nightly'
   ansible.builtin.get_url:
@@ -10,12 +15,14 @@
   when: nvim_version | lower == 'nightly'
   ansible.builtin.get_url:
     url: "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}/nvim-linux-x86_64.appimage"
-    dest: /tmp/nvim.appimage
+    dest: "{{ _tmp_dir.path }}/nvim.appimage"
     mode: '0755'
 
-- name: Extract Neovim appimage
-  shell: |
-    cd /tmp && ./nvim.appimage --appimage-extract
+- name: "Extract Neovim appimage - {{ _tmp_dir.path }}"
+  ansible.builtin.shell: |
+    ./nvim.appimage --appimage-extract
+  args:
+    chdir: "{{ _tmp_dir.path }}"
 
 - name: Create local dir if not exists
   file:
@@ -35,7 +42,7 @@
 
 - name: Copy extracted neovim
   copy:
-    src: /tmp/squashfs-root/
+    src: "{{ _tmp_dir.path }}/squashfs-root/"
     dest: ~/.local/nvim
     remote_src: true
 
@@ -55,3 +62,8 @@
     src: ~/.local/nvim/usr/bin/nvim
     dest: ~/.local/bin/vim
     state: link
+
+#- name: Remove temporary directory
+#  ansible.builtin.file:
+#    path: "{{ _tmp_dir.path }}"
+#    state: absent

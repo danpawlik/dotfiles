@@ -5,6 +5,6 @@
     components:
       - nodejs
       - vim
-      - lvim
+      # - lvim
   roles:
     - dotfiles

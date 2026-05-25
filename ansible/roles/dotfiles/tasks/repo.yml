@@ -1,7 +1,7 @@
 ---
 - name: Install git package
   become: true
-  dnf:
+  ansible.builtin.package:
     name: git
     state: present
   run_once: true
