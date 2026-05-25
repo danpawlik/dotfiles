@@ -3,7 +3,6 @@
   hosts: localhost
   vars:
     components:
-      - nodejs
       - vim
       # - lvim
   roles:
