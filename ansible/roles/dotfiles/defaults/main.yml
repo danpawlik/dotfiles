@@ -42,7 +42,6 @@ other_fonts: []
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
 nvim_version: nightly
-nvim_use_coc: false
 nvim_minimal: false
 
 # it install nodejs into ~/.local/nodejs

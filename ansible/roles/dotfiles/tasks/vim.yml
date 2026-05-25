@@ -3,10 +3,5 @@
 - name: Setup Neovim
   include_tasks: neovim.yml
 
-- name: Setup Neovim coc
-  include_tasks: coc.yml
-  when: nvim_use_coc
-
 - name: Setup Neovim Lua
   include_tasks: vim-lua.yml
-  when: not nvim_use_coc
