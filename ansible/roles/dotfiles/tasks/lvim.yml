@@ -14,6 +14,7 @@
 - name: Install lunar vim - nightly version
   ansible.builtin.shell: |
     bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+  changed_when: true
 
 - name: Copy lvim config
   ansible.builtin.copy:

@@ -17,3 +17,4 @@
     bash -x install.sh "{{ ansible_user }}"
   args:
     chdir: /tmp/android-udev-rules
+  changed_when: true

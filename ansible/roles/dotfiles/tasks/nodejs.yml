@@ -4,6 +4,7 @@
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
   ansible.builtin.shell: |
     npm --version
+  changed_when: false
   register: npm_version
   ignore_errors: true
 
@@ -31,6 +32,7 @@
     - name: Check if xz command is available
       ansible.builtin.shell: |
         command -v xz
+      changed_when: false
       register: _xz_installed
       ignore_errors: true
 
@@ -52,6 +54,7 @@
         - name: Get version
           ansible.builtin.shell: |
             sed -r 's/^.*href="([^"]+)".*/\1/' /tmp/nodejs-latest | grep linux-x64.tar.gz | cut -f2 -d'-'
+          changed_when: false
           register: latest_nodejs_version
 
     - name: "Download and unpack nodejs version {{ latest_nodejs_version.stdout | default(nodejs_version) }}"
@@ -88,6 +91,7 @@
       become: true
       ansible.builtin.shell: |
         curl --silent --location https://rpm.nodesource.com/setup_14.x | bash
+      changed_when: true
       when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
 
     - name: Install NodeJS

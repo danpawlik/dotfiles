@@ -18,6 +18,7 @@
             ./install.sh -M -O -S
           args:
             chdir: /tmp/nerd-fonts
+          changed_when: true
 
       when: nerd_fonts_pack == 'full' and nerd_fonts_install == 'direct'
 
@@ -39,10 +40,12 @@
         - name: Remove windows fonts
           ansible.builtin.shell: |
             find /tmp/fonts -name "*Windows*" -delete
+          changed_when: true
 
         - name: Move fonts
           ansible.builtin.shell: |
             mv /tmp/fonts/* ~/.local/share/fonts/
+          changed_when: true
 
         - name: Remove archives
           ansible.builtin.file:
@@ -71,6 +74,7 @@
     ls | grep -iE 'light|bold|italic|medium' | grep -vi 'mono' | xargs rm
   args:
     chdir: ~/.local/share/fonts
+  changed_when: true
   ignore_errors: true
 
 - name: Install other fonts
@@ -81,3 +85,4 @@
 
 - name: Update font cache
   ansible.builtin.command: fc-cache -fv
+  changed_when: false

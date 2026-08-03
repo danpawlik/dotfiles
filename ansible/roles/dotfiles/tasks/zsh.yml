@@ -7,6 +7,7 @@
 - name: Configure Oh My ZSH
   ansible.builtin.shell: |
     curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+  changed_when: true
   when: not _omz_status.stat.exists
 
 - name: Copy powerlevel10k config file

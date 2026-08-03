@@ -23,6 +23,7 @@
     ./nvim.appimage --appimage-extract
   args:
     chdir: "{{ _tmp_dir.path }}"
+  changed_when: true
 
 - name: Create local dir if not exists
   ansible.builtin.file:

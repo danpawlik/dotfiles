@@ -113,6 +113,7 @@
 - name: Enable podman socket
   ansible.builtin.shell: |
     systemctl --user enable --now podman.socket
+  changed_when: true
 
 - name: Increase sysctl values
   become: true
@@ -156,7 +157,9 @@
 
 - name: Disable automatic suspend after a while
   ansible.builtin.command: xset s off
+  changed_when: false
 
 - name: Disable automatic suspend after a while - do also as root
   become: true
   ansible.builtin.command: xset s off
+  changed_when: false

@@ -1,7 +1,7 @@
 ---
 - name: Install packages
   become: true
-  ansible.builtin.yum:
+  ansible.builtin.package:
     name:
       - qemu-common
     state: present
@@ -9,6 +9,7 @@
 - name: Check if CPU vendor is Intel
   ansible.builtin.shell: |
     grep -qi intel /proc/cpuinfo
+  changed_when: false
   ignore_errors: true
   register: _intel_vendor
 

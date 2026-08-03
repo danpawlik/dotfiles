@@ -8,3 +8,4 @@
 - name: Setup fzf
   ansible.builtin.shell: |
     ~/.fzf/install --all
+  changed_when: true

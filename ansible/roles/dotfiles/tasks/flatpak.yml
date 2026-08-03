@@ -3,8 +3,10 @@
   become: true
   ansible.builtin.shell: |
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  changed_when: false
 
 - name: Install flatpak packages
   ansible.builtin.shell: |
     flatpak install --user -y {{ item }}
+  changed_when: true
   loop: "{{ flatpak_packages }}"

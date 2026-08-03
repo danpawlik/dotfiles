@@ -2,4 +2,5 @@
 - name: Install Ansible collections
   ansible.builtin.shell: |
     ansible-galaxy collection install {{ item }}
+  changed_when: false
   loop: "{{ ansible_collections }}"

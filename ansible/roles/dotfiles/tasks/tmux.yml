@@ -15,3 +15,4 @@
 - name: Configure tmux
   ansible.builtin.shell: |
     bash ~/.tmux/plugins/tpm/bin/install_plugins
+  changed_when: true

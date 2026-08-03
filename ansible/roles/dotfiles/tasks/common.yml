@@ -16,7 +16,7 @@
           value: 10M
 
     - name: Update packages
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: "*"
         state: latest
 
@@ -29,40 +29,42 @@
         dnf install -y
         https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+      changed_when: true
 
     - name: Install basic packages
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ common_packages }}"
         state: latest
-      when: common_packages | bool
+      when: common_packages | length > 0
 
     - name: Install KDE packages
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ kde_packages }}"
         state: latest
-      when: (kde_packages | bool) and (desktop_env == 'kde')
+      when: (kde_packages | length > 0) and (desktop_env == 'kde')
 
     - name: Install GNOME packages
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ gnome_packages }}"
         state: latest
-      when: (gnome_packages | bool) and (desktop_env == 'gnome')
+      when: (gnome_packages | length > 0) and (desktop_env == 'gnome')
 
     - name: Install dev packages
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ dev_packages }}"
         state: latest
-      when: dev_packages | bool
+      when: dev_packages | length > 0
 
     - name: Remove packages
-      ansible.builtin.yum:
+      ansible.builtin.package:
         name: "{{ remove_packages }}"
         state: absent
-      when: remove_packages | bool
+      when: remove_packages | length > 0
 
     - name: Install npm packages
       ansible.builtin.shell: "npm install -g {{ npm_packages | join(' ') }}"
-      when: npm_packages | bool
+      changed_when: true
+      when: npm_packages | length > 0
 
   when: ansible_distribution == 'Fedora'
 
@@ -71,4 +73,4 @@
     name: "{{ pip_packages }}"
     state: forcereinstall
     extra_args: --user
-  when: pip_packages | bool
+  when: pip_packages | length > 0

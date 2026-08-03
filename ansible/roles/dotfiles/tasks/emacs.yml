@@ -6,7 +6,7 @@
 
 - name: Install emacs
   become: true
-  ansible.builtin.yum:
+  ansible.builtin.package:
     name: emacs
     state: present
 
@@ -15,3 +15,4 @@
      ~/.emacs.d/bin/doom install --install --fonts --force
   args:
     chdir: ~/.emacs.d
+  changed_when: true
