@@ -1050,9 +1050,17 @@ vim.o.autoread = true
 -- Colorscheme
 vim.cmd [[silent! colorscheme molokai]]
 
--- Highlight whitechars
+-- Highlight and strip trailing whitespace on save
 vim.cmd 'highlight ExtraWhitespace ctermbg=red guibg=red'
 vim.cmd [[match ExtraWhitespace /\s\+$/]]
+-- Auto-remove trailing whitespace on save (preserves cursor position)
+vim.api.nvim_create_autocmd('BufWritePre', {
+  callback = function()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    vim.cmd [[%s/\s\+$//e]]
+    vim.api.nvim_win_set_cursor(0, pos)
+  end,
+})
 
 -- Color column
 vim.api.nvim_set_option_value('colorcolumn', '80', {})
