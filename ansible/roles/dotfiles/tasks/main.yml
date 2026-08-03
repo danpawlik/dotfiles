@@ -30,6 +30,10 @@
   ansible.builtin.include_tasks: zsh.yml
   when: "'zsh' in components"
 
+- name: Configure bash
+  ansible.builtin.include_tasks: bash.yml
+  when: "'bash' in components"
+
 - name: Configure tmux
   ansible.builtin.include_tasks: tmux.yml
   when: "'tmux' in components"

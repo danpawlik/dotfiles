@@ -1,0 +1,79 @@
+# Starship config matching powerlevel10k lean style
+add_newline = false
+
+format = """$directory$git_branch$git_status$character"""
+
+right_format = """$status$cmd_duration$jobs$kubernetes$python$golang$nodejs$time"""
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+[directory]
+style = "blue"
+truncation_length = 3
+truncate_to_repo = true
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+style = "green"
+format = "[$symbol$branch]($style) "
+symbol = ""
+
+[git_status]
+style = "yellow"
+format = '([$all_status$ahead_behind]($style) )'
+modified = "!"
+untracked = "?"
+staged = "+"
+conflicted = "~"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇡⇣"
+
+[status]
+disabled = false
+format = "[$symbol$signal_name$status]($style) "
+symbol = "✘ "
+success_symbol = ""
+style = "red"
+map_symbol = true
+pipestatus = true
+
+[cmd_duration]
+min_time = 3000
+style = "yellow"
+format = "[$duration]($style) "
+show_milliseconds = false
+
+[jobs]
+style = "green"
+symbol = "≡"
+format = "[$symbol]($style) "
+
+[kubernetes]
+disabled = false
+style = "cyan"
+format = "[$symbol$context]($style) "
+symbol = "⎈ "
+
+[python]
+style = "yellow"
+format = "[$symbol$virtualenv]($style) "
+symbol = ""
+
+[golang]
+style = "cyan"
+format = "[$symbol$version]($style) "
+symbol = ""
+
+[nodejs]
+style = "green"
+format = "[$symbol$version]($style) "
+symbol = ""
+
+[time]
+disabled = false
+style = "white"
+format = "[$time]($style)"
+time_format = "%H:%M:%S"
