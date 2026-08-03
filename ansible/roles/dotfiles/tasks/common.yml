@@ -3,7 +3,7 @@
   become: true
   block:
     - name: Tune DNF
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/dnf/dnf.conf
         regexp: "^{{ item.param }}"
         line: "{{ item.param }}={{ item.value }}"
@@ -16,7 +16,7 @@
           value: 10M
 
     - name: Update packages
-      yum:
+      ansible.builtin.yum:
         name: "*"
         state: latest
 
@@ -31,37 +31,37 @@
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
 
     - name: Install basic packages
-      yum:
+      ansible.builtin.yum:
         name: "{{ common_packages }}"
         state: latest
       when: common_packages | bool
 
     - name: Install KDE packages
-      yum:
+      ansible.builtin.yum:
         name: "{{ kde_packages }}"
         state: latest
       when: (kde_packages | bool) and (desktop_env == 'kde')
 
     - name: Install GNOME packages
-      yum:
+      ansible.builtin.yum:
         name: "{{ gnome_packages }}"
         state: latest
       when: (gnome_packages | bool) and (desktop_env == 'gnome')
 
     - name: Install dev packages
-      yum:
+      ansible.builtin.yum:
         name: "{{ dev_packages }}"
         state: latest
       when: dev_packages | bool
 
     - name: Remove packages
-      yum:
+      ansible.builtin.yum:
         name: "{{ remove_packages }}"
         state: absent
       when: remove_packages | bool
 
     - name: Install npm packages
-      shell: "npm install -g {{ npm_packages | join(' ') }}"
+      ansible.builtin.shell: "npm install -g {{ npm_packages | join(' ') }}"
       when: npm_packages | bool
 
   when: ansible_distribution == 'Fedora'

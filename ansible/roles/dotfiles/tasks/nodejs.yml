@@ -2,7 +2,7 @@
 - name: Check if NodeJS is already available
   environment:
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
-  shell: |
+  ansible.builtin.shell: |
     npm --version
   register: npm_version
   ignore_errors: true
@@ -11,7 +11,7 @@
   when: npm_version.rc != 0 or nodejs_userspace
   block:
     - name: Remove old local dirs
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: absent
       loop:
@@ -20,7 +20,7 @@
         - "~/.local/nodejs"
 
     - name: Ensure local dir exists
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
       loop:
@@ -37,7 +37,7 @@
     - name: Install xz package
       when: not _xz_installed.stdout
       become: true
-      package:
+      ansible.builtin.package:
         name: xz
         state: present
 
@@ -45,12 +45,12 @@
       when: nodejs_version == "latest"
       block:
         - name: Fetch publication page
-          get_url:
+          ansible.builtin.get_url:
             url: https://nodejs.org/dist/latest/
             dest: /tmp/nodejs-latest
 
         - name: Get version
-          shell: |
+          ansible.builtin.shell: |
             sed -r 's/^.*href="([^"]+)".*/\1/' /tmp/nodejs-latest | grep linux-x64.tar.gz | cut -f2 -d'-'
           register: latest_nodejs_version
 
@@ -69,7 +69,7 @@
         extra_opts: [--strip-components=1]
 
     - name: Create symlinks
-      file:
+      ansible.builtin.file:
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
         state: link
@@ -86,12 +86,12 @@
   block:
     - name: Configure NodeJS repo - Centos 7
       become: true
-      shell: |
+      ansible.builtin.shell: |
         curl --silent --location https://rpm.nodesource.com/setup_14.x | bash
       when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
 
     - name: Install NodeJS
       become: true
-      package:
+      ansible.builtin.package:
         name: nodejs
         state: present

@@ -1,10 +1,10 @@
 ---
 - name: Enable flathub
   become: true
-  shell: |
+  ansible.builtin.shell: |
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 - name: Install flatpak packages
-  shell: |
-    flatpak install -y {{ item }}
+  ansible.builtin.shell: |
+    flatpak install --user -y {{ item }}
   loop: "{{ flatpak_packages }}"

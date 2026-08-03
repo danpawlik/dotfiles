@@ -1,7 +1,7 @@
 ---
 - name: Setup Visual Studio repository
   become: true
-  copy:
+  ansible.builtin.copy:
     content: |
       [code]
       name=Visual Studio Code
@@ -13,7 +13,7 @@
 
 - name: Install Visual Studio Code
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: code
     state: present
     update_cache: true

@@ -1,10 +1,10 @@
 ---
 - name: Clone fzf repo
-  git:
+  ansible.builtin.git:
     repo: https://github.com/junegunn/fzf
     dest: ~/.fzf
     update: true
 
 - name: Setup fzf
-  shell: |
+  ansible.builtin.shell: |
     ~/.fzf/install --all

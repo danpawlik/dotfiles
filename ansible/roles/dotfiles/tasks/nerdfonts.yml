@@ -1,20 +1,20 @@
 - name: Install nerd fonts
   block:
     - name: Create font directory
-      file:
+      ansible.builtin.file:
         path: ~/.local/share/fonts
         state: directory
 
     - name: Install full version of nerd fonts
       block:
         - name: Clone nerd fonts
-          git:
+          ansible.builtin.git:
             repo: https://github.com/ryanoasis/nerd-fonts
             dest: /tmp/nerd-fonts
             depth: 1
 
         - name: Download nerd fonts - full
-          shell: |
+          ansible.builtin.shell: |
             ./install.sh -M -O -S
           args:
             chdir: /tmp/nerd-fonts
@@ -24,7 +24,7 @@
     - name: Install small version of nerd fonts
       block:
         - name: Create temp font directory
-          file:
+          ansible.builtin.file:
             path: /tmp/fonts
             state: directory
 
@@ -37,15 +37,15 @@
           ignore_errors: true
 
         - name: Remove windows fonts
-          shell: |
+          ansible.builtin.shell: |
             find /tmp/fonts -name "*Windows*" -delete
 
         - name: Move fonts
-          shell: |
+          ansible.builtin.shell: |
             mv /tmp/fonts/* ~/.local/share/fonts/
 
         - name: Remove archives
-          file:
+          ansible.builtin.file:
             path: /tmp/{{ item }}.zip
             state: absent
           loop: "{{ nerd_fonts }}"
@@ -55,13 +55,13 @@
 - name: Install nerd fonts by using package
   become: true
   when: nerd_fonts_install | lower == 'package'
-  package:
+  ansible.builtin.package:
     name: "{{ nerd_fonts_package }}"
     state: present
 
 - name: Install patched fonts
   when: nerd_fonts_install | lower == 'patched'
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item }}"
     dest: "~/.local/share/fonts/{{ item | basename }}"
   loop: "{{ nerd_fonts_patched }}"

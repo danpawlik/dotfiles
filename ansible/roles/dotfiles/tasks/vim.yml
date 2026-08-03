@@ -1,7 +1,7 @@
 ---
 
 - name: Setup Neovim
-  include_tasks: neovim.yml
+  ansible.builtin.include_tasks: neovim.yml
 
 - name: Setup Neovim Lua
-  include_tasks: vim-lua.yml
+  ansible.builtin.include_tasks: vim-lua.yml

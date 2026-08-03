@@ -1,17 +1,17 @@
 ---
 - name: Clone tmux package manager
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
     force: true
   ignore_errors: true
 
 - name: Copy tmux config
-  copy:
+  ansible.builtin.copy:
     src: /tmp/dotfiles/tmux/.tmux.conf
     dest: ~/.tmux.conf
     remote_src: true
 
 - name: Configure tmux
-  shell: |
+  ansible.builtin.shell: |
     bash ~/.tmux/plugins/tpm/bin/install_plugins

@@ -1,17 +1,17 @@
 ---
 - name: Clone doom emacs
-  git:
+  ansible.builtin.git:
     repo: https://github.com/hlissner/doom-emacs
     dest: ~/.emacs.d
 
 - name: Install emacs
   become: true
-  yum:
+  ansible.builtin.yum:
     name: emacs
     state: present
 
 - name: Install doom emacs
-  shell: |
+  ansible.builtin.shell: |
      ~/.emacs.d/bin/doom install --install --fonts --force
   args:
     chdir: ~/.emacs.d

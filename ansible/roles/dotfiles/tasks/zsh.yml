@@ -1,33 +1,33 @@
 ---
 - name: Check if oh my zsh already exists
-  stat:
+  ansible.builtin.stat:
     path: ~/.oh-my-zsh
   register: _omz_status
 
 - name: Configure Oh My ZSH
-  shell: |
+  ansible.builtin.shell: |
     curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
   when: not _omz_status.stat.exists
 
 - name: Copy powerlevel10k config file
-  copy:
+  ansible.builtin.copy:
     src: /tmp/dotfiles/powerlevel10k/.p10k.zsh
     dest: ~/.p10k.zsh
     remote_src: true
 
 - name: Clone powerlevel10k deps
-  git:
+  ansible.builtin.git:
     repo: https://github.com/romkatv/powerlevel10k
     dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
     depth: 1
 
 - name: Clone autosugestions
-  git:
+  ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 - name: Copy zsh config files
-  copy:
+  ansible.builtin.copy:
     src: "/tmp/dotfiles/oh_my_zsh/{{ item }}"
     dest: ~/{{ item }}
     remote_src: true
@@ -37,6 +37,6 @@
 
 - name: Change user shell to ZSH
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh

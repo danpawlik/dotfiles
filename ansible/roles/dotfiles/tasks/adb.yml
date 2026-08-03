@@ -1,19 +1,19 @@
 ---
 - name: Install android tools package
   become: true
-  package:
+  ansible.builtin.package:
     name: android-tools
     state: present
 
 - name: Clone adb udev rules
-  git:
+  ansible.builtin.git:
     repo: https://github.com/M0Rf30/android-udev-rules
     dest: /tmp/android-udev-rules
     depth: 1
 
 - name: Install udev rules
   become: true
-  shell: |
+  ansible.builtin.shell: |
     bash -x install.sh "{{ ansible_user }}"
   args:
     chdir: /tmp/android-udev-rules

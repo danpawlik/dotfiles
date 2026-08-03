@@ -25,7 +25,7 @@
     chdir: "{{ _tmp_dir.path }}"
 
 - name: Create local dir if not exists
-  file:
+  ansible.builtin.file:
     path: ~/.local/nvim
     state: directory
     recurse: true
@@ -41,24 +41,24 @@
     state: absent
 
 - name: Copy extracted neovim
-  copy:
+  ansible.builtin.copy:
     src: "{{ _tmp_dir.path }}/squashfs-root/"
     dest: ~/.local/nvim
     remote_src: true
 
 - name: Ensure userspace local bin exists
-  file:
+  ansible.builtin.file:
     path: ~/.local/bin
     state: directory
 
 - name: Create symlink neovim to local bin
-  file:
+  ansible.builtin.file:
     src: ~/.local/nvim/usr/bin/nvim
     dest: ~/.local/bin/nvim
     state: link
 
 - name: Create optional symlink from neovim to vim in userspace bin
-  file:
+  ansible.builtin.file:
     src: ~/.local/nvim/usr/bin/nvim
     dest: ~/.local/bin/vim
     state: link

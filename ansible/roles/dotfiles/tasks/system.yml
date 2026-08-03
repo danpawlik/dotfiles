@@ -1,7 +1,7 @@
 ---
 - name: Create NetworkManager conf.d dir
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/NetworkManager/conf.d
     state: directory
 
@@ -10,7 +10,7 @@
   when: wifi_disable_powersave
   block:
     - name: Disable power save for Wireless device
-      copy:
+      ansible.builtin.copy:
         content: |
           [connection]
           wifi.powersave = 2
@@ -23,14 +23,14 @@
   when: disable_systemd_resolved
   block:
     - name: Disable systemd-resolved
-      service:
+      ansible.builtin.service:
         name: systemd-resolved
         state: stopped
         enabled: false
       register: _disable_resolved
 
     - name: Set dns to default in Network Manger
-      ini_file:
+      community.general.ini_file:
         path: /etc/NetworkManager/NetworkManager.conf
         section: main
         option: dns
@@ -38,13 +38,13 @@
         no_extra_spaces: true
 
     - name: Clear resolv.conf file
-      file:
+      ansible.builtin.file:
         path: /etc/resolv.conf
         state: absent
       when: _disable_resolved.changed
 
     - name: Restart NetworkManager
-      service:
+      ansible.builtin.service:
         name: NetworkManager
         state: restarted
       when: _disable_resolved.changed or wifi_powersave is defined and wifi_powersave.changed
@@ -87,7 +87,7 @@
   when: enable_powertop
   block:
     - name: Create service file
-      copy:
+      ansible.builtin.copy:
         content: |
           [Unit]
           Description=PowerTOP auto tune
@@ -103,7 +103,7 @@
         dest: /etc/systemd/system/powertop.service
 
     - name: Enable powertop service
-      service:
+      ansible.builtin.service:
         name: powertop
         state: started
         enabled: true
@@ -111,12 +111,12 @@
 
 
 - name: Enable podman socket
-  shell: |
+  ansible.builtin.shell: |
     systemctl --user enable --now podman.socket
 
 - name: Increase sysctl values
   become: true
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present
@@ -124,12 +124,12 @@
   loop: "{{ sysctl_params }}"
 
 - name: Enable nested virtualization
-  include_tasks: nested_virt.yml
+  ansible.builtin.include_tasks: nested_virt.yml
   when: enable_nested_virtualization
 
 - name: Add user to libvirt group
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     groups: libvirt
     append: true
