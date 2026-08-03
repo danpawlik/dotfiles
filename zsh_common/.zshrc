@@ -24,7 +24,6 @@ unsetopt correct_all
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias vimdiff="nvim"
 alias vimdiff="nvim -d"
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
 
@@ -37,7 +36,9 @@ bindkey "\033[4~" end-of-line
 export PNPM_HOME="~/.local/share/pnpm"
 # pnpm end
 #
-source <(kubectl completion zsh)
-alias k='kubectl'
+if command -v kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
+    alias k='kubectl'
+fi
 
 export PATH=~/android-platform-tools:~/.local/bin:~/go/bin:/usr/local/bin/:~/.cargo/bin/:~/.local/share/nvim/mason/bin/:$PNPM_HOME:$PATH

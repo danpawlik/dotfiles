@@ -946,28 +946,6 @@ require("lazy").setup({
 		},
 	},
 
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
-		config = function()
-			---@diagnostic disable-next-line: missing-fields
-			require("tokyonight").setup({
-				styles = {
-					comments = { italic = false }, -- Disable italics in comments
-				},
-			})
-
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
-		end,
-	},
-
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
@@ -993,7 +971,6 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
-			require("mini.completion").setup()
 			require("mini.diff").setup()
 
 			-- Simple and easy statusline.
@@ -1147,7 +1124,7 @@ require("lazy").setup({
 
 -- My config --
 
-vim.g.encoding = "uft-8"
+vim.o.encoding = "utf-8"
 -- vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 4
@@ -1157,11 +1134,11 @@ vim.opt.smarttab = true
 vim.opt.autoindent = true
 -- vim.opt.background = "dark"
 vim.opt.hlsearch = true
-vim.g.nofoldenable = true
+vim.o.foldenable = false
 -- vim.g.wildmenu = true
 vim.opt.cursorcolumn = true
 vim.opt.smartindent = true
-vim.g.nowrap = true
+vim.o.wrap = false
 -- vim.g.ttyfast = true
 -- vim.g.colorcolumn = 80, 120
 vim.o.termguicolors = true

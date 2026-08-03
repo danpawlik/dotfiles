@@ -25,7 +25,6 @@ HISTCONTROL=ignoreboth:erasedups
 HISTTIMEFORMAT="%Y-%m-%d "
 shopt -s histappend
 
-alias vimdiff="nvim"
 alias vimdiff="nvim -d"
 export PATH=~/.local/bin:~/go/bin:/usr/local/bin/:$PATH
 export DOCKER_HOST=unix:///run/user/$(id -u)/podman//podman.sock
