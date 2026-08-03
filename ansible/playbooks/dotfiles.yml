@@ -16,6 +16,7 @@
       - tmux
       - alacritty
       # - fzf
+      - bash
       - zsh
       - git
       - system

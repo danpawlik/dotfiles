@@ -1,0 +1,61 @@
+---
+- name: Ensure local bin dir exists
+  ansible.builtin.file:
+    path: ~/.local/bin
+    state: directory
+
+- name: Install starship prompt
+  ansible.builtin.shell: |
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b ~/.local/bin
+  args:
+    creates: ~/.local/bin/starship
+  changed_when: true
+
+- name: Install ble.sh
+  block:
+    - name: Check if ble.sh already exists
+      ansible.builtin.stat:
+        path: ~/.local/share/blesh/ble.sh
+      register: _blesh_status
+
+    - name: Clone ble.sh
+      when: not _blesh_status.stat.exists
+      ansible.builtin.git:
+        repo: https://github.com/akinomyoga/ble.sh
+        dest: /tmp/ble.sh
+        depth: 1
+        recursive: true
+
+    - name: Build and install ble.sh
+      when: not _blesh_status.stat.exists
+      ansible.builtin.shell: |
+        make install PREFIX=~/.local
+      args:
+        chdir: /tmp/ble.sh
+      changed_when: true
+
+- name: Ensure starship config dir exists
+  ansible.builtin.file:
+    path: ~/.config
+    state: directory
+
+- name: Copy starship config
+  ansible.builtin.copy:
+    src: /tmp/dotfiles/bash/starship.toml
+    dest: ~/.config/starship.toml
+    remote_src: true
+
+- name: Copy bash config files
+  ansible.builtin.copy:
+    src: "/tmp/dotfiles/bash/{{ item }}"
+    dest: "~/{{ item }}"
+    remote_src: true
+  loop:
+    - .bashrc
+    - .bash_aliases
+
+- name: Change user shell to bash
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/bash
