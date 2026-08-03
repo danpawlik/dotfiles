@@ -95,6 +95,7 @@ common_packages:
   - sudo
   - sysstat
   - tmux
+  - tree-sitter-cli
   - unzip
   - util-linux-user
   - vim-enhanced
