@@ -2,6 +2,10 @@ if [ -f "$HOME/.zsh_aliases" ]; then
     source "$HOME/.zsh_aliases"
 fi
 
+if [ -f "$HOME/.zsh_aliases_work" ]; then
+    source "$HOME/.zsh_aliases_work"
+fi
+
 if [ -f "$HOME/.zsh_prezto" ]; then
 # Source Prezto.
     if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then

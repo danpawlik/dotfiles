@@ -7,10 +7,6 @@ alias cleanup-repo='git rebase --abort; git cherry-pick --abort; git merge --abo
 
 alias week='date +"So this is week: %V"'
 
-if [ -f "$HOME/.zsh_aliases_work" ]; then
-    source "$HOME/.zsh_aliases_work"
-fi
-
 alias vim="~/.local/bin/nvim"
 alias emacs="emacs -nw"
 
