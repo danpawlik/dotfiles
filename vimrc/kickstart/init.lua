@@ -95,8 +95,8 @@ do
   -- Set <space> as the leader key
   -- See `:help mapleader`
   --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-  vim.g.mapleader = ','
-  vim.g.maplocalleader = ','
+	vim.g.mapleader = ","
+	vim.g.maplocalleader = ","
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
@@ -112,7 +112,7 @@ do
   --  Experiment for yourself to see if you like it!
   -- vim.o.relativenumber = true
 
-  -- Disable mouse
+  -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = ''
 
   -- Don't show the mode, since it's already in the status line
@@ -156,7 +156,7 @@ do
   --   See `:help lua-options`
   --   and `:help lua-guide-options`
   vim.o.list = true
-  -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+  vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
   -- Preview substitutions live, as you type!
   vim.o.inccommand = 'split'
@@ -165,7 +165,7 @@ do
   vim.o.cursorline = true
 
   -- Minimal number of screen lines to keep above and below the cursor.
-  -- vim.o.scrolloff = 10
+  vim.o.scrolloff = 10
 
   -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
   -- instead raise a dialog asking if you wish to save the current file(s)
@@ -196,15 +196,6 @@ do
     -- Can switch between these as you prefer
     virtual_text = true, -- Text shows up at the end of the line
     virtual_lines = false, -- Text shows up underneath the line, with virtual lines
-
-    signs = vim.g.have_nerd_font and {
-      text = {
-        [vim.diagnostic.severity.ERROR] = '󰅚 ',
-        [vim.diagnostic.severity.WARN] = '󰀪 ',
-        [vim.diagnostic.severity.INFO] = '󰋽 ',
-        [vim.diagnostic.severity.HINT] = '󰌶 ',
-      },
-    } or {},
 
     -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
     jump = {
@@ -328,19 +319,11 @@ do
   })
 end
 
----Because most plugins are hosted on GitHub, you can use the helper
----function to have less repetition in the following sections.
+--- Because most plugins are hosted on GitHub, you can use the helper
+--- function to have less repetition in the following sections.
 ---@param repo string
 ---@return string
 local function gh(repo) return 'https://github.com/' .. repo end
-
--- Auto-install packages without confirmation prompt
-local _pack_add = vim.pack.add
----@diagnostic disable-next-line: duplicate-set-field
-vim.pack.add = function(specs, opts)
-  opts = vim.tbl_extend('keep', opts or {}, { confirm = false })
-  return _pack_add(specs, opts)
-end
 
 -- ============================================================
 -- SECTION 4: UI / CORE UX PLUGINS
@@ -368,14 +351,55 @@ do
   -- See `:help gitsigns` to understand what each configuration key does.
   -- Adds git related signs to the gutter, as well as utilities for managing changes
   vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
+  local gitsigns = require 'gitsigns'
+  gitsigns.setup {
     signs = {
-      add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
+      add = { text = '+' }, ---@diagnostic disable-line: missing-fields
+      change = { text = '~' }, ---@diagnostic disable-line: missing-fields
+      delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
+      topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
+      changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
+    -- gitsigns.nvim's recommended keymaps:
+    on_attach = function(bufnr)
+      -- Navigation
+      vim.keymap.set('n', ']c', function()
+        if vim.wo.diff then
+          vim.cmd.normal { ']c', bang = true }
+        else
+          gitsigns.nav_hunk 'next'
+        end
+      end, { desc = 'Jump to next git [c]hange', buf = bufnr })
+
+      vim.keymap.set('n', '[c', function()
+        if vim.wo.diff then
+          vim.cmd.normal { '[c', bang = true }
+        else
+          gitsigns.nav_hunk 'prev'
+        end
+      end, { desc = 'Jump to previous git [c]hange', buf = bufnr })
+
+      -- Visual mode actions
+      vim.keymap.set('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [s]tage hunk', buf = bufnr })
+      vim.keymap.set('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [r]eset hunk', buf = bufnr })
+      -- Normal mode actions
+      vim.keymap.set('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer', buf = bufnr })
+      vim.keymap.set('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer', buf = bufnr })
+      vim.keymap.set('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hi', gitsigns.preview_hunk_inline, { desc = 'git preview hunk [i]nline', buf = bufnr })
+      vim.keymap.set('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, { desc = 'git [b]lame line', buf = bufnr })
+      vim.keymap.set('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index', buf = bufnr })
+      vim.keymap.set('n', '<leader>hD', function() gitsigns.diffthis '~' end, { desc = 'git [D]iff against last commit', buf = bufnr })
+      vim.keymap.set('n', '<leader>hQ', function() gitsigns.setqflist 'all' end, { desc = 'git hunk [Q]uickfix list (all files in repo)', buf = bufnr })
+      vim.keymap.set('n', '<leader>hq', gitsigns.setqflist, { desc = 'git hunk [q]uickfix list (all changes in this file)', buf = bufnr })
+      -- Toggles
+      vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line', buf = bufnr })
+      vim.keymap.set('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = '[T]oggle git intra-line [w]ord diff', buf = bufnr })
+      -- Text object
+      vim.keymap.set({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'text object [i]nside [h]unk', buf = bufnr })
+    end,
   }
 
   -- Useful plugin to show you pending keybinds.
@@ -393,22 +417,39 @@ do
     },
   }
 
-  -- [[ Colorschemes ]]
-  vim.pack.add {
-    gh 'sjl/badwolf',
-    gh 'tomasr/molokai',
-    gh 'ray-x/aurora',
-    gh 'NTBBloodbath/doom-one.nvim',
-    gh 'ofirgall/ofirkai.nvim',
-    gh 'rafalbromirski/vim-aurora',
-    gh 'challenger-deep-theme/vim',
-    gh 'kaicataldo/material.vim',
-    gh 'rakr/vim-one',
-    gh 'jacoborus/tender.vim',
-    gh 'navarasu/onedark.nvim',
-    gh 'folke/tokyonight.nvim',
-    gh 'nlknguyen/papercolor-theme',
+  -- [[ Colorscheme ]]
+  -- You can easily change to a different colorscheme.
+  -- Change the name of the colorscheme plugin below, and then
+  -- change the command under that to load whatever the name of that colorscheme is.
+  --
+  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  vim.pack.add { gh 'folke/tokyonight.nvim' }
+  ---@diagnostic disable-next-line: missing-fields
+  require('tokyonight').setup {
+    styles = {
+      comments = { italic = false }, -- Disable italics in comments
+    },
   }
+	vim.pack.add({
+		gh("sjl/badwolf"),
+		gh("tomasr/molokai"),
+		gh("ray-x/aurora"),
+		gh("NTBBloodbath/doom-one.nvim"),
+		gh("ofirgall/ofirkai.nvim"),
+		gh("rafalbromirski/vim-aurora"),
+		gh("challenger-deep-theme/vim"),
+		gh("kaicataldo/material.vim"),
+		gh("rakr/vim-one"),
+		gh("jacoborus/tender.vim"),
+		gh("navarasu/onedark.nvim"),
+		gh("folke/tokyonight.nvim"),
+		gh("nlknguyen/papercolor-theme"),
+	})
+
+  -- Load the colorscheme here.
+  -- Like many other themes, this one has different styles, and you could load
+  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  -- vim.cmd.colorscheme 'sjl/badwolf'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -446,7 +487,6 @@ do
   -- - sd'   - [S]urround [D]elete [']quotes
   -- - sr)'  - [S]urround [R]eplace [)] [']
   require('mini.surround').setup()
-  require('mini.diff').setup()
 
   -- Simple and easy statusline.
   --  You could remove this setup call if you don't like it,
@@ -494,7 +534,7 @@ do
   -- Telescope picker. This is really useful to discover what Telescope can
   -- do as well as how to actually do it!
 
-  ---@type (string|vim.pack.Spec)[]
+  ---@type (string | vim.pack.Spec)[]
   local telescope_plugins = {
     gh 'nvim-lua/plenary.nvim',
     gh 'nvim-telescope/telescope.nvim',
@@ -635,14 +675,6 @@ do
   vim.pack.add { gh 'j-hui/fidget.nvim' }
   require('fidget').setup {}
 
-  -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-  vim.pack.add { gh 'folke/lazydev.nvim' }
-  require('lazydev').setup {
-    library = {
-      { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-    },
-  }
-
   --  This function gets run when an LSP attaches to a particular buffer.
   --    That is to say, every time a new file is opened that is associated with
   --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -716,24 +748,47 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    bashls = {},
-    yamlls = {},
-    dockerls = {},
-    ansiblels = {},
-    marksman = {},
-    pyright = {},
-    clangd = {},
-    taplo = {},
-    typos_lsp = {},
+    -- clangd = {},
+    -- gopls = {},
+    -- pyright = {},
+    -- tsc = {},
+    --
+    -- Some languages (like rust) have entire language plugins that can be useful:
+    --    https://github.com/mrcjkb/rustaceanvim
+    --
+    -- But for many setups, the LSP (`rust_analyzer`) will work just fine
+    -- rust_analyzer = {},
 
+    stylua = {}, -- Used to format Lua code
+
+    -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
+      on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
+
+        if client.workspace_folders then
+          local path = client.workspace_folders[1].name
+          if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+        end
+
+        local current_settings = client.config.settings --[[@as lspconfig.settings.lua_ls]]
+        client.config.settings.Lua = vim.tbl_deep_extend('force', current_settings.Lua, {
+          runtime = {
+            version = 'LuaJIT',
+            path = { 'lua/?.lua', 'lua/?/init.lua' },
+          },
+          workspace = {
+            checkThirdParty = false,
+            -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
+            --  See https://github.com/neovim/nvim-lspconfig/issues/3189
+            library = vim.api.nvim_get_runtime_file('', true),
+          },
+        })
+      end,
+      ---@type lspconfig.settings.lua_ls
       settings = {
         Lua = {
-          completion = {
-            autoRequire = true,
-            callSnippet = 'Replace',
-            displayContext = 1,
-          },
+          format = { enable = false }, -- Disable formatting (formatting is done by stylua)
         },
       },
     },
@@ -763,48 +818,12 @@ do
   -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    'stylua',
-    'ansible-language-server',
-    'ansible-lint',
-    'bash-language-server',
-    'checkmake',
-    'clangd',
-    'clang-format',
-    'codespell',
-    'commitlint',
-    'cspell',
-    'dhall-lsp',
-    'dockerfile-language-server',
-    'gitlint',
-    'goimports',
-    'gopls',
-    'hadolint',
-    'helm-ls',
-    'html-lsp',
-    'jedi-language-server',
-    'jq-lsp',
-    'jsonlint',
-    'json-lsp',
-    'luacheck',
-    'lua-language-server',
-    'markdownlint',
-    'marksman',
-    'misspell',
-    'prettier',
-    'pyright',
-    'rstcheck',
-    'ruff',
-    'rust-analyzer',
-    'shellcheck',
-    'shfmt',
-    'staticcheck',
-    'stylua',
-    'systemdlint',
-    'trivy',
-    'vim-language-server',
-    'yamlfmt',
-    'yaml-language-server',
-    'yamllint',
+    "checkmake",
+    "gitlint",
+    "luacheck",
+    "markdownlint",
+    "rstcheck",
+    "markdownlint",
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -825,11 +844,15 @@ do
   require('conform').setup {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      local disable_filetypes = { c = true, cpp = true, python = true }
-      if disable_filetypes[vim.bo[bufnr].filetype] then
-        return nil
+      -- You can specify filetypes to autoformat on save here:
+      local enabled_filetypes = {
+        -- lua = true,
+        -- python = true,
+      }
+      if enabled_filetypes[vim.bo[bufnr].filetype] then
+        return { timeout_ms = 500 }
       else
-        return { timeout_ms = 500, lsp_format = 'fallback' }
+        return nil
       end
     end,
     default_format_opts = {
@@ -837,10 +860,12 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      ansible = { 'ansible-lint' },
-      lua = { 'stylua' },
-      yaml = { 'ansible-lint' },
-      yml = { 'ansible-lint' },
+      -- rust = { 'rustfmt' },
+      -- Conform can also run multiple formatters sequentially
+      -- python = { "isort", "black" },
+      --
+      -- You can use 'stop_after_first' to run the first available formatter from the list
+      -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
   }
 
@@ -910,10 +935,7 @@ do
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
-      providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-      },
+      default = { 'lsp', 'path', 'snippets' },
     },
 
     snippets = { preset = 'luasnip' },
@@ -947,11 +969,24 @@ do
 
   -- Ensure basic parsers are installed
   local parsers = {
-    'bash', 'c', 'cmake', 'comment', 'css', 'dhall', 'diff', 'dockerfile',
-    'gitcommit', 'git_rebase', 'go', 'graphql', 'haskell', 'helm', 'html',
-    'http', 'javascript', 'jq', 'json', 'lua', 'luadoc', 'make', 'markdown',
-    'markdown_inline', 'python', 'query', 'regex', 'rst', 'rust', 'toml',
-    'typescript', 'vim', 'vimdoc', 'yaml',
+    'bash',
+    'c',
+    'diff',
+    'html',
+    'lua',
+    'luadoc',
+    'markdown',
+    'markdown_inline',
+    'query',
+    'vim',
+    'vimdoc',
+    'go',
+    'markdown',
+    'python',
+    'rust',
+    'git_rebase',
+    'gitcommit',
+    'dockerfile',
   }
   require('nvim-treesitter').install(parsers)
 
@@ -960,6 +995,10 @@ do
   local function treesitter_try_attach(buf, language)
     -- Check if a parser exists and load it
     if not vim.treesitter.language.add(language) then return end
+
+    -- Check if the buffer is valid (might not be after install completes)
+    if not vim.api.nvim_buf_is_valid(buf) then return end
+
     -- Enable syntax highlighting and other treesitter features
     vim.treesitter.start(buf, language)
 
@@ -1014,18 +1053,25 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  require 'kickstart.plugins.debug'
-  require 'kickstart.plugins.indent_line'
-  require 'kickstart.plugins.lint'
-  require 'kickstart.plugins.autopairs'
-  require 'kickstart.plugins.neo-tree'
-  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  -- require 'kickstart.plugins.debug'
+  -- require 'kickstart.plugins.indent_line'
+  -- require 'kickstart.plugins.lint'
+  -- require 'kickstart.plugins.autopairs'
+  -- require 'kickstart.plugins.neo-tree'
 
-  -- vim-prettier
-  vim.pack.add { gh 'prettier/vim-prettier' }
-
-  -- Log highlighting (like CCZE)
-  vim.pack.add { gh 'mtdl9/vim-log-highlighting' }
+  -- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
+  --
+  -- For independent modules, uncomment the convenience loader:
+  -- require 'custom.plugins'
+  --
+  -- `custom.plugins` automatically loads files from that directory, but their
+  -- order is unspecified. If plugins depend on each other, keep them in the same
+  -- file and put their `vim.pack.add()` and `setup()` calls in the required order.
+  --
+  -- If separate modules need a specific order, require them explicitly instead:
+  -- require 'custom.plugins.colorscheme'
+  -- require 'custom.plugins.ui'
+  -- require 'custom.plugins.git'
 end
 
 -- ============================================================
@@ -1033,7 +1079,7 @@ end
 -- Custom settings, colorscheme, highlights, autocmds
 -- ============================================================
 
-vim.o.encoding = 'utf-8'
+vim.o.encoding = "utf-8"
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
@@ -1048,69 +1094,70 @@ vim.o.termguicolors = true
 vim.o.autoread = true
 
 -- Colorscheme
-vim.cmd [[silent! colorscheme molokai]]
+vim.cmd([[silent! colorscheme molokai]])
 
 -- Highlight and strip trailing whitespace on save
-vim.cmd 'highlight ExtraWhitespace ctermbg=red guibg=red'
-vim.cmd [[match ExtraWhitespace /\s\+$/]]
+vim.cmd("highlight ExtraWhitespace ctermbg=red guibg=red")
+vim.cmd([[match ExtraWhitespace /\s\+$/]])
 -- Auto-remove trailing whitespace on save (preserves cursor position)
-vim.api.nvim_create_autocmd('BufWritePre', {
-  callback = function()
-    local pos = vim.api.nvim_win_get_cursor(0)
-    vim.cmd [[%s/\s\+$//e]]
-    vim.api.nvim_win_set_cursor(0, pos)
-  end,
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = function()
+		local pos = vim.api.nvim_win_get_cursor(0)
+		vim.cmd([[%s/\s\+$//e]])
+		vim.api.nvim_win_set_cursor(0, pos)
+	end,
 })
 
 -- Color column
-vim.api.nvim_set_option_value('colorcolumn', '80', {})
+vim.api.nvim_set_option_value("colorcolumn", "80", {})
 
 -- Highlight unicode symbols/chars
-vim.cmd 'highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout'
-vim.cmd [[autocmd BufReadPost * syntax match nonascii "[^\x00-\x7F]"]]
+vim.cmd("highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout")
+vim.cmd([[autocmd BufReadPost * syntax match nonascii "[^\x00-\x7F]"]])
 
 -- prettier
-vim.g['prettier#autoformat'] = 1
-vim.g['prettier#config#use_tabs'] = 'auto'
-vim.g['prettier#config#tab_width'] = '2'
+vim.g["prettier#autoformat"] = 0
+vim.g["prettier#formatOnSave"] = 0
+vim.g["prettier#config#use_tabs"] = "auto"
+vim.g["prettier#config#tab_width"] = "2"
 
 -- make colors in vimdiff
-vim.cmd 'highlight! link DiffText MatchParen'
+vim.cmd("highlight! link DiffText MatchParen")
 
 -- Simple Ansible log highlighting
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead' }, {
-  callback = function(args)
-    local bufnr = args.buf
-    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+vim.api.nvim_create_autocmd({ "BufEnter", "BufRead" }, {
+	callback = function(args)
+		local bufnr = args.buf
+		local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
-    for i, line in ipairs(lines) do
-      if line:match 'FAILED' then
-        vim.api.nvim_buf_add_highlight(bufnr, -1, 'AnsibleFailed', i - 1, 0, -1)
-      elseif line:match 'changed:' then
-        vim.api.nvim_buf_add_highlight(bufnr, -1, 'AnsibleChanged', i - 1, 0, -1)
-      elseif line:match 'ok:' then
-        vim.api.nvim_buf_add_highlight(bufnr, -1, 'AnsibleOK', i - 1, 0, -1)
-      end
-    end
-  end,
+		for i, line in ipairs(lines) do
+			if line:match("FAILED") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleFailed", i - 1, 0, -1)
+			elseif line:match("changed:") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleChanged", i - 1, 0, -1)
+			elseif line:match("ok:") then
+				vim.api.nvim_buf_add_highlight(bufnr, -1, "AnsibleOK", i - 1, 0, -1)
+			end
+		end
+	end,
 })
 
-vim.cmd [[
+vim.cmd([[
   highlight AnsibleFailed ctermfg=white ctermbg=darkred guifg=white guibg=#5c0000
   highlight AnsibleChanged ctermfg=blue ctermbg=NONE guifg=#4dabf7 guibg=NONE
   highlight AnsibleOK ctermfg=green ctermbg=NONE guifg=#51cf66 guibg=NONE
-]]
+]])
 
 -- Change colorscheme when in diff mode
-vim.api.nvim_create_autocmd({ 'OptionSet', 'BufEnter' }, {
-  pattern = 'diff',
-  callback = function()
-    if vim.o.diff then
-      vim.cmd 'colorscheme badwolf'
-    else
-      vim.cmd 'colorscheme molokai'
-    end
-  end,
+vim.api.nvim_create_autocmd({ "OptionSet", "BufEnter" }, {
+	pattern = "diff",
+	callback = function()
+		if vim.o.diff then
+			vim.cmd("colorscheme badwolf")
+		else
+			vim.cmd("colorscheme molokai")
+		end
+	end,
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

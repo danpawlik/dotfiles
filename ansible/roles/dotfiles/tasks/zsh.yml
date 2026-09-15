@@ -36,8 +36,8 @@
     - ".zsh_ohmyzsh"
     - ".zshrc"
 
-- name: Change user shell to ZSH
-  become: true
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: /bin/zsh
+#- name: Change user shell to ZSH
+#  become: true
+#  ansible.builtin.user:
+#    name: "{{ ansible_user_id }}"
+#    shell: /bin/zsh

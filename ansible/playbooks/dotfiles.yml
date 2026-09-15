@@ -19,9 +19,9 @@
       - bash
       - zsh
       - git
-      - system
+      # - system
       - kubernetes
       - flatpak
-      - visualstudio
+      # - visualstudio
   roles:
     - dotfiles
