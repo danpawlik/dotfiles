@@ -186,11 +186,11 @@ npm_packages:
   - pnpm
   - prettier
 
-flatpak_packages:
+flatpak_packages: []
   # Element.io
-  - im.riot.Riot
+  # - im.riot.Riot
   # Signal
-  - org.signal.Signal
+  # - org.signal.Signal
 
 ansible_collections:
   - community.general
