@@ -20,6 +20,10 @@
         name: "*"
         state: latest
 
+    - name: Swap ffmpeg from free to nonfree
+      ansible.builtin.shell: |
+        dnf swap ffmpeg-free ffmpeg --allowerasing -y
+
     # FIXME: Changed to shell because current ansible
     # contains a bug https://github.com/ansible/ansible/issues/85124
     - name: Install rpmfusion
