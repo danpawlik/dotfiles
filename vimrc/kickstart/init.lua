@@ -845,7 +845,6 @@ do
     'markdownlint',
     'marksman',
     'misspell',
-    'prettier',
     'pyright',
     'rstcheck',
     'ruff',
@@ -880,7 +879,8 @@ do
   require('conform').setup {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      local disable_filetypes = { c = true, cpp = true, python = true }
+      -- disable autoformat
+      local disable_filetypes = { c = true, cpp = true, python = true, lua = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
       else
@@ -893,9 +893,8 @@ do
     -- You can also specify external formatters in here.
     formatters_by_ft = {
       ansible = { 'ansible-lint' },
-      lua = { 'stylua' },
-      yaml = { 'ansible-lint' },
-      yml = { 'ansible-lint' },
+      yaml = { 'prettier' },
+      yml = { 'prettier' },
     },
   }
 
@@ -1076,12 +1075,6 @@ do
   require 'kickstart.plugins.autopairs'
   require 'kickstart.plugins.neo-tree'
 
-  -- vim-prettier: vim.g must be set BEFORE pack.add (plugin reads them on load)
-  vim.g['prettier#autoformat'] = 1
-  vim.g['prettier#config#use_tabs'] = 'auto'
-  vim.g['prettier#config#tab_width'] = '2'
-  vim.pack.add { gh 'prettier/vim-prettier' }
-
   -- Log highlighting (like CCZE)
   vim.pack.add { gh 'mtdl9/vim-log-highlighting' }
 
@@ -1109,7 +1102,7 @@ end
 --   after gh(): pack confirm wrapper
 --   SECTION 4: colorscheme packs, mini.diff
 --   SECTION 6–9: LSP servers, mason tools, conform, treesitter parsers
---   SECTION 10: optional plugins + prettier globals before pack.add
+--   SECTION 10: optional plugins
 -- ============================================================
 
 vim.o.encoding = 'utf-8'
