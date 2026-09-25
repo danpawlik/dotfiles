@@ -92,7 +92,7 @@ do
   -- Enable faster startup by caching compiled Lua modules
   vim.loader.enable()
 
-  -- Set <space> as the leader key
+  -- Set <comma> as the leader key (custom; Kickstart default is <space>)
   -- See `:help mapleader`
   --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
   vim.g.mapleader = ','
@@ -151,12 +151,11 @@ do
   --  See `:help 'list'`
   --  and `:help 'listchars'`
   --
-  --  Notice listchars is set using `vim.opt` instead of `vim.o`.
-  --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
-  --   See `:help lua-options`
-  --   and `:help lua-guide-options`
-  vim.o.list = true
+  -- Custom: keep list off. With `list` on and no listchars set, Neovim defaults
+  -- to `tab:>` which renders tabs as `>`.
+  -- vim.o.list = true
   -- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+  vim.o.list = false
 
   -- Preview substitutions live, as you type!
   vim.o.inccommand = 'split'
@@ -165,6 +164,7 @@ do
   vim.o.cursorline = true
 
   -- Minimal number of screen lines to keep above and below the cursor.
+  -- Custom: leave Kickstart's scrolloff disabled (Neovim default is 0)
   -- vim.o.scrolloff = 10
 
   -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
@@ -1076,7 +1076,10 @@ do
   require 'kickstart.plugins.autopairs'
   require 'kickstart.plugins.neo-tree'
 
-  -- vim-prettier
+  -- vim-prettier: vim.g must be set BEFORE pack.add (plugin reads them on load)
+  vim.g['prettier#autoformat'] = 1
+  vim.g['prettier#config#use_tabs'] = 'auto'
+  vim.g['prettier#config#tab_width'] = '2'
   vim.pack.add { gh 'prettier/vim-prettier' }
 
   -- Log highlighting (like CCZE)
@@ -1099,7 +1102,14 @@ end
 
 -- ============================================================
 -- SECTION 11: MY CONFIG
--- Custom settings, colorscheme, highlights, autocmds
+-- Personal options / highlights / autocmds that are safe late.
+-- Things that MUST stay earlier (do not move here):
+--   SECTION 1: leader, nerd_font, mouse, list/listchars, scrolloff
+--   SECTION 2: diagnostic signs
+--   after gh(): pack confirm wrapper
+--   SECTION 4: colorscheme packs, mini.diff
+--   SECTION 6–9: LSP servers, mason tools, conform, treesitter parsers
+--   SECTION 10: optional plugins + prettier globals before pack.add
 -- ============================================================
 
 vim.o.encoding = 'utf-8'
@@ -1115,14 +1125,29 @@ vim.o.smartindent = true
 vim.o.wrap = false
 vim.o.termguicolors = true
 vim.o.autoread = true
+vim.api.nvim_set_option_value('colorcolumn', '80', {})
 
--- Colorscheme
+-- Colorscheme (packs installed in SECTION 4; indent_line ColorScheme hooks in SECTION 10)
 vim.cmd [[silent! colorscheme molokai]]
 
--- Highlight and strip trailing whitespace on save
-vim.cmd 'highlight ExtraWhitespace ctermbg=red guibg=red'
+-- Highlights clear on colorscheme change — re-apply via ColorScheme autocmd
+local function apply_custom_highlights()
+  vim.cmd 'highlight ExtraWhitespace ctermbg=red guibg=red'
+  vim.cmd 'highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout'
+  vim.cmd 'highlight! link DiffText MatchParen'
+  vim.cmd [[
+    highlight AnsibleFailed ctermfg=white ctermbg=darkred guifg=white guibg=#5c0000
+    highlight AnsibleChanged ctermfg=blue ctermbg=NONE guifg=#4dabf7 guibg=NONE
+    highlight AnsibleOK ctermfg=green ctermbg=NONE guifg=#51cf66 guibg=NONE
+  ]]
+end
+apply_custom_highlights()
+vim.api.nvim_create_autocmd('ColorScheme', {
+  desc = 'Re-apply custom highlights after colorscheme changes',
+  callback = apply_custom_highlights,
+})
+
 vim.cmd [[match ExtraWhitespace /\s\+$/]]
--- Auto-remove trailing whitespace on save (preserves cursor position)
 vim.api.nvim_create_autocmd('BufWritePre', {
   callback = function()
     local pos = vim.api.nvim_win_get_cursor(0)
@@ -1131,20 +1156,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end,
 })
 
--- Color column
-vim.api.nvim_set_option_value('colorcolumn', '80', {})
-
--- Highlight unicode symbols/chars
-vim.cmd 'highlight nonascii guibg=OrangeRed4 ctermbg=1 term=standout'
 vim.cmd [[autocmd BufReadPost * syntax match nonascii "[^\x00-\x7F]"]]
-
--- prettier
-vim.g['prettier#autoformat'] = 1
-vim.g['prettier#config#use_tabs'] = 'auto'
-vim.g['prettier#config#tab_width'] = '2'
-
--- make colors in vimdiff
-vim.cmd 'highlight! link DiffText MatchParen'
 
 -- Simple Ansible log highlighting
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead' }, {
@@ -1164,13 +1176,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufRead' }, {
   end,
 })
 
-vim.cmd [[
-  highlight AnsibleFailed ctermfg=white ctermbg=darkred guifg=white guibg=#5c0000
-  highlight AnsibleChanged ctermfg=blue ctermbg=NONE guifg=#4dabf7 guibg=NONE
-  highlight AnsibleOK ctermfg=green ctermbg=NONE guifg=#51cf66 guibg=NONE
-]]
-
--- Change colorscheme when in diff mode
+-- Diff mode colorscheme (badwolf/molokai from SECTION 4)
 vim.api.nvim_create_autocmd({ 'OptionSet', 'BufEnter' }, {
   pattern = 'diff',
   callback = function()
