@@ -37,9 +37,37 @@ M.plugins = {
       vim.g.indent_guides_auto_colors = 0
     end,
   },
+
+  -- Auto-install LSP servers / formatters that are not on the system.
+  -- (gopls, shellcheck, prettier are installed system-wide, so not listed)
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    lazy = false, -- must load at startup: auto-installs on VimEnter
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = {
+      ensure_installed = {
+        'pyright', 'bash-language-server', 'yaml-language-server', 'json-lsp',
+        'ruff', 'shfmt', 'stylua', 'goimports',
+      },
+    },
+  },
+
+  -- Treesitter parsers for my languages (extends NvChad's default set)
+  {
+    'nvim-treesitter/nvim-treesitter',
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { 'go', 'gomod', 'python', 'bash', 'yaml', 'json', 'jsonc' })
+      return opts
+    end,
+  },
 }
 
 function M.setup()
+  -- Make mason-installed binaries (LSP servers, formatters) visible to
+  -- vim.lsp and conform — NvChad sets mason's PATH option to "skip".
+  vim.env.PATH = vim.fn.stdpath 'data' .. '/mason/bin:' .. vim.env.PATH
+
   vim.o.encoding = 'utf-8'
   vim.o.softtabstop = 2
   vim.o.shiftwidth = 4
