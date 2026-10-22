@@ -5,18 +5,11 @@
     name: gcc
     state: present
 
-- name: Copy config
+- name: Copy config - {{ nvim_config }}
   ansible.builtin.copy:
-    src: /tmp/dotfiles/vimrc/kickstart/{{ item }}
+    src: /tmp/dotfiles/vimrc/{{ nvim_config }}/{{ item }}
     dest: ~/.config/nvim/{{ item }}
     remote_src: true
   loop:
     - init.lua
     - lua/
-
-- name: Overwrite with minimal if set
-  when: nvim_minimal
-  ansible.builtin.copy:
-    src: /tmp/dotfiles/vimrc/kickstart/init-minimal.lua
-    dest: ~/.config/nvim/init.lua
-    remote_src: true

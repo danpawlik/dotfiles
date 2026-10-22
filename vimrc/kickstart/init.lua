@@ -1179,6 +1179,7 @@ vim.api.nvim_create_autocmd({ 'OptionSet', 'BufEnter' }, {
       vim.cmd 'colorscheme molokai'
     end
   end,
+
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
