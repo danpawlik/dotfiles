@@ -28,7 +28,8 @@ other_fonts: []
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
 nvim_version: nightly
-nvim_minimal: false
+# can be: kickstart, kickstart_minimal, nvchad
+nvim_config: nvchad
 
 # it install nodejs into ~/.local/nodejs
 # https://nodejs.org/dist/latest-v20.x/
