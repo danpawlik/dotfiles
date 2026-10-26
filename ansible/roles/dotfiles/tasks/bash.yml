@@ -4,12 +4,11 @@
     path: ~/.local/bin
     state: directory
 
-- name: Install starship prompt
-  ansible.builtin.shell: |
-    curl -sS https://starship.rs/install.sh | sh -s -- -y -b ~/.local/bin
-  args:
-    creates: ~/.local/bin/starship
-  changed_when: true
+- name: Install fzf (used for history search and fuzzy Tab completion)
+  become: true
+  ansible.builtin.package:
+    name: fzf
+    state: present
 
 - name: Install ble.sh
   block:
@@ -33,17 +32,6 @@
       args:
         chdir: /tmp/ble.sh
       changed_when: true
-
-- name: Ensure starship config dir exists
-  ansible.builtin.file:
-    path: ~/.config
-    state: directory
-
-- name: Copy starship config
-  ansible.builtin.copy:
-    src: /tmp/dotfiles/bash/starship.toml
-    dest: ~/.config/starship.toml
-    remote_src: true
 
 - name: Copy bash config files
   ansible.builtin.copy:
