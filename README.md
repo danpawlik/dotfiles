@@ -1,6 +1,6 @@
 # My dotfiles
 
-My dotfiles configurtion.
+My dotfiles configuration.
 
 ## Vim configuration
 
@@ -28,24 +28,19 @@ If you want to install some other vim distribution, that works well on `neovim` 
 ## Use ansible to install dotfiles
 
 ```shell
-sudo yum install -y git ansible
+sudo dnf install -y git ansible-core
 git clone https://github.com/danpawlik/dotfiles
-ansible-galaxy collection install community.general
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/dotfiles.yml
 ```
+
+The Ansible collections used by the role are installed by the `ansible` component.
 
 ### Use ansible to install vim
 
 ```shell
-sudo yum install -y git ansible
+sudo dnf install -y git ansible-core
 git clone https://github.com/danpawlik/dotfiles
 ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/vim.yml
-```
-
-On Centos 7, you can run it with:
-
-```shell
-ansible-playbook --ask-become-pass -e ansible_python_interpreter=/usr/bin/python2 ansible/playbooks/vim.yml
 ```
 
 When you have an error:
@@ -86,26 +81,17 @@ $HOME/.tmux/plugins/tpm/bin/install_plugins
 
 ## Vim alternative distributions
 
-You can always install just neovim, then choose proper distribution:
+The `vim` playbook installs Neovim and the NvChad config from `vimrc/nvchad`
+(`nvim_config: nvchad`). To use another distribution, clone it into
+`~/.config/nvim`, replacing the config installed by the playbook.
 
 ### Preparation
 
 ```shell
-yum install -y git python3-pip
+sudo dnf install -y git python3-pip
 pip3 install -U setuptools pip
-pip3 install ansible==2.9.13
-export PATH=$PATH:/usr/local/bin
 git clone https://github.com/danpawlik/dotfiles
-ansible-playbook --ask-become-pass -e just_neovim=true dotfiles/ansible/playbooks/vim.yml
-```
-
-Or for Centos 7:
-
-```shell
-ansible-playbook --ask-become-pass \
-  -e just_neovim=true \
-  -e ansible_python_interpreter=/usr/bin/python2 \
-  dotfiles/ansible/playbooks/vim.yml
+ansible-playbook --ask-become-pass dotfiles/ansible/playbooks/vim.yml
 ```
 
 Distros, for example:
@@ -114,52 +100,14 @@ Distros, for example:
 
 ```shell
 git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-nvim +PackerSync
+nvim
 ```
-
-Works well on `Centos 7` and newer.
 
 ### <https://github.com/NvChad/NvChad>
 
 ```shell
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
-```
-
-NOTE:
-Replace vim with python some nvim-treesitter on `Centos 7`:
-
-```shell
-sed -i 's/      \"vim\",/      \"python\",/g' ~/.config/nvim/lua/plugins/configs/treesitter.lua
-```
-
-### <https://github.com/LunarVim/LunarVim>
-
-Before, install:
-
-```shell
-# if Centos
-sudo yum install -y epel-relase
-sudo yum install -y neovim cargo gcc-c++ gcc
-```
-
-```shell
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-```
-
-And copy my config into the LunarVim dir:
-
-```shell
-cp lvim/lunar-vim.lua ~/.config/lvim/config.lua
-```
-
-NOTE:
-Disable some nvim-treesitter on `Centos 7`:
-
-```shell
-sed -i '/  \"javascript\"/d' ~/.config/lvim/config.lua
-sed -i '/  \"typescript\"/d' ~/.config/lvim/config.lua
-sed -i '/  \"tsx\"/d' ~/.config/lvim/config.lua
+nvim
 ```
 
 ## Post configuration
@@ -215,9 +163,6 @@ TSModuleInfo
 ### Removing
 
 ```shell
-# to uninstall just lvim
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)
-
 # For vim config and neovim
-sudo rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.config/lvim ~/.local/share/lunarvim ~/.cache/lvim ~/.local/bin/node ~/.local/bin/npm ~/.local/bin/vim
+sudo rm -rf ~/.local/nvim ~/.local/share/nvim ~/.cache/nvim ~/.config/nvim ~/.local/nodejs ~/.vim ~/.vimrc ~/.local/bin/node ~/.local/bin/npm ~/.local/bin/vim
 ```

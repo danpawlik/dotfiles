@@ -28,8 +28,8 @@ bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
 
 # pnpm
-export PNPM_HOME="/home/dpawlik/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME:$HOME/.opencode/bin:$PATH"
 # pnpm end
 #
 if command -v kubectl &>/dev/null; then

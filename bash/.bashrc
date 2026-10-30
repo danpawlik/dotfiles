@@ -12,6 +12,10 @@ if [ -f "$HOME/.bash_aliases" ]; then
     source "$HOME/.bash_aliases"
 fi
 
+if [ -f "$HOME/.bash_aliases_work" ]; then
+    source "$HOME/.bash_aliases_work"
+fi
+
 xset b off 2>/dev/null
 
 export LANG=en_US.UTF-8
@@ -139,7 +143,7 @@ if command -v kubectl &>/dev/null; then
     complete -o default -F __start_kubectl k
 fi
 
-export PATH="$PNPM_HOME:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin:$HOME/android-platform-tools:$PATH"
+export PATH="$PNPM_HOME:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin:$HOME/android-platform-tools:$HOME/.opencode/bin:$PATH"
 
 # ls: colorized output. vivid only generates LS_COLORS, the alias turns on --color.
 # The "ansi" theme reuses the terminal palette and leaves regular files uncolored.

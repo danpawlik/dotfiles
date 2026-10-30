@@ -1,11 +1,14 @@
+---
 - name: Install nerd fonts
   block:
     - name: Create font directory
       ansible.builtin.file:
         path: ~/.local/share/fonts
         state: directory
+        mode: '0755'
 
     - name: Install full version of nerd fonts
+      when: nerd_fonts_pack == 'full' and nerd_fonts_install == 'direct'
       block:
         - name: Clone nerd fonts
           ansible.builtin.git:
@@ -20,14 +23,14 @@
             chdir: /tmp/nerd-fonts
           changed_when: true
 
-      when: nerd_fonts_pack == 'full' and nerd_fonts_install == 'direct'
-
     - name: Install small version of nerd fonts
+      when: nerd_fonts_pack == 'small' and nerd_fonts_install | lower == 'direct'
       block:
         - name: Create temp font directory
           ansible.builtin.file:
             path: /tmp/fonts
             state: directory
+            mode: '0755'
 
         - name: Download and unzip fonts
           ansible.builtin.unarchive:
@@ -35,25 +38,23 @@
             dest: /tmp/fonts
             remote_src: true
           loop: "{{ nerd_fonts }}"
-          ignore_errors: true
 
         - name: Remove windows fonts
           ansible.builtin.shell: |
-            find /tmp/fonts -name "*Windows*" -delete
+            find /tmp/fonts -maxdepth 1 -type f -iname '*windows*' -delete
           changed_when: true
 
         - name: Move fonts
-          ansible.builtin.shell: |
-            mv /tmp/fonts/* ~/.local/share/fonts/
-          changed_when: true
+          ansible.builtin.copy:
+            src: /tmp/fonts/
+            dest: ~/.local/share/fonts/
+            remote_src: true
+            mode: '0644'
 
-        - name: Remove archives
+        - name: Remove temporary font directory
           ansible.builtin.file:
-            path: /tmp/{{ item }}.zip
+            path: /tmp/fonts
             state: absent
-          loop: "{{ nerd_fonts }}"
-
-      when: nerd_fonts_pack == 'small' and nerd_fonts_install | lower == 'direct'
 
 - name: Install nerd fonts by using package
   become: true
@@ -67,20 +68,21 @@
   ansible.builtin.get_url:
     url: "{{ item }}"
     dest: "~/.local/share/fonts/{{ item | basename }}"
+    mode: '0644'
   loop: "{{ nerd_fonts_patched }}"
 
-- name: Remove uncecessary fonts
+- name: Remove unnecessary fonts
   ansible.builtin.shell: |
-    ls | grep -iE 'light|bold|italic|medium' | grep -vi 'mono' | xargs rm
-  args:
-    chdir: ~/.local/share/fonts
+    find ~/.local/share/fonts -maxdepth 1 -type f \
+      \( -iname '*light*' -o -iname '*bold*' -o -iname '*italic*' -o -iname '*medium*' \) \
+      ! -iname '*mono*' -delete
   changed_when: true
-  ignore_errors: true
 
 - name: Install other fonts
   ansible.builtin.get_url:
     url: "{{ item }}"
     dest: "~/.local/share/fonts/{{ item | basename }}"
+    mode: '0644'
   loop: "{{ other_fonts }}"
 
 - name: Update font cache

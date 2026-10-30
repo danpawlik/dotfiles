@@ -4,6 +4,5 @@
   vars:
     components:
       - vim
-      # - lvim
   roles:
     - dotfiles
