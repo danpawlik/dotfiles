@@ -156,3 +156,10 @@ alias la='ls -la --color=auto'
 
 # Attach ble.sh last
 [[ ${BLE_VERSION-} ]] && ble-attach
+
+# zsh-like Ctrl+W: kill only the current word, stopping at / . - and other
+# punctuation instead of deleting the whole shell word. Use Ctrl+U to clear
+# everything to the left. Ctrl+K still kills everything to the right.
+if [[ ${BLE_VERSION-} ]]; then
+    ble-bind -m emacs -f C-w kill-backward-cword
+fi
