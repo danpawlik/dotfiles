@@ -7,6 +7,9 @@ enable_kubernetes_tools: true
 kubernetes_repo_version: v1.36
 enable_nested_virtualization: true
 
+# LS_COLORS generator used by bash ls aliases
+vivid_version: v0.11.1
+
 # package, direct or small
 nerd_fonts_install: small
 # small or full

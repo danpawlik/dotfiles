@@ -141,5 +141,18 @@ fi
 
 export PATH="$PNPM_HOME:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin:$HOME/android-platform-tools:$PATH"
 
+# ls: colorized output. vivid only generates LS_COLORS, the alias turns on --color.
+# The "ansi" theme reuses the terminal palette and leaves regular files uncolored.
+if command -v vivid >/dev/null 2>&1; then
+    if _ls_colors=$(vivid generate "${VIVID_THEME:-ansi}"); then
+        # regular files with multiple hard links: bold magenta (vivid leaves them uncolored)
+        export LS_COLORS="$_ls_colors:mh=1;35"
+    fi
+    unset _ls_colors
+fi
+alias ls='ls --color=auto'
+alias ll='ls -l --color=auto'
+alias la='ls -la --color=auto'
+
 # Attach ble.sh last
 [[ ${BLE_VERSION-} ]] && ble-attach
