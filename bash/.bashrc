@@ -139,7 +139,7 @@ if command -v kubectl &>/dev/null; then
     complete -o default -F __start_kubectl k
 fi
 
-export PATH="$PNPM_HOME:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin:$HOME/android-platform-tools:$PATH"
+export PATH="$PNPM_HOME:$HOME/.local/bin:$HOME/go/bin:/usr/local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin:$HOME/android-platform-tools:$HOME/.opencode/bin:$PATH"
 
 # ls: colorized output. vivid only generates LS_COLORS, the alias turns on --color.
 # The "ansi" theme reuses the terminal palette and leaves regular files uncolored.

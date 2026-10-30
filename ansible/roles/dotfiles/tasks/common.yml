@@ -9,7 +9,7 @@
         line: "{{ item.param }}={{ item.value }}"
       loop:
         - param: fastestmirror
-          value: True
+          value: true
         - param: max_parallel_downloads
           value: 8
         - param: minrate
@@ -20,20 +20,22 @@
         name: "*"
         state: latest
 
-    - name: Swap ffmpeg from free to nonfree
-      ansible.builtin.shell: |
-        dnf swap ffmpeg-free ffmpeg --allowerasing -y
-
     # FIXME: Changed to shell because current ansible
     # contains a bug https://github.com/ansible/ansible/issues/85124
     - name: Install rpmfusion
       when: enable_rpmfusion
-      become: true
       ansible.builtin.shell: >
         dnf install -y
         https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
         https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
       changed_when: true
+
+    - name: Swap ffmpeg from free to nonfree
+      when: enable_rpmfusion
+      ansible.builtin.shell: |
+        dnf swap ffmpeg-free ffmpeg --allowerasing -y
+      register: _ffmpeg_swap
+      changed_when: "'Nothing to do' not in _ffmpeg_swap.stdout"
 
     - name: Install basic packages
       ansible.builtin.package:

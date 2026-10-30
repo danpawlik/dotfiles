@@ -2,39 +2,46 @@
 - name: Check if NodeJS is already available
   environment:
     PATH: ~/.local/bin:/usr/local/bin/:{{ ansible_env.PATH }}
-  ansible.builtin.shell: |
-    npm --version
+  ansible.builtin.command: npm --version
   changed_when: false
   register: npm_version
-  ignore_errors: true
+  failed_when: false
 
 - name: Setup NodeJS
   when: npm_version.rc != 0 or nodejs_userspace
   block:
-    - name: Remove old local dirs
+    - name: Remove old nodejs dirs
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
       loop:
-        - "~/.local/bin"
         - "~/.local/yarn"
         - "~/.local/nodejs"
+
+    - name: Remove old nodejs symlinks
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "~/.local/bin/npm"
+        - "~/.local/bin/node"
+        - "~/.local/bin/yarn"
 
     - name: Ensure local dir exists
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
+        mode: '0755'
       loop:
         - "~/.local/bin"
         - "~/.local/yarn"
         - "~/.local/nodejs"
 
     - name: Check if xz command is available
-      ansible.builtin.shell: |
-        command -v xz
+      ansible.builtin.command: which xz
       changed_when: false
       register: _xz_installed
-      ignore_errors: true
+      failed_when: false
 
     - name: Install xz package
       when: not _xz_installed.stdout
@@ -50,6 +57,7 @@
           ansible.builtin.get_url:
             url: https://nodejs.org/dist/latest/
             dest: /tmp/nodejs-latest
+            mode: '0644'
 
         - name: Get version
           ansible.builtin.shell: |
@@ -57,9 +65,11 @@
           changed_when: false
           register: latest_nodejs_version
 
-    - name: "Download and unpack nodejs version {{ latest_nodejs_version.stdout | default(nodejs_version) }}"
+    - name: Download and unpack nodejs
+      vars:
+        nodejs_download_version: "{{ latest_nodejs_version.stdout | default(nodejs_version, true) }}"
       ansible.builtin.unarchive:
-        src: "https://nodejs.org/dist/{{ latest_nodejs_version.stdout | default(nodejs_version) }}/node-{{ latest_nodejs_version.stdout | default(nodejs_version) }}-linux-x64.tar.xz"
+        src: "https://nodejs.org/dist/{{ nodejs_download_version }}/node-{{ nodejs_download_version }}-linux-x64.tar.xz"
         dest: ~/.local/nodejs
         remote_src: true
         extra_opts: [--strip-components=1]
@@ -85,17 +95,8 @@
           dest: "~/.local/bin/yarn"
 
 - name: Install nodejs package
+  become: true
   when: npm_version.rc != 0 and not nodejs_userspace
-  block:
-    - name: Configure NodeJS repo - Centos 7
-      become: true
-      ansible.builtin.shell: |
-        curl --silent --location https://rpm.nodesource.com/setup_14.x | bash
-      changed_when: true
-      when: ansible_distribution == 'CentOS' and ansible_lsb.major_release|int <= 7
-
-    - name: Install NodeJS
-      become: true
-      ansible.builtin.package:
-        name: nodejs
-        state: present
+  ansible.builtin.package:
+    name: nodejs
+    state: present
