@@ -3,6 +3,7 @@
   ansible.builtin.file:
     path: ~/.local/bin
     state: directory
+    mode: '0755'
 
 - name: Install vivid (LS_COLORS generator for ls)
   ansible.builtin.unarchive:
@@ -47,12 +48,14 @@
     src: "/tmp/dotfiles/bash/{{ item }}"
     dest: "~/{{ item }}"
     remote_src: true
+    mode: '0644'
   loop:
     - .bashrc
     - .bash_aliases
 
 - name: Change user shell to bash
   become: true
+  when: default_shell == 'bash'
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /bin/bash

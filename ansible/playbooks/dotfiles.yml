@@ -11,16 +11,13 @@
       - nerdfonts
       # - nodejs
       - vim
-      # - lvim
       # - emacs
       - tmux
       - alacritty
       # - fzf
       - bash
       - zsh
-      - git
       - system
-      - kubernetes
       - flatpak
       - visualstudio
   roles:

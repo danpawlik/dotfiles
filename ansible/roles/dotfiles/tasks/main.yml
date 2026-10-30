@@ -22,10 +22,6 @@
   ansible.builtin.include_tasks: vim.yml
   when: "'vim' in components"
 
-- name: Configure lunarvim
-  ansible.builtin.include_tasks: lvim.yml
-  when: "'lvim' in components"
-
 - name: Configure zsh
   ansible.builtin.include_tasks: zsh.yml
   when: "'zsh' in components"
@@ -61,10 +57,6 @@
 - name: Configure system
   ansible.builtin.include_tasks: system.yml
   when: "'system' in components"
-
-- name: Configure Kubernetes packages
-  ansible.builtin.include_tasks: kubernetes.yml
-  when: "'kubernetes' in components"
 
 - name: Configure flatpak
   ansible.builtin.include_tasks: flatpak.yml

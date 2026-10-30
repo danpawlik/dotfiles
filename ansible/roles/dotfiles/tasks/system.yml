@@ -4,6 +4,7 @@
   ansible.builtin.file:
     path: /etc/NetworkManager/conf.d
     state: directory
+    mode: '0755'
 
 - name: Disable Wireless powersave
   become: true
@@ -15,6 +16,7 @@
           [connection]
           wifi.powersave = 2
         dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+        mode: '0644'
       register: wifi_powersave
 
 
@@ -36,6 +38,7 @@
         option: dns
         value: default
         no_extra_spaces: true
+        mode: '0644'
 
     - name: Clear resolv.conf file
       ansible.builtin.file:
@@ -44,10 +47,10 @@
       when: _disable_resolved.changed
 
     - name: Restart NetworkManager
-      ansible.builtin.service:
+      ansible.builtin.systemd:
         name: NetworkManager
         state: restarted
-      when: _disable_resolved.changed or wifi_powersave is defined and wifi_powersave.changed
+      when: _disable_resolved.changed or (wifi_powersave is defined and wifi_powersave.changed)
       register: _nm_restarted
 
     - name: Wait few seconds before continue
@@ -60,12 +63,19 @@
   become: true
   when: nm_dns_workaround
   block:
+    - name: Create dnsmasq conf.d dir
+      ansible.builtin.file:
+        path: /etc/NetworkManager/dnsmasq.d
+        state: directory
+        mode: '0755'
+
     - name: Enable dnsmasq
       ansible.builtin.copy:
         content: |
           [main]
           dns=dnsmasq
         dest: /etc/NetworkManager/conf.d/dns.conf
+        mode: '0644'
       register: _enable_dnsmasq
 
     - name: Set cache for dnsmasq
@@ -73,6 +83,7 @@
         content: |
           cache-size=10000
         dest: /etc/NetworkManager/dnsmasq.d/cache.conf
+        mode: '0644'
       register: _dnsmasq_cache
 
     - name: Restart NetworkManager
@@ -101,19 +112,30 @@
           [Install]
           WantedBy=multi-user.target
         dest: /etc/systemd/system/powertop.service
+        mode: '0644'
 
     - name: Enable powertop service
-      ansible.builtin.service:
+      ansible.builtin.systemd:
         name: powertop
         state: started
         enabled: true
-        daemon-reload: true
+        daemon_reload: true
 
+
+- name: Check if podman is installed
+  ansible.builtin.stat:
+    path: /usr/bin/podman
+  register: _podman_binary
 
 - name: Enable podman socket
-  ansible.builtin.shell: |
-    systemctl --user enable --now podman.socket
-  changed_when: true
+  when: _podman_binary.stat.exists
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+  ansible.builtin.systemd:
+    name: podman.socket
+    scope: user
+    state: started
+    enabled: true
 
 - name: Increase sysctl values
   become: true
@@ -142,6 +164,7 @@
     regexp: "{{ item.regex }}"
     line: "{{ item.line }}"
     create: true
+    mode: '0644'
   loop:
     - regex: '^#SystemMaxUse='
       line: 'SystemMaxUse=500M'

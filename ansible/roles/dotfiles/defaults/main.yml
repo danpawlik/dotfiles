@@ -3,15 +3,13 @@ components: []
 
 enable_rpmfusion: true
 enable_nerd_fonts: true
-enable_kubernetes_tools: true
-kubernetes_repo_version: v1.36
 enable_nested_virtualization: true
 
 # LS_COLORS generator used by bash ls aliases
 vivid_version: v0.11.1
 
-# package, direct or small
-nerd_fonts_install: small
+# package, direct or patched
+nerd_fonts_install: direct
 # small or full
 nerd_fonts_pack: small
 nerd_fonts_version: v3.5.0
@@ -27,9 +25,12 @@ nerd_fonts_package:
   - google-droid-sans-mono-fonts
 
 other_fonts: []
+nerd_fonts_patched: []
 
 # available: prezto, starship, oh_my_zsh
 zsh_distro: oh_my_zsh
+# login shell to configure: bash or zsh
+default_shell: zsh
 nvim_version: nightly
 # can be: kickstart, kickstart_minimal, nvchad
 nvim_config: nvchad
@@ -136,7 +137,6 @@ remove_packages:
   - kontact
   - kontact-libs
   - konversation
-  - kontact
   - kf5-ktnef
   - kmahjongg
 
@@ -201,7 +201,6 @@ ansible_collections:
   - community.crypto
   - ansible.posix
   - openstack.cloud
-  - kubernetes.core
   - community.mysql
   - community.postgresql
 

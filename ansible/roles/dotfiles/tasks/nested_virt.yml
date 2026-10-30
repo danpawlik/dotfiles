@@ -7,26 +7,27 @@
     state: present
 
 - name: Check if CPU vendor is Intel
-  ansible.builtin.shell: |
-    grep -qi intel /proc/cpuinfo
+  ansible.builtin.command: grep -qi intel /proc/cpuinfo
   changed_when: false
-  ignore_errors: true
+  failed_when: false
   register: _intel_vendor
 
 - name: Enable nested virtualization - Intel
   become: true
   ansible.builtin.lineinfile:
     path: /etc/modprobe.d/kvm.conf
-    regexp: '^#options kvm_intel nested=1'
+    regexp: '^#?options kvm_intel nested=1'
     line: 'options kvm_intel nested=1'
+    create: true
+    mode: '0644'
   when: _intel_vendor.rc == 0
-  register: _nested_intel
 
 - name: Enable nested virtualization - AMD
   become: true
   ansible.builtin.lineinfile:
     path: /etc/modprobe.d/kvm.conf
-    regexp: '^#options kvm_amd nested=1'
+    regexp: '^#?options kvm_amd nested=1'
     line: 'options kvm_amd nested=1'
+    create: true
+    mode: '0644'
   when: _intel_vendor.rc == 1
-  register: _nested_amd

@@ -37,7 +37,7 @@ bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
 
 # pnpm
-export PNPM_HOME="~/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 # pnpm end
 #
 if command -v kubectl &>/dev/null; then
@@ -45,4 +45,4 @@ if command -v kubectl &>/dev/null; then
     alias k='kubectl'
 fi
 
-export PATH=~/android-platform-tools:~/.local/bin:~/go/bin:/usr/local/bin/:~/.cargo/bin/:~/.local/share/nvim/mason/bin/:$PNPM_HOME:$PATH
+export PATH=~/android-platform-tools:~/.local/bin:~/go/bin:/usr/local/bin/:~/.cargo/bin/:~/.local/share/nvim/mason/bin/:$PNPM_HOME:$HOME/.opencode/bin:$PATH

@@ -1,8 +1,9 @@
 ---
 - name: Clone doom emacs
   ansible.builtin.git:
-    repo: https://github.com/hlissner/doom-emacs
-    dest: ~/.emacs.d
+    repo: https://github.com/doomemacs/core
+    dest: ~/.config/emacs
+    depth: 1
 
 - name: Install emacs
   become: true
@@ -11,8 +12,7 @@
     state: present
 
 - name: Install doom emacs
-  ansible.builtin.shell: |
-     ~/.emacs.d/bin/doom install --install --fonts --force
+  ansible.builtin.command: ~/.config/emacs/bin/doom install
   args:
-    chdir: ~/.emacs.d
-  changed_when: true
+    chdir: ~/.config/emacs
+    creates: ~/.config/doom/init.el
