@@ -42,13 +42,13 @@ ble-bind -m emacs -f tab fzf-complete
 ble-import contrib/prompt-git
 export VIRTUAL_ENV_DISABLE_PROMPT=1   # venv is shown on the right instead
 
-# \q{dir}: parent path steel blue, last component bold bright blue
+# \q{dir}: parent path dark red, last component bold bright red
 function ble/prompt/backslash:dir {
   local p=$PWD
   [[ $p == "$HOME" || $p == "$HOME"/* ]] && p="~${p#"$HOME"}"
   local head= tail=$p
   [[ $p == */* ]] && head=${p%/*}/ tail=${p##*/}
-  ble/prompt/print $'\e[0;38;5;31m'"$head"$'\e[1;38;5;39m'"$tail"$'\e[0m'
+  ble/prompt/print $'\e[0;38;5;124m'"$head"$'\e[1;38;5;196m'"$tail"$'\e[0m'
 }
 
 # Git counts from one async "git status --porcelain=v2 --branch --show-stash"
