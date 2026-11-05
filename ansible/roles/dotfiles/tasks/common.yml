@@ -9,11 +9,13 @@
         line: "{{ item.param }}={{ item.value }}"
       loop:
         - param: fastestmirror
-          value: true
+          value: false
         - param: max_parallel_downloads
           value: 8
         - param: minrate
           value: 10M
+        - param: max_downloads_per_mirror
+          value: 2
 
     - name: Update packages
       ansible.builtin.dnf:

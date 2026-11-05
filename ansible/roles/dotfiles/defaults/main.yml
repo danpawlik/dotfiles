@@ -108,7 +108,6 @@ dev_packages:
   - ghc
   - git
   - golang
-  - golang-honnef-tools
   - krb5-devel
   - libvirt
   - luarocks
