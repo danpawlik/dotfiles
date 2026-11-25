@@ -5,6 +5,16 @@
     name: gcc
     state: present
 
+# The repo only carries the customized files; the rest of the config
+# (lua/configs/lazy.lua, lua/options.lua, ...) comes from the upstream
+# starter. Without it init.lua fails on require "configs.lazy".
+- name: Clone NvChad starter
+  when: nvim_config == 'nvchad'
+  ansible.builtin.git:
+    repo: https://github.com/NvChad/starter
+    dest: ~/.config/nvim
+    update: false
+
 - name: Copy config - {{ nvim_config }}
   ansible.builtin.copy:
     src: /tmp/dotfiles/vimrc/{{ nvim_config }}/{{ item }}
